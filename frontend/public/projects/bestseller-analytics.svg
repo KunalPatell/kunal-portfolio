@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Bestseller Analytics Dashboard cover</title>
+  <desc id="desc">Abstract analytics dashboard cover.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#581c87"/>
+      <stop offset=".52" stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <rect x="150" y="105" width="900" height="510" rx="34" fill="#020617" opacity=".56" stroke="#c4b5fd" stroke-opacity=".5" stroke-width="3"/>
+  <rect x="205" y="165" width="245" height="170" rx="22" fill="#ffffff" opacity=".08"/>
+  <rect x="490" y="165" width="220" height="170" rx="22" fill="#ffffff" opacity=".08"/>
+  <rect x="750" y="165" width="245" height="170" rx="22" fill="#ffffff" opacity=".08"/>
+  <path d="M220 520V404M295 520V360M370 520V438M445 520V318M520 520V386M595 520V286M670 520V430M745 520V334M820 520V374M895 520V260M970 520V410" stroke="#93c5fd" stroke-width="28" stroke-linecap="round"/>
+  <path d="M225 414c92 30 128-74 210-40 78 32 120-80 204-44 76 32 126-52 188-38 56 13 82-14 130-62" fill="none" stroke="#c084fc" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="958" cy="230" r="12" fill="#f0abfc"/>
+  <text x="600" y="254" text-anchor="middle" fill="#e0e7ff" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="800">Product Insights</text>
+</svg>

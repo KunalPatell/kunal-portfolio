@@ -1,0 +1,34 @@
+# ── dependencies & build output ──
+**/node_modules/
+**/.next/
+**/out/
+**/build/
+**/.venv/
+**/venv/
+**/__pycache__/
+*.pyc
+**/static/
+*.tsbuildinfo
+**/next-env.d.ts
+
+# ── env & secrets — NEVER commit ──
+.env
+**/.env
+.env.*
+**/.env.*
+!**/.env.example
+!**/.env.local.example
+*.db
+
+# ── local tooling / personal artifacts ──
+.claude/
+hf_deploy_*/
+deploy_to_hf.*
+image.png
+Kunal_Patell_CV2.pdf
+Profile.pdf
+
+# ── os / editor ──
+.DS_Store
+.vercel
+*.log

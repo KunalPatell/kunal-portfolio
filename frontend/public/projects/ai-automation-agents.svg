@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AI Automation Agents cover</title>
+  <desc id="desc">Abstract workflow automation cover.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#1e40af"/>
+      <stop offset=".52" stop-color="#4338ca"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <circle cx="600" cy="360" r="255" fill="#ffffff" opacity=".06"/>
+  <g fill="#020617" opacity=".58" stroke="#bfdbfe" stroke-opacity=".56" stroke-width="4">
+    <rect x="120" y="285" width="205" height="150" rx="28"/>
+    <rect x="500" y="95" width="205" height="150" rx="28"/>
+    <rect x="875" y="285" width="205" height="150" rx="28"/>
+    <rect x="500" y="475" width="205" height="150" rx="28"/>
+  </g>
+  <g fill="none" stroke="#67e8f9" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M325 360h150c70 0 70-190 25-190"/>
+    <path d="M705 170c70 0 95 190 170 190"/>
+    <path d="M875 360H725c-70 0-70 190-20 190"/>
+    <path d="M500 550c-70 0-95-190-175-190"/>
+  </g>
+  <g fill="#e0f2fe" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="30">
+    <text x="222" y="372" text-anchor="middle">API</text>
+    <text x="602" y="182" text-anchor="middle">LLM</text>
+    <text x="978" y="372" text-anchor="middle">n8n</text>
+    <text x="602" y="562" text-anchor="middle">Agent</text>
+  </g>
+  <circle cx="600" cy="360" r="70" fill="#38bdf8" opacity=".22" stroke="#e0f2fe" stroke-width="4"/>
+  <path d="M570 360h60M600 330v60" stroke="#e0f2fe" stroke-width="12" stroke-linecap="round"/>
+</svg>
