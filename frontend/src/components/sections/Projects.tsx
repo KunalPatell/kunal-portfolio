@@ -1,12 +1,27 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import { projects } from "@/lib/data";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Tilt } from "@/components/Tilt";
 
+const FILTERS = ["All", "AI / LLM", "Computer Vision", "Automation", "Data"];
+
+function bucket(category: string): string {
+  const c = category.toLowerCase();
+  if (c.includes("vision")) return "Computer Vision";
+  if (c.includes("automation")) return "Automation";
+  if (c.includes("data") || c.includes("analytics") || c.includes("intelligence") || c.includes("business"))
+    return "Data";
+  return "AI / LLM";
+}
+
 export function Projects() {
+  const [active, setActive] = useState("All");
+  const shown = active === "All" ? projects : projects.filter((p) => bucket(p.category) === active);
+
   return (
     <section id="projects" className="section bg-[#050505]">
       <div className="container-px">
@@ -16,8 +31,24 @@ export function Projects() {
           description="Real AI systems — from public policing platforms to computer vision and automation pipelines."
         />
 
+        <div data-blur-in className="mb-10 flex flex-wrap gap-2">
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setActive(f)}
+              className={`rounded-lg border px-4 py-1.5 font-mono text-[11px] uppercase tracking-wider transition-all duration-300 ${
+                active === f
+                  ? "border-[#9ed8ff]/50 bg-[#9ed8ff]/10 text-[#9ed8ff]"
+                  : "border-white/10 bg-white/[0.02] text-white/50 hover:border-[#9ed8ff]/30 hover:text-white"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
+          {shown.map((project, i) => (
             <div
               key={project.title}
               data-blur-in
