@@ -174,6 +174,20 @@ export const projects: Project[] = [
     accent: "from-emerald-500/20 to-cyan-400/10",
   },
   {
+    title: "Comonk AI",
+    category: "AI Agent Platform",
+    description:
+      "Enterprise-grade AI career guidance and intelligence platform for Gujarat IT/AIML job seekers featuring multi-agent counselors, interactive mock interviews, ATS optimization, and semantic job recommendations.",
+    features: ["Multi-Agent Graph", "Mock Interview Simulator", "ATS Optimizer", "Salary Intelligence"],
+    techStack: ["Python", "FastAPI", "LangGraph", "ChromaDB", "Groq API"],
+    status: "Live on Render",
+    liveUrl: "https://comonk-ai.onrender.com",
+    githubUrl: "https://github.com/KunalPatell/comonk-ai",
+    image: "/projects/rag-assistant.svg",
+    imageAlt: "Abstract enterprise AI career advisor platform",
+    accent: "from-purple-500/20 to-indigo-400/10",
+  },
+  {
     title: "RAG Document Assistant",
     category: "RAG / AI Agent",
     description:
