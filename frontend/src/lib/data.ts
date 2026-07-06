@@ -17,7 +17,7 @@ export const profile = {
     github: "https://github.com/KunalPatell",
     linkedin: "https://linkedin.com/in/kunalpatell",
     huggingface: "https://huggingface.co/Kunalptl777",
-    portfolio: "https://kunal-portfolio-omega-bay.vercel.app",
+    portfolio: "https://kunal-portfolio-kunalpatells-projects.vercel.app",
   },
 };
 
