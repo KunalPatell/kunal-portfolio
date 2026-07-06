@@ -17,7 +17,7 @@ export const profile = {
     github: "https://github.com/KunalPatell",
     linkedin: "https://linkedin.com/in/kunalpatell",
     huggingface: "https://huggingface.co/Kunalptl777",
-    portfolio: "https://kunalpatel.dev",
+    portfolio: "https://kunal-portfolio-omega-bay.vercel.app",
   },
 };
 
@@ -167,7 +167,7 @@ export const projects: Project[] = [
     features: ["JD Parsing", "Skill Gap Analysis", "Match Score", "AI Recommendations"],
     techStack: ["Python", "OpenAI API", "FastAPI", "Next.js", "Vector Embeddings"],
     status: "Live on Hugging Face",
-    liveUrl: "https://kunalptl777-resume-jd-matcher.hf.space",
+    liveUrl: "https://huggingface.co/spaces/Kunalptl777/resume-jd-matcher",
     githubUrl: "https://github.com/KunalPatell/resume-jd-matcher",
     image: "/projects/ai-jd-matcher.svg",
     imageAlt: "Abstract resume to job description AI matching tool",
@@ -234,8 +234,8 @@ export const projects: Project[] = [
       "Interactive analytics dashboard for bestseller product analysis and insights.",
     features: ["Data Visualization", "Analytics", "Dashboard Reporting"],
     techStack: ["Python", "Streamlit", "Pandas", "Plotly"],
-    status: "Live on Hugging Face",
-    liveUrl: "https://huggingface.co/spaces/Kunalptl777/bestseller-analytics",
+    status: "Live on Streamlit",
+    liveUrl: "https://bestseller-analytics-vqbxhnrnbdz4juh8elwnau.streamlit.app/",
     githubUrl: "https://github.com/KunalPatell/bestseller-analytics",
     image: "/projects/bestseller-analytics.svg",
     imageAlt: "Abstract business analytics dashboard project cover",
