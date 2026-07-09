@@ -167,7 +167,7 @@ export const projects: Project[] = [
     features: ["JD Parsing", "Skill Gap Analysis", "Match Score", "AI Recommendations"],
     techStack: ["Python", "OpenAI API", "FastAPI", "Next.js", "Vector Embeddings"],
     status: "Live on Vercel",
-    liveUrl: "https://resume-jd-matcher-kunalpatells-projects.vercel.app/",
+    liveUrl: "https://resume-jd-matcher-teal.vercel.app/",
     githubUrl: "https://github.com/KunalPatell/resume-jd-matcher",
     image: "/projects/ai-jd-matcher.svg",
     imageAlt: "Abstract resume to job description AI matching tool",
