@@ -74,7 +74,6 @@ export default function RootLayout({
           <GlowEffectInitializer />
           <CustomCursor />
           <StarCanvas />
-          <Preloader />
           <EntranceAnimator />
           <ScrollProgress />
           <Grain />
