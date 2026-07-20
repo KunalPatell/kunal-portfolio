@@ -1,6 +1,7 @@
 /**
  * Centralized portfolio content.
  * Edit this single file to update the entire site.
+ * Last Updated: 2026-07-21 (V7 Resume, Interactive Skills, Modals & Terminal)
  */
 
 export const profile = {
