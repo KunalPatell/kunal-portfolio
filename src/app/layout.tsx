@@ -4,7 +4,6 @@ import "./globals.css";
 import { profile } from "@/lib/data";
 import { Grain } from "@/components/Grain";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { Preloader } from "@/components/Preloader";
 import { EntranceAnimator } from "@/components/EntranceAnimator";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { GlowEffectInitializer } from "@/components/GlowEffectInitializer";
@@ -83,4 +82,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
