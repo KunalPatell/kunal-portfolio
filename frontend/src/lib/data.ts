@@ -111,36 +111,82 @@ export const resume: ResumeSection[] = [
   },
 ];
 
-export const skillGroups: { category: string; skills: string[] }[] = [
+export type SkillItem = {
+  name: string;
+  level: number;
+  experience: string;
+  projectsBuilt: number;
+};
+
+export type SkillCategoryGroup = {
+  category: string;
+  skills: SkillItem[];
+};
+
+export const skillGroups: SkillCategoryGroup[] = [
   {
     category: "LLM APIs & AI",
     skills: [
-      "OpenAI API",
-      "Claude API",
-      "Gemini API",
-      "LangChain",
-      "LangGraph",
-      "RAG Pipelines",
-      "AI Agents",
-      "Prompt Engineering",
-      "Vector Embeddings",
+      { name: "OpenAI API", level: 95, experience: "2+ Yrs", projectsBuilt: 9 },
+      { name: "Claude API", level: 92, experience: "1.5 Yrs", projectsBuilt: 6 },
+      { name: "Gemini API", level: 90, experience: "1+ Yr", projectsBuilt: 5 },
+      { name: "LangChain", level: 92, experience: "2 Yrs", projectsBuilt: 8 },
+      { name: "LangGraph", level: 88, experience: "1 Yr", projectsBuilt: 4 },
+      { name: "RAG Pipelines", level: 94, experience: "2 Yrs", projectsBuilt: 7 },
+      { name: "AI Agents", level: 90, experience: "1.5 Yrs", projectsBuilt: 6 },
+      { name: "Prompt Engineering", level: 96, experience: "2+ Yrs", projectsBuilt: 12 },
+      { name: "Vector Embeddings", level: 92, experience: "2 Yrs", projectsBuilt: 7 },
     ],
   },
   {
-    category: "Full-Stack",
-    skills: ["Python", "FastAPI", "Flask", "Next.js", "React", "Streamlit", "REST APIs", "JSON"],
+    category: "Full-Stack AI",
+    skills: [
+      { name: "Python", level: 96, experience: "3+ Yrs", projectsBuilt: 15 },
+      { name: "FastAPI", level: 94, experience: "2 Yrs", projectsBuilt: 10 },
+      { name: "Flask", level: 88, experience: "2 Yrs", projectsBuilt: 6 },
+      { name: "Next.js", level: 90, experience: "2 Yrs", projectsBuilt: 8 },
+      { name: "React", level: 90, experience: "2 Yrs", projectsBuilt: 8 },
+      { name: "Streamlit", level: 92, experience: "2 Yrs", projectsBuilt: 5 },
+      { name: "REST APIs", level: 95, experience: "3 Yrs", projectsBuilt: 14 },
+      { name: "JSON & Data Pipelines", level: 96, experience: "3 Yrs", projectsBuilt: 15 },
+    ],
   },
   {
-    category: "Databases & Cloud",
-    skills: ["Supabase", "Firebase", "PostgreSQL", "SQL", "FAISS", "Vector DBs", "Hugging Face"],
+    category: "Databases & Vector DBs",
+    skills: [
+      { name: "Supabase", level: 90, experience: "1.5 Yrs", projectsBuilt: 6 },
+      { name: "Firebase", level: 86, experience: "1.5 Yrs", projectsBuilt: 4 },
+      { name: "PostgreSQL", level: 88, experience: "2 Yrs", projectsBuilt: 7 },
+      { name: "SQL", level: 90, experience: "3 Yrs", projectsBuilt: 10 },
+      { name: "FAISS", level: 92, experience: "1.5 Yrs", projectsBuilt: 5 },
+      { name: "Vector DBs (Chroma/FAISS)", level: 90, experience: "1.5 Yrs", projectsBuilt: 6 },
+      { name: "Hugging Face", level: 92, experience: "2 Yrs", projectsBuilt: 8 },
+    ],
   },
   {
     category: "AI/ML & Computer Vision",
-    skills: ["Machine Learning", "Deep Learning", "NLP", "Computer Vision", "TensorFlow", "OpenCV", "YOLO", "Model Training"],
+    skills: [
+      { name: "Machine Learning", level: 92, experience: "2.5 Yrs", projectsBuilt: 10 },
+      { name: "Deep Learning", level: 88, experience: "2 Yrs", projectsBuilt: 6 },
+      { name: "NLP", level: 90, experience: "2 Yrs", projectsBuilt: 7 },
+      { name: "Computer Vision", level: 94, experience: "2 Yrs", projectsBuilt: 6 },
+      { name: "TensorFlow / PyTorch", level: 86, experience: "2 Yrs", projectsBuilt: 5 },
+      { name: "OpenCV", level: 94, experience: "2 Yrs", projectsBuilt: 6 },
+      { name: "YOLO Face/Object AI", level: 90, experience: "1.5 Yrs", projectsBuilt: 4 },
+      { name: "Model Training & Evaluation", level: 88, experience: "2 Yrs", projectsBuilt: 8 },
+    ],
   },
   {
     category: "Automation & Tools",
-    skills: ["n8n", "Workflow Automation", "API Integrations", "Git/GitHub", "Cursor", "Postman", "Jupyter"],
+    skills: [
+      { name: "n8n Automation", level: 95, experience: "1.5 Yrs", projectsBuilt: 12 },
+      { name: "Workflow Automation", level: 96, experience: "2 Yrs", projectsBuilt: 14 },
+      { name: "API Integrations", level: 95, experience: "3 Yrs", projectsBuilt: 16 },
+      { name: "Git / GitHub", level: 92, experience: "3 Yrs", projectsBuilt: 20 },
+      { name: "Cursor & AI Coding", level: 98, experience: "2 Yrs", projectsBuilt: 18 },
+      { name: "Postman", level: 92, experience: "3 Yrs", projectsBuilt: 12 },
+      { name: "Jupyter", level: 94, experience: "3 Yrs", projectsBuilt: 15 },
+    ],
   },
 ];
 
@@ -148,6 +194,9 @@ export type Project = {
   title: string;
   category: string;
   description: string;
+  longDescription?: string;
+  architecture?: string[];
+  challenges?: string[];
   features: string[];
   techStack: string[];
   status?: string;
@@ -372,12 +421,10 @@ export const navLinks = [
 ];
 
 export const aiSuggestions = [
-  "What LLM APIs has he worked with?",
-  "Has he built any RAG applications?",
-  "Can he build full-stack AI apps?",
-  "Tell me about his AI projects.",
-  "What is his experience?",
-  "What technologies does he know?",
+  "What is Kunal's current role at Capermint Technology?",
+  "Show Computer Vision & Face Intelligence projects",
+  "How does Kunal build n8n & Python automation workflows?",
+  "Download Kunal's latest V7 PDF Resume",
 ];
 
 export function isPlaceholderUrl(url?: string) {

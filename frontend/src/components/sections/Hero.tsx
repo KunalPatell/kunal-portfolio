@@ -11,15 +11,32 @@ import { Typewriter } from "@/components/Typewriter";
 
 export function Hero() {
   const resume = resumeAction();
-  const roles = profile.title.split("|").map((r) => r.trim()).filter(Boolean);
+  const roles = [
+    "Data Scientist",
+    "AI/ML Engineer",
+    "Computer Vision & Face AI",
+    "LLM, RAG & Agentic AI",
+    "n8n & Python Automation"
+  ];
 
   return (
     <section id="home" className="relative flex min-h-screen items-center pt-16 bg-[#050505]">
       <AnimatedBackground />
       <div className="container-px relative z-10">
         <div className="max-w-4xl">
+          {/* Live Availability Badge */}
+          <div data-blur-in="subtle" className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-mono text-emerald-400 backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+            </span>
+            <span>Available for AI/ML Roles &amp; Freelance Projects</span>
+          </div>
+
+          <br />
+
           <span data-blur-in="subtle" className="eyebrow">
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-3.5 w-3.5 text-[#9ed8ff]" />
             AI Engineer &amp; Automation Specialist
           </span>
 

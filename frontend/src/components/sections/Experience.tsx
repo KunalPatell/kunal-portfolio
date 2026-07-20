@@ -1,45 +1,59 @@
-import { Briefcase } from "lucide-react";
+"use client";
+
+import { motion } from "framer-motion";
+import { Briefcase, Calendar, Building2 } from "lucide-react";
 import { experiences } from "@/lib/data";
 import { SectionHeading } from "@/components/SectionHeading";
 
 export function Experience() {
   return (
-    <section id="experience" className="section bg-[#050505] border-t border-white/5">
-      <div className="container-px">
+    <section id="experience" className="section bg-[#050505] border-t border-white/5 relative">
+      <div className="container-px relative z-10">
         <SectionHeading
-          eyebrow="Experience"
+          eyebrow="Career History"
           title={<>Where I&apos;ve applied AI</>}
-          description="Hands-on internships building LLM agents, automation pipelines, and ML models."
+          description="Hands-on roles building AI models, automation workflows, and production software."
         />
 
-        <div className="relative ml-4 border-l border-white/10 pl-8 space-y-12">
-          {/* Vertical timeline line with gradient glow */}
-          <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#9ed8ff] via-[#cfae6e]/40 to-transparent" />
+        <div className="relative ml-4 md:ml-8 border-l border-white/10 pl-6 md:pl-10 space-y-10">
+          {/* Vertical glowing timeline bar */}
+          <motion.div
+            initial={{ height: 0 }}
+            whileInView={{ height: "100%" }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="absolute left-0 top-0 w-[2px] bg-gradient-to-b from-[#cfae6e] via-[#9ed8ff] to-[#38bdf8] shadow-[0_0_12px_rgba(158,216,255,0.6)]"
+          />
 
           {experiences.map((exp, i) => (
-            <div
+            <motion.div
               key={exp.role + exp.company}
-              data-blur-in
-              style={{ transitionDelay: `${i * 100}ms` }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
               className="relative"
             >
-              {/* Glowing timeline node */}
-              <span className="absolute -left-[45px] top-1.5 grid h-[26px] w-[26px] place-items-center rounded-full border border-[#9ed8ff]/40 bg-[#080a0f] text-[#9ed8ff] shadow-[0_0_10px_rgba(158,216,255,0.4)] transition-all duration-300 hover:scale-110 hover:border-[#9ed8ff] hover:shadow-[0_0_15px_rgba(158,216,255,0.8)]">
-                <Briefcase className="h-3 w-3" />
+              {/* Glowing timeline icon node */}
+              <span className="absolute -left-[35px] md:-left-[51px] top-1.5 grid h-7 w-7 md:h-8 md:w-8 place-items-center rounded-full border border-[#9ed8ff]/50 bg-[#080a0f] text-[#9ed8ff] shadow-[0_0_12px_rgba(158,216,255,0.5)] transition-all duration-300 hover:scale-110 hover:border-[#9ed8ff]">
+                <Briefcase className="h-3.5 w-3.5" />
               </span>
 
-              {/* Experience details card */}
-              <div className="glass-card p-6 hover:border-[#9ed8ff]/30 transition-all duration-300">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="font-mono text-sm font-semibold uppercase tracking-wider text-white">
-                    {exp.role}
-                  </h3>
-                  <span className="font-mono text-[10px] text-[#cfae6e] uppercase tracking-widest">
-                    {exp.company}
-                  </span>
+              {/* Experience Details Card */}
+              <div className="glass-card p-6 hover:border-[#9ed8ff]/40 transition-all duration-300 group">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-4">
+                  <div>
+                    <h3 className="font-mono text-base font-bold uppercase tracking-wider text-white group-hover:text-[#9ed8ff] transition-colors">
+                      {exp.role}
+                    </h3>
+                    <div className="mt-1 flex items-center gap-2 text-xs font-mono text-[#cfae6e]">
+                      <Building2 className="h-3.5 w-3.5 text-[#cfae6e]/70" />
+                      <span>{exp.company}</span>
+                    </div>
+                  </div>
                 </div>
-                
-                <ul className="mt-5 flex flex-wrap gap-2">
+
+                <ul className="mt-4 flex flex-wrap gap-2">
                   {exp.highlights.map((h) => (
                     <li
                       key={h}
@@ -50,11 +64,12 @@ export function Experience() {
                   ))}
                 </ul>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
