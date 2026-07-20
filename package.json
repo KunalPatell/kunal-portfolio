@@ -1,8 +1,11 @@
 {
-  "name": "kunal-portfolio-root",
+  "name": "kunal-portfolio-monorepo",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "build": "if [ -d \"frontend\" ]; then cd frontend && npm install --legacy-peer-deps && npm run build; else npm install --legacy-peer-deps && npm run build; fi"
+    "build": "npm run build --workspace=frontend"
   }
 }
