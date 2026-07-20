@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AI Price Comparator cover</title>
+  <desc id="desc">Abstract product comparison and data intelligence cover.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0369a1"/>
+      <stop offset=".55" stop-color="#047857"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <circle cx="210" cy="135" r="180" fill="#7dd3fc" opacity=".16"/>
+  <circle cx="990" cy="590" r="210" fill="#6ee7b7" opacity=".16"/>
+  <g transform="translate(180 150)">
+    <rect width="250" height="360" rx="28" fill="#020617" opacity=".56" stroke="#bae6fd" stroke-opacity=".45" stroke-width="3"/>
+    <rect x="54" y="58" width="142" height="116" rx="22" fill="#38bdf8" opacity=".22"/>
+    <path d="M58 242h134M58 286h96" stroke="#e0f2fe" stroke-opacity=".8" stroke-width="16" stroke-linecap="round"/>
+    <text x="58" y="338" fill="#6ee7b7" font-family="Inter,Arial,sans-serif" font-size="40" font-weight="800">$</text>
+  </g>
+  <g transform="translate(475 110)">
+    <rect width="250" height="440" rx="28" fill="#020617" opacity=".62" stroke="#bbf7d0" stroke-opacity=".55" stroke-width="3"/>
+    <rect x="54" y="58" width="142" height="116" rx="22" fill="#34d399" opacity=".22"/>
+    <path d="M58 242h134M58 286h96M58 330h128" stroke="#e0f2fe" stroke-opacity=".8" stroke-width="16" stroke-linecap="round"/>
+    <text x="58" y="392" fill="#7dd3fc" font-family="Inter,Arial,sans-serif" font-size="40" font-weight="800">$</text>
+  </g>
+  <g transform="translate(770 150)">
+    <rect width="250" height="360" rx="28" fill="#020617" opacity=".56" stroke="#bae6fd" stroke-opacity=".45" stroke-width="3"/>
+    <rect x="54" y="58" width="142" height="116" rx="22" fill="#22d3ee" opacity=".18"/>
+    <path d="M58 242h134M58 286h96" stroke="#e0f2fe" stroke-opacity=".8" stroke-width="16" stroke-linecap="round"/>
+    <text x="58" y="338" fill="#6ee7b7" font-family="Inter,Arial,sans-serif" font-size="40" font-weight="800">$</text>
+  </g>
+  <path d="M384 590c130-92 304-92 432 0" fill="none" stroke="#e0f2fe" stroke-opacity=".45" stroke-width="8" stroke-linecap="round" stroke-dasharray="22 24"/>
+</svg>

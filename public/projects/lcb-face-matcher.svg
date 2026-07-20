@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">LCB Face Matcher cover</title>
+  <desc id="desc">Abstract computer vision face matching cover.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#312e81"/>
+      <stop offset=".58" stop-color="#075985"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <g fill="none" stroke="#bfdbfe" stroke-opacity=".18" stroke-width="2">
+    <path d="M0 120h1200M0 240h1200M0 360h1200M0 480h1200M0 600h1200"/>
+    <path d="M160 0v720M320 0v720M480 0v720M640 0v720M800 0v720M960 0v720"/>
+  </g>
+  <g transform="translate(255 128)">
+    <rect x="0" y="0" width="280" height="360" rx="34" fill="#020617" opacity=".52" stroke="#93c5fd" stroke-opacity=".65" stroke-width="4"/>
+    <circle cx="140" cy="126" r="62" fill="#38bdf8" opacity=".22" stroke="#bae6fd" stroke-width="4"/>
+    <path d="M74 284c20-64 112-64 132 0" stroke="#bae6fd" stroke-width="18" stroke-linecap="round"/>
+    <path d="M64 62h54M162 62h54M64 298h54M162 298h54" stroke="#38bdf8" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(665 128)">
+    <rect x="0" y="0" width="280" height="360" rx="34" fill="#020617" opacity=".52" stroke="#93c5fd" stroke-opacity=".65" stroke-width="4"/>
+    <circle cx="140" cy="126" r="62" fill="#818cf8" opacity=".22" stroke="#c7d2fe" stroke-width="4"/>
+    <path d="M74 284c20-64 112-64 132 0" stroke="#c7d2fe" stroke-width="18" stroke-linecap="round"/>
+    <path d="M64 62h54M162 62h54M64 298h54M162 298h54" stroke="#818cf8" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <path d="M545 310h110" stroke="#67e8f9" stroke-width="14" stroke-linecap="round"/>
+  <path d="M608 276l47 34-47 34" fill="none" stroke="#67e8f9" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="585" text-anchor="middle" fill="#e0f2fe" font-family="Inter,Arial,sans-serif" font-size="38" font-weight="700">Similarity Matching</text>
+</svg>
