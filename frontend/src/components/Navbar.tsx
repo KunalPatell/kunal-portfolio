@@ -107,5 +107,6 @@ export function Navbar() {
 
       <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </header>
-  );
+  </>
+);
 }
