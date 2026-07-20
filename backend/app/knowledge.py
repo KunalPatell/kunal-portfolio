@@ -49,6 +49,21 @@ KB_ENTRIES: list[dict] = [
         ),
     },
     {
+        "keywords": ["startups", "companies", "ventures", "sevenseed", "avpu", "university", "pharmacy", "construction", "emart", "trust", "group"],
+        "answer": (
+            "Kunal is the AI engineer behind the Sevenseed AI Venture Studio portfolio. "
+            "Under the Sevenseed umbrella, he has developed landing portals and AI backends for 7 ventures:\n"
+            "• Sevenseed (AI Venture Studio) — The parent studio validating and launching AI ventures.\n"
+            "• Comonk Technology (AI Career Intelligence) — Live platform offering multi-agent career advice and mock interviews.\n"
+            "• Alpaben Vipulbhai Patel University (AVPU) — AI-native education portal with personal AI tutors and adaptive learning.\n"
+            "• Decode Forest Pharmacy — AI pharmacy prototype featuring prescription OCR reading and safety verification.\n"
+            "• Breakdown Factor Construction — AI construction platform offering site safety monitoring and cost forecasting.\n"
+            "• AVP Charitable Trust — AI-driven needs matching and transparent impact reporting.\n"
+            "• AVP Emart — AI e-commerce price comparison (linking to price-com streamlit demo).\n"
+            "You can explore all startup landing pages live on this website under the /startups/ path."
+        ),
+    },
+    {
         "keywords": ["tech", "technology", "technologies", "stack", "skill", "skills", "language", "tools", "know"],
         "answer": (
             "Kunal's toolkit:\n"
@@ -62,10 +77,10 @@ KB_ENTRIES: list[dict] = [
         "keywords": ["experience", "intern", "internship", "job", "worked", "company", "career"],
         "answer": (
             "Kunal's work experience includes:\n"
-            "• AI-ML Engineer Intern at Capermint Technologies, Ahmedabad (May 2026 – Present) — contributing to AI-powered gaming solutions and interactive digital experiences for mobile and web, building intelligent features and automation workflows.\n"
-            "• AI Engineer Intern at Elite Workforces Services, Ahmedabad (Feb 2026 – Apr 2026) — automated business processes via Python/APIs/n8n (~40% effort reduction) and designed scalable automation on the SaaS platform automationowl.\n"
-            "• AI Automation Intern at One Percent Media, Ahmedabad (Jan 2026 – Feb 2026) — developed and tested AI-powered automation workflows using Python, n8n, and AI tools, and worked on dashboard insights.\n"
-            "• Freelance Automation Developer at pucho.ai (Remote) (Jan 2026 – Feb 2026) — designed automation workflows and converted templates into functional API-based pipelines using JSON."
+            "• AI-ML Engineer at Capermint Technology, Ahmedabad (May 2026 – Present) — contributing to AI-powered gaming solutions and interactive digital experiences for mobile and web platforms, developing intelligent features and automation workflows.\n"
+            "• AI Engineer Intern at Elite Workforces Services, Ahmedabad (Dec 2025 – May 2026) — automated business processes via Python, APIs, and n8n, reducing manual effort by ~40%, integrating AI services into operational workflows.\n"
+            "• AI Intern at One Percent Media, Ahmedabad (Oct 2025 – Dec 2025) — developed and tested automation workflows using Python, n8n, and AI tools, integrating AI services into operational workflows.\n"
+            "• AI Automation Engineer at Sevenseed Technology (May 2025 – Nov 2025) — designed automation workflows on platforms similar to n8n/Make/Activepieces, converting templates into functional JSON logic pipelines."
         ),
     },
     {

@@ -5,7 +5,7 @@
 
 export const profile = {
   name: "Kunal Patel",
-  title: "AI Engineer | Data Scientist | Automation Developer",
+  title: "Data Scientist | AI/ML Engineer",
   subtitle:
     "Building full-stack AI apps end-to-end — LLM APIs (OpenAI, Claude, Gemini), RAG pipelines, document automation, and intelligent micro-apps that solve real business problems.",
   email: "websitekunal@gmail.com",
@@ -405,43 +405,42 @@ export function resumeAction() {
 
 export const experiences = [
   {
-    role: "AI-ML Engineer Intern",
-    company: "Capermint Technologies",
-    period: "May 2026 - Present",
+    role: "AI-ML Engineer",
+    company: "Capermint Technology, Ahmedabad",
+    period: "May 2026 – Present",
     highlights: [
-      "Building full-stack AI micro-apps and intelligent features using LLM APIs (OpenAI, Gemini) integrated into mobile and web platforms.",
-      "Developing end-to-end AI solutions: FastAPI backends, React/Next.js frontends, and automation workflows that enhance product performance and user engagement.",
-      "Shipping working prototypes quickly using modern AI-assisted development tools (Cursor, GitHub Copilot)."
+      "Contributed to AI-powered gaming solutions and interactive digital experiences for mobile and web platforms.",
+      "Developed and integrated intelligent features, automation workflows, and data-driven solutions to enhance game performance and user engagement."
     ],
   },
   {
     role: "AI Engineer Intern",
-    company: "Elite Workforces Services",
-    period: "Feb 2026 - Apr 2026",
+    company: "Elite Workforces Services, Ahmedabad",
+    period: "Dec 2025 – May 2026",
     highlights: [
-      "Built document automation tools and AI-powered business workflows using Python, REST APIs, and LLM APIs, reducing manual effort by ~40%.",
-      "Designed full-stack AI applications on the automationowl SaaS platform — from backend logic to frontend dashboards.",
-      "Converted business requirements into working AI prototypes rapidly, iterating based on client feedback."
+      "Automated business processes using Python, APIs, and n8n, reducing manual effort by ~40%.",
+      "Integrated AI services into content and operational workflows.",
+      "Assisted in performance analysis and dashboard insights."
     ],
   },
   {
-    role: "AI Automation Intern",
-    company: "One Percent Media",
-    period: "Jan 2026 - Feb 2026",
+    role: "AI Intern",
+    company: "One Percent Media, Ahmedabad",
+    period: "Oct 2025 – Dec 2025",
     highlights: [
-      "Developed and tested AI automation pipelines using Python, n8n, and LLM APIs for content and operational workflows.",
-      "Integrated AI services (OpenAI, Claude) into business processes, improving content generation speed and accuracy.",
-      "Built performance analysis dashboards with data visualization and AI-generated insights."
+      "Developed and tested automation workflows using Python, n8n, and AI tools.",
+      "Integrated AI services into content and operational workflows.",
+      "Assisted in performance analysis and dashboard insights."
     ],
   },
   {
-    role: "Freelance - Automation Developer",
-    company: "pucho.ai (Remote)",
-    period: "Jan 2026 - Feb 2026",
+    role: "AI Automation Engineer",
+    company: "Sevenseed Technology",
+    period: "May 2025 – Nov 2025",
     highlights: [
-      "Designed and shipped API-based automation workflows on platforms similar to n8n, Make, Activepieces, and Zapier.",
-      "Converted workflow templates into production-ready automation pipelines with JSON logic and REST API integrations.",
-      "Debugged and optimized AI flow outputs, improving accuracy and edge-case handling."
+      "Designed automation workflows on a platform similar to n8n, Make, Activepieces, and Zapier.",
+      "Converted workflow templates into functional automation pipelines.",
+      "Built API-based automation systems using JSON and logic-based workflows."
     ],
   },
 ];
