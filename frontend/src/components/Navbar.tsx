@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles, Terminal as TerminalIcon } from "lucide-react";
+import { Menu, X, Sparkles, Terminal as TerminalIcon, Key } from "lucide-react";
 import { navLinks, profile } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { TerminalModal } from "@/components/TerminalModal";
+import { APIKeyManager } from "@/components/APIKeyManager";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [byokOpen, setByokOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -52,10 +54,19 @@ export function Navbar() {
             ))}
           </ul>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
+            <button
+              onClick={() => setByokOpen(true)}
+              className="rounded-xl border border-violet-500/30 bg-violet-500/10 px-3 py-2 font-mono text-xs uppercase tracking-wider text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/50 transition-all duration-300 flex items-center gap-1.5"
+              title="Add personal API keys (Groq, Gemini, OpenAI) for free unlimited access"
+            >
+              <Key className="h-3.5 w-3.5 text-violet-400" />
+              BYOK API Key
+            </button>
+
             <button
               onClick={() => setTerminalOpen(true)}
-              className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300 flex items-center gap-1.5"
+              className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 font-mono text-xs uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300 flex items-center gap-1.5"
               title="Open Developer Terminal CLI"
             >
               <TerminalIcon className="h-3.5 w-3.5" />
@@ -64,49 +75,50 @@ export function Navbar() {
 
             <a
               href="#ask-ai"
-              className="rounded-xl border border-[#9ed8ff]/30 bg-[#9ed8ff]/5 px-4 py-2 font-mono text-xs uppercase tracking-widest text-[#9ed8ff] hover:bg-[#9ed8ff]/10 hover:border-[#9ed8ff]/50 transition-all duration-300 shadow-[0_0_10px_rgba(158,216,255,0.15)] flex items-center gap-2"
+              className="rounded-xl border border-[#9ed8ff]/30 bg-[#9ed8ff]/5 px-3.5 py-2 font-mono text-xs uppercase tracking-widest text-[#9ed8ff] hover:bg-[#9ed8ff]/10 hover:border-[#9ed8ff]/50 transition-all duration-300 shadow-[0_0_10px_rgba(158,216,255,0.15)] flex items-center gap-1.5"
             >
               <Sparkles className="h-3.5 w-3.5 text-[#9ed8ff] drop-shadow-[0_0_4px_rgba(158,216,255,0.4)] animate-pulse" />
               Ask Kunal AI
             </a>
           </div>
 
-        <button
-          aria-label="Toggle menu"
-          className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white md:hidden"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-white/5 bg-[#050505]/95 backdrop-blur-xl md:hidden"
+          <button
+            aria-label="Toggle menu"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white md:hidden"
+            onClick={() => setOpen((v) => !v)}
           >
-            <ul className="container-px flex flex-col py-4">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-3 font-mono text-xs uppercase tracking-wider text-white/80 hover:bg-[#9ed8ff]/5 hover:text-[#9ed8ff]"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </nav>
 
-      <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
-    </header>
-  </>
-);
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden border-t border-white/5 bg-[#050505]/95 backdrop-blur-xl md:hidden"
+            >
+              <ul className="container-px flex flex-col py-4">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-lg px-3 py-3 font-mono text-xs uppercase tracking-wider text-white/80 hover:bg-[#9ed8ff]/5 hover:text-[#9ed8ff]"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
+        <APIKeyManager isOpen={byokOpen} onClose={() => setByokOpen(false)} />
+      </header>
+    </>
+  );
 }

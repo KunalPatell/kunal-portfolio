@@ -213,8 +213,8 @@ export const projects: Project[] = [
     title: "Sevenseed",
     category: "AI Venture Studio",
     description:
-      "AI-native venture studio that ideates, incubates, and launches market-leading AI SaaS startups in India. Built on a shared vector RAG + LLM backend — ships MVP in 2 weeks. 7 ventures incubated, ₹1.5Cr+ studio GMV, 100% AI-native.",
-    features: ["Venture Ideation AI", "Shared RAG Backbone", "2-Week MVP Sprint", "Docker Deployments"],
+      "AI-native venture studio platform behind 7 startups in tech, edtech, health, construction, social impact, and e-commerce. Features a shared vector RAG + multi-agent backend, 2-week MVP sprint architecture, and full BYOK (Bring Your Own Key) zero-cost user model.",
+    features: ["Venture Ideation AI", "Shared RAG Backbone", "Self API Key / BYOK Support", "2-Week MVP Sprint", "Docker Deployments"],
     techStack: ["Next.js", "FastAPI", "LangGraph", "ChromaDB", "Groq LLaMA 3.3", "Docker"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com",
@@ -226,8 +226,8 @@ export const projects: Project[] = [
     title: "Comonk Technology",
     category: "AI Career Platform",
     description:
-      "Enterprise AI career intelligence platform for Gujarat IT/AIML job seekers — multi-agent LangGraph counselors, ATS optimizer, mock interview simulator, semantic job matching, and salary intelligence. Deployed live on Render.",
-    features: ["Multi-Agent Graph", "Mock Interview Simulator", "ATS Optimizer", "Salary Intelligence"],
+      "Enterprise AI career guidance platform — multi-agent LangGraph counselors, ATS resume optimizer, mock interview simulator, semantic job matching, and salary intelligence with self-service API key integration.",
+    features: ["Multi-Agent Graph", "Mock Interview Simulator", "Self API & Token Manager", "ATS Resume Optimizer"],
     techStack: ["Python", "FastAPI", "LangGraph", "ChromaDB", "Groq API", "Next.js"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/comonk-ai/",
@@ -239,8 +239,8 @@ export const projects: Project[] = [
     title: "Sevenforce",
     category: "AI Workforce Automation",
     description:
-      "AI-powered workforce and business automation platform — autonomous agent workforce that handles HR onboarding, employee scheduling, payroll automation, and business process intelligence using multi-agent workflows.",
-    features: ["Autonomous Agent Workforce", "HR Automation", "Payroll AI", "Business Process Intelligence"],
+      "AI-powered workforce and business automation platform — autonomous agent workforce handling HR onboarding, employee scheduling, automated payroll, and process intelligence using multi-agent workflows.",
+    features: ["Autonomous Agent Workforce", "HR Automation", "Payroll AI", "Business Process Intelligence", "BYOK Support"],
     techStack: ["Python", "FastAPI", "LangGraph", "n8n", "RAG Pipelines", "Next.js"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/sevenforce/",
@@ -252,8 +252,8 @@ export const projects: Project[] = [
     title: "AVP University (AVPU)",
     category: "AI EdTech Platform",
     description:
-      "AI-powered digital university — personal AI tutor with adaptive learning, semantic course recommendations, automated assessments, placement matcher, and LLM-driven curriculum planning for modern learners.",
-    features: ["Personal AI Tutor", "Adaptive Assessments", "Placement Matcher", "LLM Curriculum"],
+      "AI digital university platform — personal AI tutor with adaptive learning, semantic course recommendations, placement matcher, automated assessments, and LLM-driven curriculum planning.",
+    features: ["Personal AI Tutor", "Adaptive Assessments", "Placement Matcher", "LLM Curriculum", "Zero-Cost BYOK"],
     techStack: ["Python", "FastAPI", "LangChain", "ChromaDB", "Next.js", "Groq API"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/avpu/",
@@ -265,8 +265,8 @@ export const projects: Project[] = [
     title: "Decode Forest Pharmacy",
     category: "AI HealthTech",
     description:
-      "AI-powered pharmacy and healthcare platform — OCR prescription reader, drug compatibility checker, AI refill tracker, medicine interaction alerts, and personalized health recommendation engine.",
-    features: ["OCR Prescription Reader", "Drug Compatibility AI", "Refill Tracker", "Health Recommendations"],
+      "Free AI healthcare and pharmacy guidance platform — 24/7 free health advice, emergency hospital & blood bank finder, OCR prescription scanner, drug compatibility checker, and refill tracking.",
+    features: ["Free Health Advice AI", "Emergency Hospital Finder", "OCR Prescription Reader", "Drug Compatibility AI"],
     techStack: ["Python", "FastAPI", "OCR", "LLMs", "ChromaDB", "Next.js"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/pharmacy/",
@@ -278,9 +278,9 @@ export const projects: Project[] = [
     title: "Breakdown Factor",
     category: "AI ConTech Platform",
     description:
-      "AI-driven construction technology platform — computer vision site safety monitors, ML cost predictors, structural crack defect detectors, and project risk intelligence for construction firms.",
-    features: ["Site Safety CV", "Cost Predictor", "Crack Detection AI", "Risk Intelligence"],
-    techStack: ["Python", "YOLO", "OpenCV", "FastAPI", "TensorFlow", "Next.js"],
+      "AI construction technology platform — computer vision property damage detection (using custom YOLO best.pt model), ML cost estimation, structural defect analysis, and automated BOQ generation.",
+    features: ["Property Damage CV (YOLO best.pt)", "Site Safety Monitors", "ML Cost Estimator", "BOQ Generator"],
+    techStack: ["Python", "YOLOv8 (best.pt)", "OpenCV", "FastAPI", "TensorFlow", "Next.js"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/breakdown/",
     accent: "from-amber-500/20 to-orange-400/10",
@@ -291,8 +291,8 @@ export const projects: Project[] = [
     title: "AVP Charitable Trust",
     category: "AI Social Impact",
     description:
-      "Non-profit AI platform that uses ML to identify community needs, semantically match beneficiaries to scholarship and welfare programs, detect funding anomalies, and generate transparent donor impact reports.",
-    features: ["AI Needs Assessment", "Beneficiary Matching RAG", "Anomaly Detection", "Impact Reporting"],
+      "100% free non-profit AI platform — uses ML to identify community welfare needs, semantically match beneficiaries to scholarships, detect funding anomalies, and produce transparent donor impact reports.",
+    features: ["100% Free Welfare Services", "AI Beneficiary Matching", "Anomaly Detection", "Impact Reporting"],
     techStack: ["Python", "FastAPI", "LangGraph", "ChromaDB", "MiniLM Embeddings", "Groq LLaMA 3.3"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/trust/",
@@ -304,9 +304,9 @@ export const projects: Project[] = [
     title: "AVP Emart",
     category: "AI E-Commerce",
     description:
-      "AI-powered smart shopping and price comparison platform — compares live prices across 4 major online stores, applies ML value-scoring, provides personalized deal recommendations and purchase timing predictions.",
-    features: ["Live Price Comparison", "ML Value Scoring", "Deal Recommendations", "Purchase Timing AI"],
-    techStack: ["Python", "Streamlit", "Web Scraping", "ML Models", "REST APIs"],
+      "AI smart shopping & price comparator platform — cross-references live prices across Amazon, Flipkart, Reliance Digital, and Snapdeal with ML value scoring, deal recommendations, and target price alerts.",
+    features: ["4-Store Live Price Compare", "ML Value Scoring", "Price Drop Alerts", "Purchase Timing AI"],
+    techStack: ["Python", "FastAPI", "Next.js", "Web Scraping", "ML Scoring", "SQLite"],
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/avp-emart/",
     image: "/projects/ai-price-comparator.svg",
@@ -314,6 +314,7 @@ export const projects: Project[] = [
     accent: "from-orange-500/20 to-yellow-400/10",
   },
 ];
+
 
 export const certifications: { title: string; tag: string }[] = [
   { title: "Artificial Intelligence", tag: "AI" },
