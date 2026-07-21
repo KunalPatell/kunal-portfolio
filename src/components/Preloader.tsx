@@ -37,6 +37,20 @@ export function Preloader() {
     return () => clearInterval(timer);
   }, []);
 
+  const quotes = [
+    "Reticulating AI splines...",
+    "Java developers never RIP. They just get Garbage Collected.",
+    "Web developers do it with <style>.",
+    "Unix is user-friendly. It's just selective about who its friends are.",
+    "Compiling neural weights & RAG embeddings...",
+  ];
+
+  const [quoteIndex, setQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    setQuoteIndex(Math.floor(Math.random() * quotes.length));
+  }, []);
+
   if (removed) return null;
 
   return (
@@ -51,6 +65,9 @@ export function Preloader() {
             <div className="preloader-icon-ring" />
           </div>
           <h1 className="font-display preloader-name">Kunal Patel</h1>
+          <p className="mt-2 font-mono text-xs text-[#9ed8ff]/70 tracking-widest animate-pulse">
+            "{quotes[quoteIndex]}"
+          </p>
         </div>
 
         <div className="preloader-progress-wrapper">

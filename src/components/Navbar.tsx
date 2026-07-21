@@ -82,43 +82,43 @@ export function Navbar() {
             </a>
           </div>
 
-        <button
-          aria-label="Toggle menu"
-          className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white md:hidden"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-white/5 bg-[#050505]/95 backdrop-blur-xl md:hidden"
+          <button
+            aria-label="Toggle menu"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white md:hidden"
+            onClick={() => setOpen((v) => !v)}
           >
-            <ul className="container-px flex flex-col py-4">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-3 font-mono text-xs uppercase tracking-wider text-white/80 hover:bg-[#9ed8ff]/5 hover:text-[#9ed8ff]"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </nav>
 
-      <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
-      <APIKeyManager isOpen={byokOpen} onClose={() => setByokOpen(false)} />
-    </header>
-  </>
-);
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden border-t border-white/5 bg-[#050505]/95 backdrop-blur-xl md:hidden"
+            >
+              <ul className="container-px flex flex-col py-4">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-lg px-3 py-3 font-mono text-xs uppercase tracking-wider text-white/80 hover:bg-[#9ed8ff]/5 hover:text-[#9ed8ff]"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
+        <APIKeyManager isOpen={byokOpen} onClose={() => setByokOpen(false)} />
+      </header>
+    </>
+  );
 }

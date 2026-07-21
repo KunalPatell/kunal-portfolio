@@ -84,6 +84,45 @@ export function Hero() {
             </Magnetic>
           </div>
 
+          {/* Social Links Bar inspired by reference portfolio */}
+          <div data-blur-in="subtle" className="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs text-white/70">
+            <span className="text-muted uppercase text-[10px] tracking-widest mr-2">// CONNECT:</span>
+            <a
+              href={profile.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 transition-all hover:border-[#9ed8ff]/50 hover:bg-[#9ed8ff]/10 hover:text-white"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 group-hover:animate-ping" />
+              <span>GitHub</span>
+            </a>
+            <a
+              href={profile.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 transition-all hover:border-[#9ed8ff]/50 hover:bg-[#9ed8ff]/10 hover:text-white"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400 group-hover:animate-ping" />
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href={profile.socials.huggingface}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 transition-all hover:border-[#9ed8ff]/50 hover:bg-[#9ed8ff]/10 hover:text-white"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 group-hover:animate-ping" />
+              <span>HuggingFace</span>
+            </a>
+            <a
+              href={`mailto:${profile.email}`}
+              className="group flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 transition-all hover:border-[#9ed8ff]/50 hover:bg-[#9ed8ff]/10 hover:text-white"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-purple-400 group-hover:animate-ping" />
+              <span>Email</span>
+            </a>
+          </div>
+
           <div
             data-blur-in="strong"
             className="mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/5 pt-8"

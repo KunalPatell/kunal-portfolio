@@ -79,4 +79,3 @@ export async function sendContact(payload: ContactPayload): Promise<void> {
     throw new Error(detail?.detail || `Failed to send (${res.status})`);
   }
 }
-
