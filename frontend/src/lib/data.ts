@@ -63,42 +63,24 @@ export const resume: ResumeSection[] = [
     title: "Experience",
     items: [
       {
-        primary: "AI-ML Engineer Intern",
+        primary: "AI-ML Engineer",
         secondary: "Capermint Technologies, Ahmedabad",
         meta: "May 2026 - Present",
-        points: [
-          "Contributing to AI-powered gaming solutions and interactive digital experiences for mobile and web platforms.",
-          "Developing and integrating intelligent features, automation workflows, and data-driven solutions to enhance game performance and user engagement."
-        ],
       },
       {
         primary: "AI Engineer Intern",
         secondary: "Elite Workforces Services, Ahmedabad",
-        meta: "Feb 2026 - Apr 2026",
-        points: [
-          "Automated business processes using Python, APIs, and n8n, reducing manual effort by ~40%.",
-          "Designed scalable automation systems on the SaaS platform (automationowl) for real-world use cases."
-        ],
+        meta: "Dec 2025 - May 2026",
       },
       {
-        primary: "AI Automation Intern",
+        primary: "AI Intern",
         secondary: "One Percent Media, Ahmedabad",
-        meta: "Jan 2026 - Feb 2026",
-        points: [
-          "Developed and tested automation workflows using Python, n8n, and AI tools.",
-          "Integrated AI services into content and operational workflows.",
-          "Assisted in performance analysis and dashboard insights."
-        ],
+        meta: "Oct 2025 - Dec 2025",
       },
       {
-        primary: "Freelance - Automation Developer",
-        secondary: "pucho.ai (Remote)",
-        meta: "Jan 2026 - Feb 2026",
-        points: [
-          "Designed automation workflows on a platform similar to n8n, Make, Activepieces, and Zapier.",
-          "Converted workflow templates into functional automation pipelines.",
-          "Built API-based automation systems using JSON and logic-based workflows."
-        ],
+        primary: "AI Automation Engineer",
+        secondary: "Sevenseed Technology",
+        meta: "May 2025 - Nov 2025",
       },
     ],
   },
