@@ -192,6 +192,19 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "Rakshak AI",
+    category: "AI Public Safety & Vision Suite",
+    description:
+      "5-in-1 AI public safety platform combining automatic FIR generation with Bharatiya Nyaya Sanhita (BNS/IPC) legal code recommendations, multilingual AI chatbot, cybercrime scam analyzer, emergency SOS geolocation dispatch, and Computer Vision workstations for safety mask PPE compliance scanning, facial attendance verification, and YOLO chair/occupancy detection.",
+    features: ["Automatic FIR (BNS/IPC)", "Multilingual AI Chatbot", "Cybercrime Scam Analyzer", "Emergency Geolocation Dispatch", "PPE & YOLO Vision Suite"],
+    techStack: ["Python", "FastAPI", "BNS Legal RAG", "YOLOv8", "OpenCV", "Next.js"],
+    status: "Live",
+    liveUrl: "https://sevenseed.onrender.com/rakshak-ai/",
+    accent: "from-red-500/20 to-amber-400/10",
+    image: "/projects/rakshak-ai.svg",
+    imageAlt: "Rakshak AI citizen assistant police copilot and vision security suite",
+  },
+  {
     title: "Sevenseed",
     category: "AI Venture Studio",
     description:
@@ -279,7 +292,7 @@ export const projects: Project[] = [
     status: "Live",
     liveUrl: "https://sevenseed.onrender.com/trust/",
     accent: "from-pink-500/20 to-rose-400/10",
-    image: "/projects/rakshak-ai.svg",
+    image: "/projects/avp-charitable-trust.svg",
     imageAlt: "AVP Charitable Trust AI social impact platform",
   },
   {
@@ -294,19 +307,6 @@ export const projects: Project[] = [
     image: "/projects/ai-price-comparator.svg",
     imageAlt: "AVP Emart AI price comparison e-commerce platform",
     accent: "from-orange-500/20 to-yellow-400/10",
-  },
-  {
-    title: "Rakshak AI",
-    category: "AI Public Safety & Vision Suite",
-    description:
-      "5-in-1 AI public safety platform combining automatic FIR generation with Bharatiya Nyaya Sanhita (BNS/IPC) legal code recommendations, multilingual AI chatbot, cybercrime scam analyzer, emergency SOS geolocation dispatch, and Computer Vision workstations for safety mask PPE compliance scanning, facial attendance verification, and YOLO chair/occupancy detection.",
-    features: ["Automatic FIR (BNS/IPC)", "Multilingual AI Chatbot", "Cybercrime Scam Analyzer", "Emergency Geolocation Dispatch", "PPE & YOLO Vision Suite"],
-    techStack: ["Python", "FastAPI", "BNS Legal RAG", "YOLOv8", "OpenCV", "Next.js"],
-    status: "Live",
-    liveUrl: "https://sevenseed.onrender.com/rakshak-ai/",
-    accent: "from-red-500/20 to-amber-400/10",
-    image: "/projects/rakshak-ai.svg",
-    imageAlt: "Rakshak AI citizen assistant police copilot and vision security suite",
   },
 ];
 

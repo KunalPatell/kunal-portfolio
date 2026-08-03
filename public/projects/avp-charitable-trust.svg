@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AVP Charitable Trust cover</title>
+  <desc id="desc">Abstract social impact and community welfare cover.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#9d174d"/>
+      <stop offset=".55" stop-color="#7c2d12"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <circle cx="220" cy="140" r="190" fill="#fda4af" opacity=".16"/>
+  <circle cx="980" cy="600" r="220" fill="#fb7185" opacity=".14"/>
+  <path d="M600 250c-46-64-146-64-178 8-30 68 26 132 178 234 152-102 208-166 178-234-32-72-132-72-178-8z"
+        fill="#fb7185" opacity=".85"/>
+  <g stroke="#ffe4e6" stroke-opacity=".7" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M310 470c96-56 194-56 290 0"/>
+    <path d="M600 470c96-56 194-56 290 0"/>
+  </g>
+  <circle cx="310" cy="470" r="34" fill="#020617" opacity=".55" stroke="#fecdd3" stroke-opacity=".6" stroke-width="3"/>
+  <circle cx="600" cy="470" r="34" fill="#020617" opacity=".55" stroke="#fecdd3" stroke-opacity=".6" stroke-width="3"/>
+  <circle cx="890" cy="470" r="34" fill="#020617" opacity=".55" stroke="#fecdd3" stroke-opacity=".6" stroke-width="3"/>
+  <path d="M280 596c160-64 320-64 480 0" fill="none" stroke="#ffe4e6" stroke-opacity=".4" stroke-width="8"
+        stroke-linecap="round" stroke-dasharray="22 24"/>
+</svg>
