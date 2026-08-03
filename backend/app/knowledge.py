@@ -107,12 +107,27 @@ KB_ENTRIES: list[dict] = [
         ),
     },
     {
-        "keywords": ["rakshak", "police", "safety", "fir", "emergency"],
+        "keywords": ["rakshak", "police", "safety", "fir", "emergency", "bns"],
         "answer": (
-            "Rakshak AI is an AI-powered citizen assistance and smart policing platform designed "
-            "for Ahmedabad Police. It includes an AI chatbot, FIR generator, voice assistant, and "
-            "emergency support. It is live on Hugging Face: "
-            "https://huggingface.co/spaces/Kunalptl777/rakshak-ai"
+            "Rakshak AI (https://sevenseed.onrender.com/rakshak-ai/) is a comprehensive 5-in-1 AI Public Safety & Computer Vision Platform powered by three core modules:\n"
+            "1. Smart Legal Chatbot & FIR Generator: Automatic BNS/IPC legal code recommendations, evidence analyzer, and investigation copilot.\n"
+            "2. Safety Mask PPE Scanner: Real-time OpenCV & PyTorch computer vision workstation for safety compliance.\n"
+            "3. Local Face Recognition System: Sub-second facial attendance verification and occupancy detection.\n"
+            "Live demo available at: https://sevenseed.onrender.com/rakshak-ai/"
+        ),
+    },
+    {
+        "keywords": ["mask", "ppe", "face mask", "safety mask"],
+        "answer": (
+            "Kunal engineered an AI Safety Mask & PPE Compliance Scanner using PyTorch and OpenCV for real-time computer vision monitoring. "
+            "It is integrated into the Rakshak AI security suite: https://sevenseed.onrender.com/rakshak-ai/"
+        ),
+    },
+    {
+        "keywords": ["face recognition", "facial", "attendance", "local face"],
+        "answer": (
+            "Kunal built a high-speed Local Face Recognition & Attendance System using OpenCV, PyTorch, and deep embeddings for sub-second identity verification. "
+            "It powers the security and attendance module of Rakshak AI: https://sevenseed.onrender.com/rakshak-ai/"
         ),
     },
     {
