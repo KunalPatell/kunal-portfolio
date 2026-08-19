@@ -68,19 +68,19 @@ export const resume: ResumeSection[] = [
         meta: "May 2026 - Present",
       },
       {
-        primary: "AI Engineer Intern",
+        primary: "AI Engineer",
         secondary: "Elite Workforces Services, Ahmedabad",
         meta: "Dec 2025 - May 2026",
       },
       {
-        primary: "AI Intern",
+        primary: "AI Engineer",
         secondary: "One Percent Media, Ahmedabad",
-        meta: "Oct 2025 - Dec 2025",
+        meta: "May 2025 - Nov 2025",
       },
       {
         primary: "AI Automation Engineer",
         secondary: "Sevenseed Technology",
-        meta: "May 2025 - Nov 2025",
+        meta: "Dec 2024 - May 2025",
       },
     ],
   },
@@ -372,7 +372,7 @@ export const experiences = [
     ],
   },
   {
-    role: "AI Engineer Intern",
+    role: "AI Engineer",
     company: "Elite Workforces Services, Ahmedabad",
     period: "Dec 2025 – May 2026",
     highlights: [
@@ -382,9 +382,9 @@ export const experiences = [
     ],
   },
   {
-    role: "AI Intern",
+    role: "AI Engineer",
     company: "One Percent Media, Ahmedabad",
-    period: "Oct 2025 – Dec 2025",
+    period: "May 2025 – Nov 2025",
     highlights: [
       "Developed and tested automation workflows using Python, n8n, and AI tools.",
       "Integrated AI services into content and operational workflows.",
@@ -394,7 +394,7 @@ export const experiences = [
   {
     role: "AI Automation Engineer",
     company: "Sevenseed Technology",
-    period: "May 2025 – Nov 2025",
+    period: "Dec 2024 – May 2025",
     highlights: [
       "Designed automation workflows on a platform similar to n8n, Make, Activepieces, and Zapier.",
       "Converted workflow templates into functional automation pipelines.",

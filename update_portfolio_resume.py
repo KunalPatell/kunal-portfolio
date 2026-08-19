@@ -146,7 +146,7 @@ work_data = [
         ]
     },
     {
-        'role': 'AI Engineer Intern',
+        'role': 'AI Engineer',
         'company': 'Elite Workforces Services',
         'location': 'Ahmedabad',
         'dates': 'Dec 2025 - May 2026',
@@ -156,10 +156,10 @@ work_data = [
         ]
     },
     {
-        'role': 'AI Intern',
+        'role': 'AI Engineer',
         'company': 'One Percent Media',
         'location': 'Ahmedabad',
-        'dates': 'Oct 2025 - Dec 2025',
+        'dates': 'May 2025 - Nov 2025',
         'bullets': [
             'Developed and tested automation workflows using Python, n8n, and AI tools.',
             'Integrated AI services into content and operational workflows.'
@@ -169,7 +169,7 @@ work_data = [
         'role': 'AI Automation Engineer',
         'company': 'Sevenseed Technology',
         'location': 'Ahmedabad',
-        'dates': 'May 2025 - Nov 2025',
+        'dates': 'Dec 2024 - May 2025',
         'bullets': [
             'Designed automation workflows on platforms similar to n8n, Make, Activepieces, and Zapier.',
             'Converted workflow templates into functional automation pipelines and built JSON API-based workflow systems.'

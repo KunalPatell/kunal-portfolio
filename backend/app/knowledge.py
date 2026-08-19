@@ -78,9 +78,9 @@ KB_ENTRIES: list[dict] = [
         "answer": (
             "Kunal's work experience includes:\n"
             "• AI-ML Engineer at Capermint Technology, Ahmedabad (May 2026 – Present) — contributing to AI-powered gaming solutions and interactive digital experiences for mobile and web platforms, developing intelligent features and automation workflows.\n"
-            "• AI Engineer Intern at Elite Workforces Services, Ahmedabad (Dec 2025 – May 2026) — automated business processes via Python, APIs, and n8n, reducing manual effort by ~40%, integrating AI services into operational workflows.\n"
-            "• AI Intern at One Percent Media, Ahmedabad (Oct 2025 – Dec 2025) — developed and tested automation workflows using Python, n8n, and AI tools, integrating AI services into operational workflows.\n"
-            "• AI Automation Engineer at Sevenseed Technology (May 2025 – Nov 2025) — designed automation workflows on platforms similar to n8n/Make/Activepieces, converting templates into functional JSON logic pipelines."
+            "• AI Engineer at Elite Workforces Services, Ahmedabad (Dec 2025 – May 2026) — automated business processes via Python, APIs, and n8n, reducing manual effort by ~40%, integrating AI services into operational workflows.\n"
+            "• AI Engineer at One Percent Media, Ahmedabad (May 2025 – Nov 2025) — developed and tested automation workflows using Python, n8n, and AI tools, integrating AI services into operational workflows.\n"
+            "• AI Automation Engineer at Sevenseed Technology (Dec 2024 – May 2025) — designed automation workflows on platforms similar to n8n/Make/Activepieces, converting templates into functional JSON logic pipelines."
         ),
     },
     {
