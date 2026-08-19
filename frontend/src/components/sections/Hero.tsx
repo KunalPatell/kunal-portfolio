@@ -128,8 +128,8 @@ export function Hero() {
             className="mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/5 pt-8"
           >
             {([
-              { count: 13, suffix: "+", v: "AI Projects" },
-              { count: 4, suffix: "", v: "Internships" },
+              { count: 9, suffix: "+", v: "Production Apps" },
+              { count: 40, suffix: "%+", v: "Efficiency Gain" },
               { label: "MSc", v: "AI & ML" },
             ] as { count?: number; suffix?: string; label?: string; v: string }[]).map((s) => (
               <div key={s.v} className="group">

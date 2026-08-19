@@ -41,7 +41,7 @@ export function Experience() {
 
               {/* Experience Details Card */}
               <div className="glass-card p-6 hover:border-[#9ed8ff]/40 transition-all duration-300 group">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-4">
                   <div>
                     <h3 className="font-mono text-base font-bold uppercase tracking-wider text-white group-hover:text-[#9ed8ff] transition-colors">
                       {exp.role}
@@ -51,15 +51,17 @@ export function Experience() {
                       <span>{exp.company}</span>
                     </div>
                   </div>
+                  <div className="flex items-center gap-1.5 font-mono text-xs text-white/70 bg-white/5 px-3 py-1 rounded-full border border-white/10 shadow-sm">
+                    <Calendar className="h-3.5 w-3.5 text-[#9ed8ff]" />
+                    <span>{exp.period}</span>
+                  </div>
                 </div>
 
-                <ul className="mt-4 flex flex-wrap gap-2">
+                <ul className="mt-4 space-y-2">
                   {exp.highlights.map((h) => (
-                    <li
-                      key={h}
-                      className="rounded-lg border border-[#9ed8ff]/15 bg-[#9ed8ff]/5 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-[#9ed8ff]/90 transition-all duration-300 hover:bg-[#9ed8ff]/10 hover:border-[#9ed8ff]/30 hover:text-white"
-                    >
-                      {h}
+                    <li key={h} className="flex items-start gap-2.5 text-xs leading-relaxed text-white/80">
+                      <span className="text-[#9ed8ff] font-mono mt-0.5 shrink-0">▸</span>
+                      <span>{h}</span>
                     </li>
                   ))}
                 </ul>

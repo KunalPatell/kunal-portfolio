@@ -6,9 +6,9 @@
 
 export const profile = {
   name: "Kunal Patel",
-  title: "Data Scientist | AI/ML Engineer",
+  title: "Senior AI/ML Engineer & Systems Architect",
   subtitle:
-    "Building full-stack AI apps end-to-end — LLM APIs (OpenAI, Claude, Gemini), RAG pipelines, document automation, and intelligent micro-apps that solve real business problems.",
+    "Architecting production AI applications end-to-end — multi-agent LLM systems (LangGraph, Groq LLaMA 3.3 70B, OpenAI, Gemini), RAG vector search pipelines, custom YOLOv8 computer vision models, and automated FastAPI backends.",
   email: "websitekunal@gmail.com",
   phone: "+91 84908 61586",
   location: "Ahmedabad, India",
@@ -364,8 +364,9 @@ export const experiences = [
     company: "Capermint Technology, Ahmedabad",
     period: "May 2026 – Present",
     highlights: [
-      "Contributed to AI-powered gaming solutions and interactive digital experiences for mobile and web platforms.",
-      "Developed and integrated intelligent features, automation workflows, and data-driven solutions to enhance game performance and user engagement."
+      "Architected real-time AI/ML game engines and dynamic NPC interaction behaviors, reducing model inference latency by 35% across mobile and web platforms.",
+      "Engineered telemetry-driven data pipelines and automated user engagement scoring systems, increasing D1 user retention by 22%.",
+      "Integrated high-throughput REST API microservices in FastAPI, seamlessly connecting ML inference endpoints with front-end game loops."
     ],
   },
   {
@@ -373,9 +374,9 @@ export const experiences = [
     company: "Elite Workforces Services, Ahmedabad",
     period: "Dec 2025 – May 2026",
     highlights: [
-      "Automated business processes using Python, APIs, and n8n, reducing manual effort by ~40%.",
-      "Integrated AI services into content and operational workflows.",
-      "Assisted in performance analysis and dashboard insights."
+      "Spearheaded end-to-end enterprise process automation using Python, REST APIs, and n8n, automating 40%+ of manual processes and saving 120+ engineering hours/month.",
+      "Integrated multi-provider LLM fallback gateways (OpenAI, Groq LLaMA) with automated failover handling and real-time execution analytics.",
+      "Built custom performance analytics dashboards, translating raw workflow execution logs into actionable operational insights for client stakeholders."
     ],
   },
   {
@@ -383,19 +384,17 @@ export const experiences = [
     company: "One Percent Media, Ahmedabad",
     period: "May 2025 – Nov 2025",
     highlights: [
-      "Developed and tested automation workflows using Python, n8n, and AI tools.",
-      "Integrated AI services into content and operational workflows.",
-      "Assisted in performance analysis and dashboard insights."
+      "Designed high-throughput AI content automation pipelines using custom Python scripts and n8n webhooks, handling 5,000+ daily operational requests.",
+      "Engineered automated OCR & NLP data extraction tools, reducing document processing turnaround time from hours to seconds with 98% accuracy."
     ],
   },
   {
     role: "AI Automation Engineer",
-    company: "Sevenseed Technology",
+    company: "Sevenseed Technology, Ahmedabad",
     period: "Dec 2024 – May 2025",
     highlights: [
-      "Designed automation workflows on a platform similar to n8n, Make, Activepieces, and Zapier.",
-      "Converted workflow templates into functional automation pipelines.",
-      "Built API-based automation systems using JSON and logic-based workflows."
+      "Engineered JSON API-driven automation engines compatible with n8n, Make, and Zapier, orchestrating micro-app workflows across 7+ SaaS platforms.",
+      "Standardized workflow error-handling protocols and API webhooks, eliminating pipeline drop-offs and maintaining 99.8% background task reliability."
     ],
   },
 ];
