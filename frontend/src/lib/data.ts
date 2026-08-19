@@ -322,12 +322,9 @@ export const certifications: { title: string; tag: string }[] = [
 
 export const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Resume", href: "#resume" },
-  { label: "Skills", href: "#skills" },
-  { label: "Capabilities", href: "#capabilities" },
   { label: "Experience", href: "#experience" },
+  { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Ask AI", href: "#ask-ai" },
   { label: "Contact", href: "#contact" },
 ];
 
