@@ -6,9 +6,9 @@
 
 export const profile = {
   name: "Kunal Patel",
-  title: "Senior AI/ML Engineer & Systems Architect",
+  title: "AI Engineer & Automation Specialist",
   subtitle:
-    "Architecting production AI applications end-to-end — multi-agent LLM systems (LangGraph, Groq LLaMA 3.3 70B, OpenAI, Gemini), RAG vector search pipelines, custom YOLOv8 computer vision models, and automated FastAPI backends.",
+    "Building production AI applications end-to-end — multi-agent LLM systems (LangGraph, Groq LLaMA 3.3 70B, OpenAI, Gemini), RAG vector search pipelines, custom YOLOv8 computer vision models, and automated FastAPI backends.",
   email: "websitekunal@gmail.com",
   phone: "+91 84908 61586",
   location: "Ahmedabad, India",
