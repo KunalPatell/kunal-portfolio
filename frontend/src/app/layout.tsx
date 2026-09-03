@@ -9,6 +9,7 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { GlowEffectInitializer } from "@/components/GlowEffectInitializer";
 import { CustomCursor } from "@/components/CustomCursor";
 import { StarCanvas } from "@/components/StarCanvas";
+import { Preloader } from "@/components/Preloader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,12 +31,12 @@ const michroma = Michroma({
 });
 
 const description =
-  "Portfolio of Kunal Patel - AI Engineer, Data Scientist & Automation Developer building AI-powered applications, computer vision systems, and intelligent workflow automation.";
+  "Portfolio of Kunal Patel - AI Engineer, Multi-Agent Architect & Automation Specialist building production multi-agent systems, computer vision models, and intelligent enterprise automation.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.socials.portfolio || "https://kunalpatel.dev"),
   title: {
-    default: `${profile.name} | AI Engineer & Automation Developer`,
+    default: `${profile.name} | AI Engineer & Automation Specialist`,
     template: `%s | ${profile.name}`,
   },
   description,
@@ -43,14 +44,17 @@ export const metadata: Metadata = {
     "AI Engineer Portfolio",
     "Data Scientist Portfolio",
     "Machine Learning Engineer",
-    "AI Automation Developer",
-    "Python Developer",
-    "AI Projects Portfolio",
+    "Multi-Agent AI",
+    "LangGraph",
+    "FastAPI",
+    "Computer Vision",
+    "YOLOv8",
+    "n8n Automation",
     "Kunal Patel",
   ],
   authors: [{ name: profile.name }],
   openGraph: {
-    title: `${profile.name} | AI Engineer & Automation Developer`,
+    title: `${profile.name} | AI Engineer & Automation Specialist`,
     description,
     type: "website",
     siteName: `${profile.name} Portfolio`,
@@ -70,6 +74,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrains.variable} ${michroma.variable} dark`}>
       <body>
         <SmoothScrollProvider>
+          <Preloader />
           <GlowEffectInitializer />
           <CustomCursor />
           <StarCanvas />
@@ -82,5 +87,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
