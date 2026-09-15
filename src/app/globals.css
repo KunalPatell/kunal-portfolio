@@ -415,4 +415,28 @@ html.lenis body {
   pointer-events: none;
 }
 
+/* 3D Transform and Holographic utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+@keyframes hologram-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.hologram-effect {
+  animation: hologram-pulse 4s ease-in-out infinite;
+}
+
 

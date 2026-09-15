@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { projects, Project } from "@/lib/data";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Tilt } from "@/components/Tilt";
+import { HoloTilt3D } from "@/components/HoloTilt3D";
 import { sound } from "@/lib/sound";
 
 const FILTERS = ["All", "Venture Startups", "AI & LLM", "Computer Vision", "Automation"];
@@ -92,12 +92,13 @@ export function Projects() {
               transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
               className="h-full"
             >
-              <Tilt className="h-full">
+              <HoloTilt3D className="h-full" intensity={14} glareOpacity={0.3}>
                 <article
                   onClick={() => handleOpenModal(project)}
-                  className="group glass-card flex h-full flex-col overflow-hidden hover:border-[#9ed8ff]/40 cursor-pointer transition-all duration-300"
+                  style={{ transformStyle: "preserve-3d" }}
+                  className="group glass-card flex h-full flex-col overflow-hidden hover:border-[#9ed8ff]/50 cursor-pointer transition-all duration-300 transform-gpu hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
                 >
-                  <div className={`relative h-44 overflow-hidden bg-gradient-to-br ${project.accent}`}>
+                  <div style={{ transformStyle: "preserve-3d" }} className={`relative h-44 overflow-hidden bg-gradient-to-br ${project.accent}`}>
                     {project.image ? (
                       <Image
                         src={project.image}
@@ -108,29 +109,47 @@ export function Projects() {
                       />
                     ) : null}
                     <div className="absolute inset-0 bg-background/40" />
-                    <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-[#080a0f]/90 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-white/90 backdrop-blur-sm">
+                    <span
+                      style={{ transform: "translateZ(28px)" }}
+                      className="absolute left-4 top-4 rounded-full border border-white/10 bg-[#080a0f]/90 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-white/90 backdrop-blur-sm shadow-md"
+                    >
                       {project.category}
                     </span>
                     {project.status ? (
-                      <span className="absolute right-4 top-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-mono text-emerald-300 backdrop-blur-sm">
+                      <span
+                        style={{ transform: "translateZ(28px)" }}
+                        className="absolute right-4 top-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-mono text-emerald-300 backdrop-blur-sm shadow-md"
+                      >
                         {project.status}
                       </span>
                     ) : null}
-                    <ArrowUpRight className="absolute bottom-3 right-3 h-5 w-5 text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#9ed8ff]" />
+                    <ArrowUpRight
+                      style={{ transform: "translateZ(24px)" }}
+                      className="absolute bottom-3 right-3 h-5 w-5 text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#9ed8ff]"
+                    />
                   </div>
 
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-mono text-sm uppercase tracking-wider text-white group-hover:text-[#9ed8ff] transition-colors duration-300 flex items-center justify-between">
+                  <div style={{ transformStyle: "preserve-3d" }} className="flex flex-1 flex-col p-6">
+                    <h3
+                      style={{ transform: "translateZ(20px)" }}
+                      className="font-mono text-sm uppercase tracking-wider text-white group-hover:text-[#9ed8ff] transition-colors duration-300 flex items-center justify-between"
+                    >
                       <span className="font-bold">{project.title}</span>
                       <span className="text-[10px] text-white/30 font-normal group-hover:text-[#cfae6e]">Inspect &rarr;</span>
                     </h3>
-                    <p className="mt-3 flex-1 text-xs leading-relaxed text-muted line-clamp-3">
+                    <p
+                      style={{ transform: "translateZ(12px)" }}
+                      className="mt-3 flex-1 text-xs leading-relaxed text-muted line-clamp-3"
+                    >
                       {project.description}
                     </p>
 
                     {/* Impact metric pills */}
                     {project.impactMetrics && project.impactMetrics.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-1.5 border-t border-white/5 pt-3">
+                      <div
+                        style={{ transform: "translateZ(16px)" }}
+                        className="mt-3 flex flex-wrap gap-1.5 border-t border-white/5 pt-3"
+                      >
                         {project.impactMetrics.slice(0, 2).map((m) => (
                           <span
                             key={m.label}
@@ -142,7 +161,10 @@ export function Projects() {
                       </div>
                     )}
 
-                    <div className="mt-4 flex flex-wrap gap-x-2 gap-y-1 border-t border-white/5 pt-3">
+                    <div
+                      style={{ transform: "translateZ(14px)" }}
+                      className="mt-4 flex flex-wrap gap-x-2 gap-y-1 border-t border-white/5 pt-3"
+                    >
                       {project.techStack.slice(0, 4).map((t) => (
                         <span key={t} className="font-mono text-[10px] text-[#9ed8ff]/80">
                           #{t.replace(/\s+/g, "")}
@@ -151,7 +173,7 @@ export function Projects() {
                     </div>
                   </div>
                 </article>
-              </Tilt>
+              </HoloTilt3D>
             </motion.div>
           ))}
         </div>

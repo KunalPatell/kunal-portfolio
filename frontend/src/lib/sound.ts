@@ -36,6 +36,7 @@ class SoundSystem {
     this.enabled = !this.enabled;
     if (typeof window !== "undefined") {
       localStorage.setItem("audio_feedback_enabled", String(this.enabled));
+      window.dispatchEvent(new CustomEvent("sound-toggled", { detail: this.enabled }));
     }
     if (this.enabled) {
       this.playSuccess();

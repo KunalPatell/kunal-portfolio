@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { projects } from "@/lib/data";
 import { SectionHeading } from "@/components/SectionHeading";
+import { HoloTilt3D } from "@/components/HoloTilt3D";
 import { sound } from "@/lib/sound";
 
 const VENTURE_LIST = projects.filter((p) => p.isStartupVenture);
@@ -111,19 +112,21 @@ export function VentureStudio() {
           </div>
 
           {/* Selected Venture Deep Dive Display */}
-          <div data-blur-in className="lg:col-span-8 glass-card p-6 sm:p-8">
-            <AnimatePresence mode="wait">
+          <HoloTilt3D className="lg:col-span-8" intensity={6} glareOpacity={0.2}>
+            <div data-blur-in className="glass-card p-6 sm:p-8 h-full">
+              <AnimatePresence mode="wait">
               <motion.div
                 key={selectedVenture.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
+                style={{ transformStyle: "preserve-3d" }}
                 className="space-y-6"
               >
                 {/* Header */}
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-5">
-                  <div>
+                <div style={{ transformStyle: "preserve-3d" }} className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-5">
+                  <div style={{ transform: "translateZ(24px)" }}>
                     <span className="rounded-full border border-[#9ed8ff]/30 bg-[#9ed8ff]/10 px-3 py-1 font-mono text-xs text-[#9ed8ff]">
                       {selectedVenture.category}
                     </span>
@@ -134,6 +137,7 @@ export function VentureStudio() {
 
                   {selectedVenture.liveUrl && (
                     <a
+                      style={{ transform: "translateZ(26px)" }}
                       href={selectedVenture.liveUrl}
                       target="_blank"
                       rel="noreferrer"
@@ -146,14 +150,18 @@ export function VentureStudio() {
                 </div>
 
                 {/* Description */}
-                <p className="text-sm leading-relaxed text-white/80">
+                <p style={{ transform: "translateZ(14px)" }} className="text-sm leading-relaxed text-white/80">
                   {selectedVenture.description}
                 </p>
 
                 {/* Impact Metrics */}
-                <div className="grid grid-cols-3 gap-3">
+                <div style={{ transformStyle: "preserve-3d" }} className="grid grid-cols-3 gap-3">
                   {selectedVenture.impactMetrics.map((m) => (
-                    <div key={m.label} className="rounded-xl border border-white/5 bg-white/[0.02] p-3 text-center">
+                    <div
+                      key={m.label}
+                      style={{ transform: "translateZ(18px)" }}
+                      className="rounded-xl border border-white/5 bg-white/[0.02] p-3 text-center transition-transform duration-300 hover:border-[#9ed8ff]/40"
+                    >
                       <div className="font-display text-base font-bold text-[#cfae6e]">{m.value}</div>
                       <div className="font-mono text-[9px] uppercase tracking-wider text-white/40 mt-1">{m.label}</div>
                     </div>
@@ -191,7 +199,8 @@ export function VentureStudio() {
                 </div>
               </motion.div>
             </AnimatePresence>
-          </div>
+            </div>
+          </HoloTilt3D>
         </div>
       </div>
     </section>

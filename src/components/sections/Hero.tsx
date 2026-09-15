@@ -21,6 +21,7 @@ import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { Magnetic } from "@/components/Magnetic";
 import { TextScramble } from "@/components/TextScramble";
 import { Typewriter } from "@/components/Typewriter";
+import { QuantumCore3D } from "@/components/QuantumCore3D";
 import { sound } from "@/lib/sound";
 
 export function Hero() {
@@ -50,8 +51,9 @@ export function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
 
       <div className="container-px relative z-10">
-        <div className="max-w-4xl">
-          {/* Live Availability & HUD Status Badges */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center">
+          <div>
+            {/* Live Availability & HUD Status Badges */}
           <div data-blur-in="subtle" className="mb-5 flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-mono text-emerald-400 backdrop-blur-md shadow-[0_0_15px_rgba(52,211,153,0.15)]">
               <span className="relative flex h-2 w-2">
@@ -178,12 +180,19 @@ export function Hero() {
               <span>HuggingFace</span>
             </a>
           </div>
+          </div>
 
-          {/* High-Impact Numerical Stats Grid */}
-          <div
-            data-blur-in="strong"
-            className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/5 pt-8"
-          >
+          {/* Right Column: 3D Quantum Neural Core Centerpiece */}
+          <div data-blur-in="strong" className="flex flex-col items-center justify-center relative my-4 lg:my-0">
+            <QuantumCore3D />
+          </div>
+        </div>
+
+        {/* High-Impact Numerical Stats Grid */}
+        <div
+          data-blur-in="strong"
+          className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/5 pt-8"
+        >
             {profile.metrics.slice(0, 4).map((s) => (
               <div key={s.label} className="group rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-[#9ed8ff]/30">
                 <div className="font-display text-2xl font-bold text-[#cfae6e] group-hover:text-[#9ed8ff] transition-colors duration-300">
@@ -197,7 +206,6 @@ export function Hero() {
                 </div>
               </div>
             ))}
-          </div>
         </div>
       </div>
 

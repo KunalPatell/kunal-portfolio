@@ -25,6 +25,9 @@ export function APIKeyManager({ isOpen, onClose }: APIKeyManagerProps) {
     e.preventDefault();
     setStoredApiKeys(keys);
     setSavedStatus(true);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("byok-updated", { detail: keys }));
+    }
     setTimeout(() => {
       onClose();
     }, 1200);

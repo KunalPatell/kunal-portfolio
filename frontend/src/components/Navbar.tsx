@@ -41,9 +41,16 @@ export function Navbar() {
     };
     window.addEventListener("keydown", handleKeyDown);
 
+    const handleSoundToggled = (e: Event) => {
+      const custom = e as CustomEvent<boolean>;
+      setSoundEnabled(custom.detail !== undefined ? custom.detail : sound.isEnabled());
+    };
+    window.addEventListener("sound-toggled", handleSoundToggled);
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("sound-toggled", handleSoundToggled);
     };
   }, []);
 

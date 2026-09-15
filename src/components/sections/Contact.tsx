@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2, CheckCircle2, Copy, Check, ExternalLink } from "lucide-react";
 import { isPlaceholderUrl, profile } from "@/lib/data";
 import { SectionHeading } from "@/components/SectionHeading";
+import { sound } from "@/lib/sound";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -18,7 +19,8 @@ function HuggingFaceIcon({ className }: { className?: string }) {
 export function Contact() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [feedbackMsg, setFeedbackMsg] = useState("");
+  const [copiedDraft, setCopiedDraft] = useState(false);
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -26,24 +28,40 @@ export function Contact() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("sending");
-    setErrorMsg("");
+    setFeedbackMsg("");
+    sound.playClick();
+
     try {
-      const body = encodeURIComponent(
-        `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
-      );
-      const subject = encodeURIComponent(form.subject || "Portfolio contact");
-      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-      setStatus("sent");
-      setForm({ name: "", email: "", subject: "", message: "" });
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success) {
+        setStatus("sent");
+        setFeedbackMsg(data.message || "Message delivered successfully! Kunal will get back to you shortly.");
+        sound.playSuccess();
+        setForm({ name: "", email: "", subject: "", message: "" });
+      } else {
+        throw new Error(data.error || "Failed to deliver message via server.");
+      }
     } catch (err) {
       setStatus("error");
-      setErrorMsg(
-        err instanceof Error
-          ? `${err.message}. You can also email me directly at ${profile.email}.`
-          : "Something went wrong."
-      );
+      const errText = err instanceof Error ? err.message : "Something went wrong.";
+      setFeedbackMsg(`${errText} You can also email Kunal directly at ${profile.email}.`);
     }
   }
+
+  const copyDraftToClipboard = () => {
+    const text = `Name: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject}\n\n${form.message}`;
+    navigator.clipboard.writeText(text);
+    setCopiedDraft(true);
+    sound.playSuccess();
+    setTimeout(() => setCopiedDraft(false), 2000);
+  };
 
   const contactItems = [
     { icon: Mail, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
@@ -115,12 +133,38 @@ export function Contact() {
               </Field>
 
               {status === "error" && (
-                <p className="font-mono text-[10px] text-[#cfae6e]">{errorMsg}</p>
+                <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-3.5 space-y-2">
+                  <p className="font-mono text-xs text-amber-300">{feedbackMsg}</p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={copyDraftToClipboard}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 font-mono text-[10px] uppercase text-amber-200 hover:bg-amber-500/20 transition-all"
+                    >
+                      {copiedDraft ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                      {copiedDraft ? "Copied Message" : "Copy Message"}
+                    </button>
+                    <a
+                      href={`mailto:${profile.email}?subject=${encodeURIComponent(form.subject || "Portfolio inquiry")}&body=${encodeURIComponent(form.message)}`}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] uppercase text-white/80 hover:bg-white/10 transition-all"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                      Open Mail Client
+                    </a>
+                  </div>
+                </div>
               )}
+
               {status === "sent" && (
-                <p className="flex items-center gap-2 font-mono text-[10px] text-emerald-400">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400" /> Your email app is opening with the message ready to send.
-                </p>
+                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-3.5 space-y-2">
+                  <p className="flex items-center gap-2 font-mono text-xs text-emerald-300 font-semibold">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                    {feedbackMsg}
+                  </p>
+                  <p className="font-mono text-[10px] text-emerald-300/70">
+                    A copy has been recorded for review. You can also reach Kunal directly at {profile.email}.
+                  </p>
+                </div>
               )}
 
               <button

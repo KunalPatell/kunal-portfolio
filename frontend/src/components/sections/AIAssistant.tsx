@@ -21,8 +21,13 @@ export function AIAssistant() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const keys = getStoredApiKeys();
-    setHasByok(Boolean(keys.groqKey || keys.geminiKey || keys.openaiKey));
+    const updateByok = () => {
+      const keys = getStoredApiKeys();
+      setHasByok(Boolean(keys.groqKey || keys.geminiKey || keys.openaiKey));
+    };
+    updateByok();
+    window.addEventListener("byok-updated", updateByok);
+    return () => window.removeEventListener("byok-updated", updateByok);
   }, []);
 
   useEffect(() => {
@@ -100,7 +105,7 @@ export function AIAssistant() {
           </div>
 
           {/* Messages Window */}
-          <div ref={scrollRef} className="h-84 sm:h-96 space-y-4 overflow-y-auto px-5 py-5 scrollbar-thin">
+          <div ref={scrollRef} className="h-80 sm:h-96 space-y-4 overflow-y-auto px-5 py-5 scrollbar-thin">
             <AnimatePresence initial={false}>
               {messages.map((m, i) => (
                 <motion.div

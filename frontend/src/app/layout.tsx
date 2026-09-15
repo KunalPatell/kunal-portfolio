@@ -8,7 +8,7 @@ import { EntranceAnimator } from "@/components/EntranceAnimator";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { GlowEffectInitializer } from "@/components/GlowEffectInitializer";
 import { CustomCursor } from "@/components/CustomCursor";
-import { StarCanvas } from "@/components/StarCanvas";
+import { NeuralSynapse2D } from "@/components/NeuralSynapse2D";
 import { Preloader } from "@/components/Preloader";
 
 const inter = Inter({
@@ -58,11 +58,20 @@ export const metadata: Metadata = {
     description,
     type: "website",
     siteName: `${profile.name} Portfolio`,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${profile.name} - AI Engineer & Multi-Agent Architect Portfolio`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} | AI Engineer`,
     description,
+    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
 };
@@ -77,7 +86,7 @@ export default function RootLayout({
           <Preloader />
           <GlowEffectInitializer />
           <CustomCursor />
-          <StarCanvas />
+          <NeuralSynapse2D />
           <EntranceAnimator />
           <ScrollProgress />
           <Grain />

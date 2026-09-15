@@ -216,20 +216,31 @@ export async function askKunalAI(
   // 2. Try Google Gemini API if user provided key
   if (keys.geminiKey) {
     try {
+      const geminiContents = [
+        ...history.slice(-6).map((h) => ({
+          role: h.role === "assistant" ? "model" : "user",
+          parts: [{ text: h.content }],
+        })),
+        {
+          role: "user",
+          parts: [{ text: message }],
+        },
+      ];
+
       const geminiRes = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${keys.geminiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            contents: [
-              {
-                role: "user",
-                parts: [
-                  { text: `${SYSTEM_CONTEXT}\n\nUser Question: ${message}` },
-                ],
-              },
-            ],
+            system_instruction: {
+              parts: [{ text: SYSTEM_CONTEXT }],
+            },
+            contents: geminiContents,
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 600,
+            },
           }),
         }
       );
@@ -274,20 +285,34 @@ export async function askKunalAI(
     }
   }
 
-  // 4. Try remote backend if API_BASE is configured
-  if (API_BASE) {
-    try {
-      const res = await fetch(`${API_BASE}/api/assistant/chat`, {
-        method: "POST",
-        headers: getByokHeaders(),
-        body: JSON.stringify({ message, history }),
-      });
-      if (res.ok) {
-        const data = (await res.json()) as { reply: string };
-        if (data.reply) return data.reply;
+  // 4. Try Next.js API route or configured remote backend
+  const chatEndpoint = API_BASE ? `${API_BASE}/api/assistant/chat` : "/api/assistant/chat";
+  try {
+    const res = await fetch(chatEndpoint, {
+      method: "POST",
+      headers: getByokHeaders(),
+      body: JSON.stringify({ message, history }),
+    });
+    if (res.ok) {
+      const data = (await res.json()) as { reply: string };
+      if (data.reply) return data.reply;
+    }
+  } catch {
+    // If configured external API failed, attempt local Next.js route if different
+    if (chatEndpoint !== "/api/assistant/chat") {
+      try {
+        const localRes = await fetch("/api/assistant/chat", {
+          method: "POST",
+          headers: getByokHeaders(),
+          body: JSON.stringify({ message, history }),
+        });
+        if (localRes.ok) {
+          const data = (await localRes.json()) as { reply: string };
+          if (data.reply) return data.reply;
+        }
+      } catch {
+        // Fall through to offline semantic matcher
       }
-    } catch {
-      // Fall through to offline semantic matcher
     }
   }
 
@@ -338,16 +363,29 @@ export function analyzeJobDescription(jobDesc: string): AtsMatchResult {
   });
 
   // Calculate dynamic ATS score
-  let baseScore = 72;
-  baseScore += Math.min(26, matched.length * 3.5);
-  if (text.includes("msc") || text.includes("master") || text.includes("degree")) baseScore += 2;
-  const score = Math.min(99, Math.round(baseScore));
+  let score: number;
+  let grade: AtsMatchResult["grade"];
+  let verdict: string;
 
-  let grade: AtsMatchResult["grade"] = "Solid Match";
-  if (score >= 94) grade = "Exceptional Match";
-  else if (score >= 88) grade = "Strong Match";
-  else if (score >= 80) grade = "Solid Match";
-  else grade = "Partial Match";
+  if (matched.length === 0) {
+    score = 18;
+    grade = "Partial Match";
+    verdict = "Minimal technical overlap detected with this job description. Kunal's core specializations are in AI Engineering, Computer Vision, Multi-Agent Systems, and Backend Automation.";
+  } else {
+    let baseScore = 38 + matched.length * 5.2;
+    if (text.includes("msc") || text.includes("master") || text.includes("degree")) baseScore += 4;
+    score = Math.min(99, Math.round(baseScore));
+
+    if (score >= 90) grade = "Exceptional Match";
+    else if (score >= 80) grade = "Strong Match";
+    else if (score >= 65) grade = "Solid Match";
+    else grade = "Partial Match";
+
+    verdict =
+      score >= 90
+        ? `Kunal's profile is an exceptional top 1% match for this role. His MSc background combined with 9+ production platforms in multi-agent systems, computer vision, and FastAPI backend engineering provides immediate execution readiness.`
+        : `Strong technical overlap. Kunal's production experience shipping end-to-end AI applications (LLM pipelines, YOLOv8 vision, and automated workflows) directly aligns with key requirements.`;
+  }
 
   // Match relevant projects
   const relevantProjects: string[] = [];
@@ -360,7 +398,7 @@ export function analyzeJobDescription(jobDesc: string): AtsMatchResult {
   if (text.includes("automation") || text.includes("n8n") || text.includes("workflow") || text.includes("crm")) {
     relevantProjects.push("Sevenforce Autonomous Workforce", "One Percent Media Automation");
   }
-  if (relevantProjects.length === 0) {
+  if (relevantProjects.length === 0 && matched.length > 0) {
     relevantProjects.push("Rakshak AI", "Sevenseed Ecosystem", "Comonk AI");
   }
 
@@ -372,15 +410,10 @@ export function analyzeJobDescription(jobDesc: string): AtsMatchResult {
     }
   });
 
-  const verdict =
-    score >= 90
-      ? `Kunal's profile is a top 1% match for this role. His MSc background combined with 9+ production platforms in multi-agent systems, computer vision, and FastAPI backend engineering provides immediate execution readiness.`
-      : `Strong technical overlap. Kunal's production experience shipping end-to-end AI applications (LLM pipelines, YOLOv8 vision, and automated workflows) directly aligns with key requirements.`;
-
   return {
     score,
     grade,
-    matchedSkills: matched.length > 0 ? matched : ["Python", "FastAPI", "LLM APIs", "Automation"],
+    matchedSkills: matched,
     bonusSkills: bonus.slice(0, 3),
     relevantProjects: Array.from(new Set(relevantProjects)),
     verdict,

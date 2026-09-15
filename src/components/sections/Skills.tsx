@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Search, BrainCircuit, ScanFace, Layers, Workflow } from "lucide-react";
 import { skillGroups } from "@/lib/data";
 import { SectionHeading } from "@/components/SectionHeading";
+import { CyberRadar2D } from "@/components/CyberRadar2D";
 import { sound } from "@/lib/sound";
 
 const iconMap: Record<string, typeof BrainCircuit> = {
@@ -31,31 +32,37 @@ export function Skills() {
   return (
     <section id="skills" className="section bg-[#050505] border-t border-white/5 relative overflow-hidden">
       <div className="container-px relative z-10">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-8">
-          <SectionHeading
-            eyebrow="Technical Proficiency"
-            title={
-              <>
-                Engineered <span className="text-[#9ed8ff] drop-shadow-[0_0_8px_rgba(158,216,255,0.4)]">Toolkit &amp; Radar</span>
-              </>
-            }
-            description="Deep technical mastery across multi-agent orchestration, computer vision, FastAPI backends, and autonomous workflows."
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center mb-10">
+          <div>
+            <SectionHeading
+              eyebrow="Technical Proficiency"
+              title={
+                <>
+                  Engineered <span className="text-[#9ed8ff] drop-shadow-[0_0_8px_rgba(158,216,255,0.4)]">Toolkit &amp; Radar</span>
+                </>
+              }
+              description="Deep technical mastery across multi-agent orchestration, computer vision, FastAPI backends, and autonomous workflows."
+            />
 
-          {/* Quick Search Tool */}
-          <div data-blur-in="subtle" className="w-full sm:w-72">
-            <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
-              <input
-                value={filterQuery}
-                onChange={(e) => {
-                  setFilterQuery(e.target.value);
-                  sound.playHover();
-                }}
-                placeholder="Filter skills (e.g. YOLO, LangGraph)..."
-                className="w-full rounded-xl border border-white/10 bg-[#080a0f] pl-10 pr-4 py-2 font-mono text-xs text-white placeholder:text-white/30 focus:border-[#9ed8ff]/40 focus:outline-none"
-              />
+            {/* Quick Search Tool */}
+            <div data-blur-in="subtle" className="w-full sm:w-80 mt-6">
+              <div className="relative">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                <input
+                  value={filterQuery}
+                  onChange={(e) => {
+                    setFilterQuery(e.target.value);
+                    sound.playHover();
+                  }}
+                  placeholder="Filter skills (e.g. YOLO, LangGraph)..."
+                  className="w-full rounded-xl border border-white/10 bg-[#080a0f] pl-10 pr-4 py-2.5 font-mono text-xs text-white placeholder:text-white/30 focus:border-[#9ed8ff]/40 focus:outline-none"
+                />
+              </div>
             </div>
+          </div>
+
+          <div data-blur-in="subtle" className="flex justify-center">
+            <CyberRadar2D />
           </div>
         </div>
 

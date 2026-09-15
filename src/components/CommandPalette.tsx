@@ -49,6 +49,15 @@ export function CommandPalette({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleSoundToggled = (e: Event) => {
+      const custom = e as CustomEvent<boolean>;
+      setSoundActive(custom.detail !== undefined ? custom.detail : sound.isEnabled());
+    };
+    window.addEventListener("sound-toggled", handleSoundToggled);
+    return () => window.removeEventListener("sound-toggled", handleSoundToggled);
+  }, []);
+
   const toggleSound = () => {
     const newState = sound.toggle();
     setSoundActive(newState);
@@ -149,7 +158,10 @@ export function CommandPalette({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
-      if (e.key === "ArrowDown") {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      } else if (e.key === "ArrowDown") {
         e.preventDefault();
         setSelectedIndex((prev) => (prev + 1) % (filtered.length || 1));
         sound.playHover();
