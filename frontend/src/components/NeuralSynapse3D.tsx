@@ -3,230 +3,244 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-interface SynapseNode3D {
-  position: THREE.Vector3;
-  velocity: THREE.Vector3;
-  color: THREE.Color;
-}
-
 export function NeuralSynapse3D() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!canvasRef.current || !containerRef.current) return;
-    const canvas = canvasRef.current;
     const container = containerRef.current;
+    if (!container) return;
 
-    // 1. Scene setup
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    // ── Three.js Scene Setup ──
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 180;
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
+    camera.position.z = 240;
 
     const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
       alpha: true,
+      antialias: false,
       powerPreference: "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    container.replaceChildren(renderer.domElement);
 
-    // 2. Create 3D Nodes
-    const NODE_COUNT = 120;
-    const CONNECT_DIST = 38;
-    const BOUNDS = { x: 140, y: 90, z: 80 };
+    // ── Particles & Connecting Lines Lattice ──
+    const PARTICLE_COUNT = 110;
+    const CONNECT_DISTANCE = 52;
+    const BOUNDS = { x: 180, y: 120, z: 120 };
 
-    const nodes: SynapseNode3D[] = [];
-    const positions = new Float32Array(NODE_COUNT * 3);
-    const colors = new Float32Array(NODE_COUNT * 3);
-
-    const cyanColor = new THREE.Color(0x9ed8ff);
-    const goldColor = new THREE.Color(0xcfae6e);
-
-    for (let i = 0; i < NODE_COUNT; i++) {
-      const pos = new THREE.Vector3(
-        (Math.random() - 0.5) * BOUNDS.x * 2,
-        (Math.random() - 0.5) * BOUNDS.y * 2,
-        (Math.random() - 0.5) * BOUNDS.z * 2
-      );
-      const vel = new THREE.Vector3(
-        (Math.random() - 0.5) * 0.18,
-        (Math.random() - 0.5) * 0.18,
-        (Math.random() - 0.5) * 0.12
-      );
-      const isGold = Math.random() > 0.75;
-      const col = isGold ? goldColor : cyanColor;
-
-      nodes.push({ position: pos, velocity: vel, color: col });
-
-      positions[i * 3] = pos.x;
-      positions[i * 3 + 1] = pos.y;
-      positions[i * 3 + 2] = pos.z;
-
-      colors[i * 3] = col.r;
-      colors[i * 3 + 1] = col.g;
-      colors[i * 3 + 2] = col.b;
+    interface Particle3D {
+      x: number;
+      y: number;
+      z: number;
+      vx: number;
+      vy: number;
+      vz: number;
+      colorIndex: number;
     }
 
-    // Points (Nodes)
-    const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    pointsGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const particles: Particle3D[] = [];
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const isGold = Math.random() > 0.72;
+      particles.push({
+        x: (Math.random() - 0.5) * BOUNDS.x * 2,
+        y: (Math.random() - 0.5) * BOUNDS.y * 2,
+        z: (Math.random() - 0.5) * BOUNDS.z * 2,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28,
+        vz: (Math.random() - 0.5) * 0.28,
+        colorIndex: isGold ? 1 : 0,
+      });
+
+      positions[i * 3] = particles[i].x;
+      positions[i * 3 + 1] = particles[i].y;
+      positions[i * 3 + 2] = particles[i].z;
+
+      // Cyan: (0.62, 0.85, 1.0) | Gold: (0.81, 0.68, 0.43)
+      if (isGold) {
+        colors[i * 3] = 0.81;
+        colors[i * 3 + 1] = 0.68;
+        colors[i * 3 + 2] = 0.43;
+      } else {
+        colors[i * 3] = 0.62;
+        colors[i * 3 + 1] = 0.85;
+        colors[i * 3 + 2] = 1.0;
+      }
+    }
+
+    // Points Geometry
+    const pointsGeom = new THREE.BufferGeometry();
+    pointsGeom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    pointsGeom.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
     const pointsMat = new THREE.PointsMaterial({
       size: 2.8,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.65,
       blending: THREE.AdditiveBlending,
     });
-    const pointsMesh = new THREE.Points(pointsGeo, pointsMat);
-    scene.add(pointsMesh);
+    const pointCloud = new THREE.Points(pointsGeom, pointsMat);
+    scene.add(pointCloud);
 
-    // Dynamic Connections (Lines)
-    const maxLines = (NODE_COUNT * (NODE_COUNT - 1)) / 2;
-    const linePositions = new Float32Array(maxLines * 6);
-    const lineColors = new Float32Array(maxLines * 6);
+    // Dynamic Connecting Lines Buffer
+    const MAX_LINES = 450;
+    const linePositions = new Float32Array(MAX_LINES * 2 * 3);
+    const lineColors = new Float32Array(MAX_LINES * 2 * 3);
 
-    const linesGeo = new THREE.BufferGeometry();
-    linesGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
-    linesGeo.setAttribute("color", new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
+    const lineGeom = new THREE.BufferGeometry();
+    lineGeom.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+    lineGeom.setAttribute("color", new THREE.BufferAttribute(lineColors, 3));
 
-    const linesMat = new THREE.LineBasicMaterial({
+    const lineMat = new THREE.LineBasicMaterial({
       vertexColors: true,
       transparent: true,
       opacity: 0.35,
       blending: THREE.AdditiveBlending,
     });
-    const linesMesh = new THREE.LineSegments(linesGeo, linesMat);
-    scene.add(linesMesh);
+    const lineSegments = new THREE.LineSegments(lineGeom, lineMat);
+    scene.add(lineSegments);
 
-    // Mouse & Scroll Parallax Tracking
-    const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-    let scrollY = 0;
-    let targetScrollY = 0;
+    // Mouse & Scroll Parallax
+    let targetCameraX = 0;
+    let targetCameraY = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouse.targetY = -(e.clientY / window.innerHeight - 0.5) * 2;
-    };
-
-    const handleScroll = () => {
-      targetScrollY = window.scrollY || window.pageYOffset;
+      const nx = (e.clientX / window.innerWidth) * 2 - 1;
+      const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+      targetCameraX = nx * 35;
+      targetCameraY = ny * 25;
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // Handle Resize
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener("resize", handleResize);
-
-    // Render loop
+    // ── Animation Loop ──
     let animId: number;
+    let isVisible = true;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+      });
+    });
+    observer.observe(container);
+
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Smooth camera interpolation
-      mouse.x += (mouse.targetX - mouse.x) * 0.04;
-      mouse.y += (mouse.targetY - mouse.y) * 0.04;
-      scrollY += (targetScrollY - scrollY) * 0.05;
+      if (!isVisible) return;
 
-      camera.position.x = mouse.x * 25;
-      camera.position.y = mouse.y * 20 - (scrollY * 0.04);
-      camera.lookAt(0, -scrollY * 0.04, 0);
+      // Parallax camera lerp
+      camera.position.x += (targetCameraX - camera.position.x) * 0.04;
+      camera.position.y += (targetCameraY - camera.position.y) * 0.04;
+      camera.lookAt(0, 0, 0);
 
-      // Update node positions
-      const posAttr = pointsGeo.attributes.position as THREE.BufferAttribute;
-      const posArr = posAttr.array as Float32Array;
+      // Update particle positions
+      const posAttr = pointsGeom.getAttribute("position") as THREE.BufferAttribute;
+      const posArray = posAttr.array as Float32Array;
 
-      let lineVertexIndex = 0;
-      let lineCount = 0;
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.z += p.vz;
 
-      for (let i = 0; i < NODE_COUNT; i++) {
-        const node = nodes[i];
-        node.position.add(node.velocity);
+        // Bounce at boundaries
+        if (p.x < -BOUNDS.x || p.x > BOUNDS.x) p.vx *= -1;
+        if (p.y < -BOUNDS.y || p.y > BOUNDS.y) p.vy *= -1;
+        if (p.z < -BOUNDS.z || p.z > BOUNDS.z) p.vz *= -1;
 
-        // Bounds bounce
-        if (Math.abs(node.position.x) > BOUNDS.x) node.velocity.x *= -1;
-        if (Math.abs(node.position.y) > BOUNDS.y) node.velocity.y *= -1;
-        if (Math.abs(node.position.z) > BOUNDS.z) node.velocity.z *= -1;
+        posArray[i * 3] = p.x;
+        posArray[i * 3 + 1] = p.y;
+        posArray[i * 3 + 2] = p.z;
+      }
+      posAttr.needsUpdate = true;
 
-        posArr[i * 3] = node.position.x;
-        posArr[i * 3 + 1] = node.position.y;
-        posArr[i * 3 + 2] = node.position.z;
+      // Recompute connections in 3D
+      let lineIndex = 0;
+      const lPosAttr = lineGeom.getAttribute("position") as THREE.BufferAttribute;
+      const lColAttr = lineGeom.getAttribute("color") as THREE.BufferAttribute;
+      const lPos = lPosAttr.array as Float32Array;
+      const lCol = lColAttr.array as Float32Array;
 
-        // Check distance to other nodes for connecting synapses
-        for (let j = i + 1; j < NODE_COUNT; j++) {
-          const other = nodes[j];
-          const dist = node.position.distanceTo(other.position);
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+          if (lineIndex >= MAX_LINES) break;
 
-          if (dist < CONNECT_DIST) {
-            const alpha = (1 - dist / CONNECT_DIST) * 0.45;
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dz = particles[i].z - particles[j].z;
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-            // Point A
-            linePositions[lineVertexIndex * 3] = node.position.x;
-            linePositions[lineVertexIndex * 3 + 1] = node.position.y;
-            linePositions[lineVertexIndex * 3 + 2] = node.position.z;
+          if (dist < CONNECT_DISTANCE) {
+            const alpha = 1 - dist / CONNECT_DISTANCE;
+            const idx1 = lineIndex * 6;
+            const idx2 = idx1 + 3;
 
-            lineColors[lineVertexIndex * 3] = node.color.r * alpha;
-            lineColors[lineVertexIndex * 3 + 1] = node.color.g * alpha;
-            lineColors[lineVertexIndex * 3 + 2] = node.color.b * alpha;
-            lineVertexIndex++;
+            lPos[idx1] = particles[i].x;
+            lPos[idx1 + 1] = particles[i].y;
+            lPos[idx1 + 2] = particles[i].z;
 
-            // Point B
-            linePositions[lineVertexIndex * 3] = other.position.x;
-            linePositions[lineVertexIndex * 3 + 1] = other.position.y;
-            linePositions[lineVertexIndex * 3 + 2] = other.position.z;
+            lPos[idx2] = particles[j].x;
+            lPos[idx2 + 1] = particles[j].y;
+            lPos[idx2 + 2] = particles[j].z;
 
-            lineColors[lineVertexIndex * 3] = other.color.r * alpha;
-            lineColors[lineVertexIndex * 3 + 1] = other.color.g * alpha;
-            lineColors[lineVertexIndex * 3 + 2] = other.color.b * alpha;
-            lineVertexIndex++;
+            // Gradient line colors
+            const c1 = particles[i].colorIndex === 1 ? 0.81 : 0.62;
+            const c2 = particles[j].colorIndex === 1 ? 0.81 : 0.62;
 
-            lineCount++;
+            lCol[idx1] = c1 * alpha;
+            lCol[idx1 + 1] = 0.85 * alpha;
+            lCol[idx1 + 2] = 1.0 * alpha;
+
+            lCol[idx2] = c2 * alpha;
+            lCol[idx2 + 1] = 0.85 * alpha;
+            lCol[idx2 + 2] = 1.0 * alpha;
+
+            lineIndex++;
           }
         }
       }
 
-      posAttr.needsUpdate = true;
-
-      // Update line segments geometry range
-      linesGeo.setDrawRange(0, lineCount * 2);
-      (linesGeo.attributes.position as THREE.BufferAttribute).needsUpdate = true;
-      (linesGeo.attributes.color as THREE.BufferAttribute).needsUpdate = true;
+      lineGeom.setDrawRange(0, lineIndex * 2);
+      lPosAttr.needsUpdate = true;
+      lColAttr.needsUpdate = true;
 
       renderer.render(scene, camera);
     };
 
-    animate();
+    animId = requestAnimationFrame(animate);
+
+    const handleResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
-
-      pointsGeo.dispose();
-      pointsMat.dispose();
-      linesGeo.dispose();
-      linesMat.dispose();
+      observer.disconnect();
       renderer.dispose();
+      container.replaceChildren();
     };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-65"
-      aria-hidden="true"
-    >
-      <canvas ref={canvasRef} className="h-full w-full block" />
-    </div>
+      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-45 overflow-hidden"
+    />
   );
 }

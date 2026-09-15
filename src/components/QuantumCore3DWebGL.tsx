@@ -2,637 +2,603 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Eye, Shield, Activity, RefreshCw, Layers, Zap, Compass } from "lucide-react";
-import { sound } from "@/lib/sound";
+import { Sparkles, Compass, Eye, Shield, Activity, RefreshCw, Zap, Cpu } from "lucide-react";
 
-export type GeometryStyle = "icosahedron" | "torusKnot" | "tesseract" | "helix" | "octahedron";
-export type ShadingMode = "crystal" | "wireframe" | "synapse";
+export type CoreGeometry = "icosahedron" | "torusknot" | "tesseract" | "helix" | "octahedron";
+export type ShadingStyle = "crystal" | "wireframe" | "synapse";
 
 interface SatelliteNode {
-  id: string;
   name: string;
-  category: string;
   color: string;
-  radius: number;
+  orbitRadius: number;
   speed: number;
-  inclination: number;
+  tilt: number;
   phase: number;
   mesh?: THREE.Mesh;
 }
 
-const SATELLITE_DATA: SatelliteNode[] = [
-  { id: "langgraph", name: "LangGraph", category: "Multi-Agent", color: "#9ed8ff", radius: 4.8, speed: 0.018, inclination: 0.35, phase: 0.0 },
-  { id: "yolov8", name: "YOLOv8", category: "Computer Vision", color: "#cfae6e", radius: 5.4, speed: -0.014, inclination: -0.45, phase: 1.1 },
-  { id: "chromadb", name: "ChromaDB", category: "Vector RAG", color: "#a78bfa", radius: 6.0, speed: 0.012, inclination: 0.7, phase: 2.3 },
-  { id: "fastapi", name: "FastAPI", category: "Async Backend", color: "#34d399", radius: 4.5, speed: -0.02, inclination: -0.2, phase: 3.4 },
-  { id: "n8n", name: "n8n", category: "Workflows", color: "#f472b6", radius: 5.8, speed: 0.016, inclination: 0.55, phase: 4.5 },
-  { id: "groq", name: "Groq LPU", category: "Ultra-Fast LLM", color: "#fb923c", radius: 5.1, speed: -0.015, inclination: -0.6, phase: 5.2 },
-  { id: "pytorch", name: "PyTorch", category: "Deep Learning", color: "#f87171", radius: 6.3, speed: 0.011, inclination: 0.25, phase: 6.0 },
+const SATELLITES_DATA: Omit<SatelliteNode, "mesh">[] = [
+  { name: "LangGraph", color: "#9ed8ff", orbitRadius: 2.7, speed: 0.65, tilt: 0.28, phase: 0 },
+  { name: "YOLOv8", color: "#cfae6e", orbitRadius: 3.1, speed: 0.48, tilt: -0.35, phase: 0.9 },
+  { name: "ChromaDB", color: "#60a5fa", orbitRadius: 3.4, speed: 0.38, tilt: 0.52, phase: 1.8 },
+  { name: "FastAPI", color: "#34d399", orbitRadius: 3.8, speed: 0.32, tilt: -0.22, phase: 2.7 },
+  { name: "n8n", color: "#f59e0b", orbitRadius: 4.1, speed: 0.25, tilt: 0.41, phase: 3.6 },
+  { name: "Groq", color: "#f43f5e", orbitRadius: 4.4, speed: 0.22, tilt: -0.48, phase: 4.5 },
+  { name: "PyTorch", color: "#ec4899", orbitRadius: 4.7, speed: 0.18, tilt: 0.15, phase: 5.4 },
 ];
 
 export function QuantumCore3DWebGL() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const [activeGeometry, setActiveGeometry] = useState<GeometryStyle>("icosahedron");
-  const [activeShading, setActiveShading] = useState<ShadingMode>("crystal");
-  const [hoveredNode, setHoveredNode] = useState<SatelliteNode | null>(null);
-  const [nodeScreenPos, setNodeScreenPos] = useState<{ x: number; y: number } | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isPulsing, setIsPulsing] = useState(false);
+  const mountRef = useRef<HTMLDivElement>(null);
+  const [geometry, setGeometry] = useState<CoreGeometry>("icosahedron");
+  const [shading, setShading] = useState<ShadingStyle>("crystal");
   const [fps, setFps] = useState(60);
+  const [activeSatellite, setActiveSatellite] = useState<string | null>(null);
+  const [synapseCount, setSynapseCount] = useState(72);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // References to THREE objects
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const coreGroupRef = useRef<THREE.Group | null>(null);
   const innerMeshRef = useRef<THREE.Mesh | null>(null);
-  const outerCageRef = useRef<THREE.LineSegments | null>(null);
-  const ringsGroupRef = useRef<THREE.Group | null>(null);
-  const satellitesGroupRef = useRef<THREE.Group | null>(null);
-  const shockwaveMeshRef = useRef<THREE.Mesh | null>(null);
-  const particlesRef = useRef<THREE.Points | null>(null);
+  const wireMeshRef = useRef<THREE.LineSegments | null>(null);
+  const pulseRingsRef = useRef<THREE.Mesh[]>([]);
+  const satellitesRef = useRef<{ mesh: THREE.Mesh; halo: THREE.Mesh; data: typeof SATELLITES_DATA[0] }[]>([]);
+  const shockwavesRef = useRef<{ mesh: THREE.Mesh; life: number }[]>([]);
+  const pulseIntensity = useRef(0);
 
-  // Interaction tracking refs
-  const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const dragStart = useRef({ x: 0, y: 0 });
-  const rotationOffset = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const isPointerDown = useRef(false);
-  const isVisibleRef = useRef(true);
-  const pulseStartTimeRef = useRef<number | null>(null);
-  const animationFrameId = useRef<number | null>(null);
-  const frameCountRef = useRef(0);
-  const lastFpsCheckRef = useRef(performance.now());
+  // Mouse & Orbit state
+  const mousePos = useRef({ x: 0, y: 0 });
+  const targetRotation = useRef({ x: 0.2, y: 0.3 });
+  const currentRotation = useRef({ x: 0.2, y: 0.3 });
+  const isDragging = useRef(false);
+  const lastMouse = useRef({ x: 0, y: 0 });
+  const isVisible = useRef(true);
 
-  // Build Geometry Generator
-  const createCoreGeometry = useCallback((type: GeometryStyle) => {
+  // Energy shockwave trigger
+  const triggerPulse = useCallback(() => {
+    pulseIntensity.current = 1.0;
+    if (!sceneRef.current) return;
+
+    const ringGeom = new THREE.RingGeometry(0.5, 0.65, 48);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0x9ed8ff,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+    });
+    const shockRing = new THREE.Mesh(ringGeom, ringMat);
+    shockRing.rotation.x = Math.PI / 2;
+    sceneRef.current.add(shockRing);
+    shockwavesRef.current.push({ mesh: shockRing, life: 1.0 });
+  }, []);
+
+  // Helper to build 3D geometry
+  const createCoreGeometry = useCallback((type: CoreGeometry) => {
     switch (type) {
-      case "torusKnot":
-        return {
-          inner: new THREE.TorusKnotGeometry(1.4, 0.42, 100, 16, 2, 3),
-          outer: new THREE.TorusKnotGeometry(1.6, 0.48, 64, 12, 2, 3),
-        };
-      case "octahedron":
-        return {
-          inner: new THREE.OctahedronGeometry(2.0, 1),
-          outer: new THREE.OctahedronGeometry(2.4, 0),
-        };
-      case "tesseract": {
-        // Compound geometry representing 4D hypercube projection
-        const inner = new THREE.BoxGeometry(1.8, 1.8, 1.8);
-        const outer = new THREE.BoxGeometry(2.8, 2.8, 2.8);
-        return { inner, outer };
-      }
-      case "helix": {
-        // Double helix curve geometry
-        const pointsA: THREE.Vector3[] = [];
-        const turns = 3;
-        const count = 90;
-        for (let i = 0; i <= count; i++) {
-          const t = (i / count) * Math.PI * 2 * turns;
-          const y = (i / count - 0.5) * 4.2;
-          const r = 1.4;
-          pointsA.push(new THREE.Vector3(Math.cos(t) * r, y, Math.sin(t) * r));
-        }
-        const curve = new THREE.CatmullRomCurve3(pointsA);
-        const inner = new THREE.TubeGeometry(curve, 70, 0.22, 8, false);
-        const outer = new THREE.IcosahedronGeometry(2.5, 0);
-        return { inner, outer };
-      }
       case "icosahedron":
+        return new THREE.IcosahedronGeometry(1.4, 1);
+      case "torusknot":
+        return new THREE.TorusKnotGeometry(0.95, 0.32, 100, 16, 2, 3);
+      case "tesseract":
+        return new THREE.BoxGeometry(1.6, 1.6, 1.6);
+      case "helix":
+        return new THREE.CylinderGeometry(0.8, 0.8, 2.4, 16, 8, true);
+      case "octahedron":
+        return new THREE.OctahedronGeometry(1.4, 0);
       default:
-        return {
-          inner: new THREE.IcosahedronGeometry(1.9, 1),
-          outer: new THREE.IcosahedronGeometry(2.4, 0),
-        };
+        return new THREE.IcosahedronGeometry(1.4, 1);
     }
   }, []);
 
-  // Update Core Meshes when geometry or shading changes
-  const updateCoreMeshes = useCallback((type: GeometryStyle, shading: ShadingMode) => {
-    if (!coreGroupRef.current) return;
-
-    // Remove existing meshes
-    if (innerMeshRef.current) {
-      coreGroupRef.current.remove(innerMeshRef.current);
-      innerMeshRef.current.geometry.dispose();
-      (innerMeshRef.current.material as THREE.Material).dispose();
-      innerMeshRef.current = null;
-    }
-    if (outerCageRef.current) {
-      coreGroupRef.current.remove(outerCageRef.current);
-      outerCageRef.current.geometry.dispose();
-      (outerCageRef.current.material as THREE.Material).dispose();
-      outerCageRef.current = null;
-    }
-
-    const { inner, outer } = createCoreGeometry(type);
-
-    let innerMat: THREE.Material;
-    if (shading === "wireframe") {
-      innerMat = new THREE.MeshBasicMaterial({
-        color: 0x9ed8ff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.65,
-      });
-    } else if (shading === "synapse") {
-      innerMat = new THREE.MeshStandardMaterial({
-        color: 0x0a1220,
-        emissive: 0x224477,
-        emissiveIntensity: 0.8,
-        roughness: 0.3,
-        metalness: 0.85,
-        wireframe: false,
-      });
-    } else {
-      // Crystal Shading
-      innerMat = new THREE.MeshPhysicalMaterial({
-        color: 0x11283c,
-        emissive: 0x9ed8ff,
-        emissiveIntensity: 0.35,
-        roughness: 0.15,
-        metalness: 0.8,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.1,
-        transparent: true,
-        opacity: 0.85,
-      });
-    }
-
-    const innerMesh = new THREE.Mesh(inner, innerMat);
-    innerMeshRef.current = innerMesh;
-    coreGroupRef.current.add(innerMesh);
-
-    // Outer Cage Lines
-    const wireGeo = new THREE.WireframeGeometry(outer);
-    const wireMat = new THREE.LineBasicMaterial({
-      color: shading === "crystal" ? 0xcfae6e : 0x9ed8ff,
-      transparent: true,
-      opacity: shading === "wireframe" ? 0.9 : 0.45,
-      linewidth: 1,
-    });
-    const outerCage = new THREE.LineSegments(wireGeo, wireMat);
-    outerCageRef.current = outerCage;
-    coreGroupRef.current.add(outerCage);
-  }, [createCoreGeometry]);
-
-  // Main Three.js Setup & Animation Lifecycle
+  // Initialize Three.js WebGL Scene
   useEffect(() => {
-    if (!canvasRef.current || !containerRef.current) return;
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
+    const container = mountRef.current;
+    if (!container) return;
 
-    // 1. Scene setup
+    const width = container.clientWidth || 400;
+    const height = container.clientHeight || 400;
+
+    // Scene & Camera
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    // 2. Camera setup
-    const aspect = container.clientWidth / container.clientHeight;
-    const camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-    camera.position.set(0, 0, 15);
-    cameraRef.current = camera;
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.set(0, 1.2, 7.2);
 
-    // 3. Renderer setup
+    // High-performance WebGL Renderer
     const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
       alpha: true,
+      antialias: true,
       powerPreference: "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    container.replaceChildren(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 4. Lighting
-    const ambientLight = new THREE.AmbientLight(0x223344, 1.8);
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const cyanLight = new THREE.PointLight(0x9ed8ff, 4.5, 30);
-    cyanLight.position.set(6, 6, 8);
+    const cyanLight = new THREE.PointLight(0x9ed8ff, 3.5, 20);
+    cyanLight.position.set(3, 4, 5);
     scene.add(cyanLight);
 
-    const goldLight = new THREE.PointLight(0xcfae6e, 3.8, 30);
-    goldLight.position.set(-7, -5, 6);
-    scene.add(goldLight);
+    const amberLight = new THREE.PointLight(0xcfae6e, 3.0, 20);
+    amberLight.position.set(-4, -2, 4);
+    scene.add(amberLight);
 
-    const backLight = new THREE.PointLight(0x8a63d2, 2.5, 25);
-    backLight.position.set(0, 7, -8);
-    scene.add(backLight);
+    const rimLight = new THREE.PointLight(0x38bdf8, 2.0, 15);
+    rimLight.position.set(0, 5, -5);
+    scene.add(rimLight);
 
-    // 5. Core Group
+    // Root Core Group
     const coreGroup = new THREE.Group();
-    coreGroupRef.current = coreGroup;
     scene.add(coreGroup);
+    coreGroupRef.current = coreGroup;
 
-    // 6. Orbital Energy Rings (3 Counter-rotating rings)
-    const ringsGroup = new THREE.Group();
-    ringsGroupRef.current = ringsGroup;
-    scene.add(ringsGroup);
+    // ── Build Initial Core Mesh ──
+    const geom = createCoreGeometry(geometry);
+    const innerMat = new THREE.MeshPhysicalMaterial({
+      color: 0x0a1424,
+      emissive: 0x1d3d63,
+      emissiveIntensity: 0.8,
+      roughness: 0.15,
+      metalness: 0.85,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.1,
+      transparent: true,
+      opacity: 0.92,
+      wireframe: shading === "wireframe",
+    });
+    const innerMesh = new THREE.Mesh(geom, innerMat);
+    coreGroup.add(innerMesh);
+    innerMeshRef.current = innerMesh;
 
+    // Outer Wireframe Cage
+    const wireGeom = new THREE.WireframeGeometry(geom);
+    const wireMat = new THREE.LineBasicMaterial({
+      color: 0x9ed8ff,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending,
+    });
+    const wireMesh = new THREE.LineSegments(wireGeom, wireMat);
+    coreGroup.add(wireMesh);
+    wireMeshRef.current = wireMesh;
+
+    // ── Concentric 3D Counter-Rotating Orbital Rings ──
+    pulseRingsRef.current = [];
     const ringConfigs = [
-      { radius: 3.5, tube: 0.02, color: 0x9ed8ff, rotX: 1.1, rotY: 0.3 },
-      { radius: 4.2, tube: 0.022, color: 0xcfae6e, rotX: -0.8, rotY: 0.9 },
-      { radius: 4.9, tube: 0.018, color: 0xa78bfa, rotX: 0.4, rotY: -1.2 },
+      { radius: 2.15, tube: 0.016, rot: [0.5, 0.2, 0], color: 0x9ed8ff },
+      { radius: 2.45, tube: 0.018, rot: [-0.4, 0.8, 0.3], color: 0xcfae6e },
+      { radius: 2.75, tube: 0.014, rot: [0.9, -0.3, 0.6], color: 0x38bdf8 },
     ];
 
     ringConfigs.forEach((cfg) => {
-      const ringGeo = new THREE.TorusGeometry(cfg.radius, cfg.tube, 16, 120);
+      const ringGeom = new THREE.TorusGeometry(cfg.radius, cfg.tube, 16, 100);
       const ringMat = new THREE.MeshBasicMaterial({
         color: cfg.color,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.55,
+        blending: THREE.AdditiveBlending,
       });
-      const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-      ringMesh.rotation.x = cfg.rotX;
-      ringMesh.rotation.y = cfg.rotY;
-      ringsGroup.add(ringMesh);
+      const ringMesh = new THREE.Mesh(ringGeom, ringMat);
+      ringMesh.rotation.set(cfg.rot[0], cfg.rot[1], cfg.rot[2]);
+      coreGroup.add(ringMesh);
+      pulseRingsRef.current.push(ringMesh);
     });
 
-    // 7. Orbiting Satellites
-    const satellitesGroup = new THREE.Group();
-    satellitesGroupRef.current = satellitesGroup;
-    scene.add(satellitesGroup);
+    // ── 7 Orbiting AI Satellites ──
+    satellitesRef.current = [];
+    SATELLITES_DATA.forEach((sat) => {
+      const satGroup = new THREE.Group();
 
-    SATELLITE_DATA.forEach((sat) => {
-      const satGeo = new THREE.SphereGeometry(0.18, 20, 20);
+      const satGeom = new THREE.SphereGeometry(0.12, 16, 16);
       const satMat = new THREE.MeshStandardMaterial({
         color: sat.color,
         emissive: sat.color,
-        emissiveIntensity: 0.8,
-        metalness: 0.4,
+        emissiveIntensity: 1.2,
         roughness: 0.2,
+        metalness: 0.8,
       });
-      const satMesh = new THREE.Mesh(satGeo, satMat);
-      satMesh.userData = sat;
-      sat.mesh = satMesh;
-      satellitesGroup.add(satMesh);
+      const satMesh = new THREE.Mesh(satGeom, satMat);
+
+      // Halo ring around satellite
+      const haloGeom = new THREE.RingGeometry(0.18, 0.22, 24);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: sat.color,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending,
+      });
+      const haloMesh = new THREE.Mesh(haloGeom, haloMat);
+      haloMesh.rotation.x = Math.PI / 2;
+
+      satGroup.add(satMesh);
+      satGroup.add(haloMesh);
+      scene.add(satGroup);
+
+      satellitesRef.current.push({
+        mesh: satGroup as unknown as THREE.Mesh,
+        halo: haloMesh,
+        data: sat,
+      });
     });
 
-    // 8. Shockwave Pulse Mesh (Expands on Energy Pulse trigger)
-    const shockGeo = new THREE.RingGeometry(0.1, 0.25, 64);
-    const shockMat = new THREE.MeshBasicMaterial({
-      color: 0x9ed8ff,
-      transparent: true,
-      opacity: 0,
-      side: THREE.DoubleSide,
-    });
-    const shockMesh = new THREE.Mesh(shockGeo, shockMat);
-    shockwaveMeshRef.current = shockMesh;
-    scene.add(shockMesh);
+    // ── Stellar Cosmic Dust Field ──
+    const starCount = 360;
+    const starPositions = new Float32Array(starCount * 3);
+    const starColors = new Float32Array(starCount * 3);
 
-    // 9. 3D Stellar Nebula Field (350+ Star particles)
-    const particleCount = 380;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
-
-    const c1 = new THREE.Color(0x9ed8ff);
-    const c2 = new THREE.Color(0xcfae6e);
-    const c3 = new THREE.Color(0xffffff);
-
-    for (let i = 0; i < particleCount; i++) {
-      const radius = 7 + Math.random() * 12;
+    for (let i = 0; i < starCount; i++) {
+      const radius = 2.5 + Math.random() * 4.5;
       const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
+      const phi = Math.acos(Math.random() * 2 - 1);
 
-      particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particlePositions[i * 3 + 2] = radius * Math.cos(phi);
+      starPositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      starPositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      starPositions[i * 3 + 2] = radius * Math.cos(phi);
 
-      const chosenColor = Math.random() > 0.6 ? c1 : Math.random() > 0.3 ? c2 : c3;
-      particleColors[i * 3] = chosenColor.r;
-      particleColors[i * 3 + 1] = chosenColor.g;
-      particleColors[i * 3 + 2] = chosenColor.b;
+      const isGold = Math.random() > 0.65;
+      starColors[i * 3] = isGold ? 0.81 : 0.62;
+      starColors[i * 3 + 1] = isGold ? 0.68 : 0.85;
+      starColors[i * 3 + 2] = isGold ? 0.43 : 1.0;
     }
 
-    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-    particleGeo.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
+    const starGeom = new THREE.BufferGeometry();
+    starGeom.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
+    starGeom.setAttribute("color", new THREE.BufferAttribute(starColors, 3));
 
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.12,
+    const starMat = new THREE.PointsMaterial({
+      size: 0.045,
       vertexColors: true,
       transparent: true,
       opacity: 0.75,
       blending: THREE.AdditiveBlending,
     });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    particlesRef.current = particles;
-    scene.add(particles);
 
-    // Initialize core meshes
-    updateCoreMeshes(activeGeometry, activeShading);
+    const starField = new THREE.Points(starGeom, starMat);
+    scene.add(starField);
 
-    // 10. Viewport Intersection Observer (Performance Optimization)
+    // ── Viewport Optimization: Pause when out of screen ──
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          isVisibleRef.current = entry.isIntersecting;
+        entries.forEach((e) => {
+          isVisible.current = e.isIntersecting;
         });
       },
       { threshold: 0.05 }
     );
     observer.observe(container);
 
-    // 11. Render Loop
+    // ── Animation Loop ──
+    let animId: number;
     let lastTime = performance.now();
+    let frameCount = 0;
+    let fpsTimer = performance.now();
+
     const animate = (time: number) => {
-      animationFrameId.current = requestAnimationFrame(animate);
+      animId = requestAnimationFrame(animate);
 
-      if (!isVisibleRef.current) return;
+      if (!isVisible.current) return;
 
-      const delta = (time - lastTime) * 0.001;
+      const dt = (time - lastTime) / 1000;
       lastTime = time;
 
       // FPS tracking
-      frameCountRef.current++;
-      if (time - lastFpsCheckRef.current >= 1000) {
-        setFps(Math.round((frameCountRef.current * 1000) / (time - lastFpsCheckRef.current)));
-        frameCountRef.current = 0;
-        lastFpsCheckRef.current = time;
+      frameCount++;
+      if (time - fpsTimer >= 1000) {
+        setFps(frameCount);
+        frameCount = 0;
+        fpsTimer = time;
       }
 
-      // Smooth mouse parallax interpolation
-      mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.08;
-      mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.08;
+      // Smooth rotation lerp
+      currentRotation.current.x += (targetRotation.current.x - currentRotation.current.x) * 0.07;
+      currentRotation.current.y += (targetRotation.current.y - currentRotation.current.y) * 0.07;
 
-      // Smooth drag rotation interpolation
-      rotationOffset.current.x += (rotationOffset.current.targetX - rotationOffset.current.x) * 0.1;
-      rotationOffset.current.y += (rotationOffset.current.targetY - rotationOffset.current.y) * 0.1;
-
-      // Rotate Core Group
       if (coreGroupRef.current) {
-        coreGroupRef.current.rotation.y += 0.008 + (isPulsing ? 0.03 : 0);
-        coreGroupRef.current.rotation.x = rotationOffset.current.y + mousePos.current.y * 0.25;
-        coreGroupRef.current.rotation.z = rotationOffset.current.x + mousePos.current.x * 0.25;
+        const autoSpin = isHovered ? 0.45 : 0.25;
+        coreGroupRef.current.rotation.y += dt * autoSpin;
+        coreGroupRef.current.rotation.x = currentRotation.current.x;
+        coreGroupRef.current.rotation.z = currentRotation.current.y * 0.4;
       }
 
-      // Counter-rotate Rings
-      if (ringsGroupRef.current) {
-        ringsGroupRef.current.children.forEach((ring, idx) => {
-          const dir = idx % 2 === 0 ? 1 : -1;
-          ring.rotation.z += 0.012 * dir * (idx + 1);
-        });
+      // Pulse decay & breathing scale
+      if (pulseIntensity.current > 0) {
+        pulseIntensity.current = Math.max(0, pulseIntensity.current - dt * 1.5);
+      }
+      const breathe = 1 + Math.sin(time * 0.002) * 0.03 + pulseIntensity.current * 0.18;
+      if (innerMeshRef.current) {
+        innerMeshRef.current.scale.set(breathe, breathe, breathe);
+      }
+      if (wireMeshRef.current) {
+        const wireScale = breathe * 1.05;
+        wireMeshRef.current.scale.set(wireScale, wireScale, wireScale);
       }
 
-      // Update Satellite Positions in true 3D elliptical orbits
-      SATELLITE_DATA.forEach((sat) => {
-        if (sat.mesh) {
-          sat.phase += sat.speed * (isPulsing ? 2.5 : 1);
-          const x = Math.cos(sat.phase) * sat.radius;
-          const z = Math.sin(sat.phase) * sat.radius;
-          const y = Math.sin(sat.phase * 1.5) * Math.sin(sat.inclination) * sat.radius * 0.65;
-          sat.mesh.position.set(x, y, z);
-
-          // Rotate satellite itself
-          sat.mesh.rotation.y += 0.02;
-        }
+      // Counter-rotate orbital rings
+      pulseRingsRef.current.forEach((ring, idx) => {
+        const dir = idx % 2 === 0 ? 1 : -1;
+        ring.rotation.z += dt * (0.35 + idx * 0.12) * dir;
       });
 
-      // Update Shockwave Pulse
-      if (pulseStartTimeRef.current !== null && shockwaveMeshRef.current) {
-        const elapsed = (time - pulseStartTimeRef.current) / 1000;
-        const duration = 1.6;
-        if (elapsed < duration) {
-          const progress = elapsed / duration;
-          const scale = 1 + progress * 24;
-          shockwaveMeshRef.current.scale.set(scale, scale, scale);
-          (shockwaveMeshRef.current.material as THREE.MeshBasicMaterial).opacity = (1 - progress) * 0.8;
-          shockwaveMeshRef.current.rotation.z += 0.04;
-        } else {
-          pulseStartTimeRef.current = null;
-          (shockwaveMeshRef.current.material as THREE.MeshBasicMaterial).opacity = 0;
-          setIsPulsing(false);
+      // Update 7 Orbiting Satellites in 3D
+      satellitesRef.current.forEach(({ mesh, halo, data }) => {
+        const t = time * 0.001 * data.speed + data.phase;
+        const x = Math.cos(t) * data.orbitRadius;
+        const z = Math.sin(t) * data.orbitRadius;
+        const y = Math.sin(t * 1.5) * (data.orbitRadius * data.tilt);
+
+        mesh.position.set(x, y, z);
+        halo.rotation.z += dt * 1.2;
+      });
+
+      // Update shockwaves
+      for (let i = shockwavesRef.current.length - 1; i >= 0; i--) {
+        const sw = shockwavesRef.current[i];
+        sw.life -= dt * 1.6;
+        const scale = 1 + (1 - sw.life) * 4.5;
+        sw.mesh.scale.set(scale, scale, scale);
+        (sw.mesh.material as THREE.MeshBasicMaterial).opacity = Math.max(0, sw.life * 0.85);
+
+        if (sw.life <= 0) {
+          scene.remove(sw.mesh);
+          sw.mesh.geometry.dispose();
+          (sw.mesh.material as THREE.Material).dispose();
+          shockwavesRef.current.splice(i, 1);
         }
       }
 
-      // Slowly rotate stellar particles
-      if (particlesRef.current) {
-        particlesRef.current.rotation.y += 0.0006;
-        particlesRef.current.rotation.x += 0.0003;
-      }
+      // Slow drift star field
+      starField.rotation.y += dt * 0.04;
 
-      // Render scene
-      if (rendererRef.current && sceneRef.current && cameraRef.current) {
-        rendererRef.current.render(sceneRef.current, cameraRef.current);
-      }
+      // Parallax Camera motion
+      camera.position.x += (mousePos.current.x * 1.2 - camera.position.x) * 0.05;
+      camera.position.y += (-mousePos.current.y * 1.0 + 1.2 - camera.position.y) * 0.05;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
     };
 
-    animationFrameId.current = requestAnimationFrame(animate);
+    animId = requestAnimationFrame(animate);
 
-    // 12. Handle Resize
+    // Responsive Resize Handler
     const handleResize = () => {
-      if (!container || !rendererRef.current || !cameraRef.current) return;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      cameraRef.current.aspect = width / height;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(width, height);
+      if (!container || !renderer) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
     };
+
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
     return () => {
-      observer.disconnect();
+      cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
-      if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      if (rendererRef.current) rendererRef.current.dispose();
+      observer.disconnect();
+      renderer.dispose();
+      container.replaceChildren();
     };
-  }, [updateCoreMeshes, isPulsing, activeGeometry, activeShading]);
+  }, [createCoreGeometry]);
 
-  // Handle Geometry Switcher
-  const handleGeometryChange = (geom: GeometryStyle) => {
-    setActiveGeometry(geom);
-    updateCoreMeshes(geom, activeShading);
-    sound.playHover();
-  };
+  // Update Geometry dynamically without rebuilding scene
+  useEffect(() => {
+    if (!coreGroupRef.current || !sceneRef.current) return;
 
-  // Handle Shading Switcher
-  const handleShadingChange = (shading: ShadingMode) => {
-    setActiveShading(shading);
-    updateCoreMeshes(activeGeometry, shading);
-    sound.playClick();
-  };
+    const newGeom = createCoreGeometry(geometry);
 
-  // Trigger 3D Energy Shockwave Pulse
-  const triggerPulse = () => {
-    setIsPulsing(true);
-    pulseStartTimeRef.current = performance.now();
-    sound.playSuccess();
-  };
+    if (innerMeshRef.current) {
+      innerMeshRef.current.geometry.dispose();
+      innerMeshRef.current.geometry = newGeom;
+    }
 
-  // Mouse Interaction: Drag to Rotate 360°
+    if (wireMeshRef.current) {
+      wireMeshRef.current.geometry.dispose();
+      wireMeshRef.current.geometry = new THREE.WireframeGeometry(newGeom);
+    }
+
+    // Update estimated synapse edge count
+    const edgeCounts: Record<CoreGeometry, number> = {
+      icosahedron: 30,
+      torusknot: 120,
+      tesseract: 32,
+      helix: 64,
+      octahedron: 12,
+    };
+    setSynapseCount(edgeCounts[geometry] || 48);
+  }, [geometry, createCoreGeometry]);
+
+  // Update Shading Style
+  useEffect(() => {
+    if (!innerMeshRef.current || !wireMeshRef.current) return;
+
+    const mat = innerMeshRef.current.material as THREE.MeshPhysicalMaterial;
+    const wireMat = wireMeshRef.current.material as THREE.LineBasicMaterial;
+
+    if (shading === "wireframe") {
+      mat.wireframe = true;
+      mat.opacity = 0.4;
+      wireMat.opacity = 0.85;
+    } else if (shading === "synapse") {
+      mat.wireframe = false;
+      mat.emissive.setHex(0x38bdf8);
+      mat.emissiveIntensity = 1.4;
+      mat.opacity = 0.75;
+      wireMat.opacity = 0.9;
+    } else {
+      // crystal mode
+      mat.wireframe = false;
+      mat.emissive.setHex(0x1d3d63);
+      mat.emissiveIntensity = 0.8;
+      mat.opacity = 0.92;
+      wireMat.opacity = 0.65;
+    }
+  }, [shading]);
+
+  // Mouse drag orbit controls & hover parallax
   const handlePointerDown = (e: React.PointerEvent) => {
-    isPointerDown.current = true;
-    setIsDragging(true);
-    dragStart.current = { x: e.clientX, y: e.clientY };
+    isDragging.current = true;
+    lastMouse.current = { x: e.clientX, y: e.clientY };
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    const container = mountRef.current;
+    if (!container) return;
 
-    // Normalized parallax coordinates (-1 to 1)
-    const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-    mousePos.current.targetX = normX;
-    mousePos.current.targetY = normY;
+    const rect = container.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+    mousePos.current = { x: nx, y: ny };
 
-    if (isPointerDown.current) {
-      const deltaX = (e.clientX - dragStart.current.x) * 0.008;
-      const deltaY = (e.clientY - dragStart.current.y) * 0.008;
-      rotationOffset.current.targetX += deltaX;
-      rotationOffset.current.targetY += deltaY;
-      dragStart.current = { x: e.clientX, y: e.clientY };
-    }
-
-    // Raycast check for hover on satellites
-    if (cameraRef.current && sceneRef.current) {
-      const raycaster = new THREE.Raycaster();
-      const mouseVec = new THREE.Vector2(normX, normY);
-      raycaster.setFromCamera(mouseVec, cameraRef.current);
-
-      const satelliteMeshes = SATELLITE_DATA.map((s) => s.mesh).filter(Boolean) as THREE.Mesh[];
-      const intersects = raycaster.intersectObjects(satelliteMeshes);
-
-      if (intersects.length > 0) {
-        const hit = intersects[0].object.userData as SatelliteNode;
-        if (hoveredNode?.id !== hit.id) {
-          setHoveredNode(hit);
-          sound.playHover();
-        }
-        setNodeScreenPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      } else if (hoveredNode) {
-        setHoveredNode(null);
-        setNodeScreenPos(null);
-      }
+    if (isDragging.current) {
+      const dx = e.clientX - lastMouse.current.x;
+      const dy = e.clientY - lastMouse.current.y;
+      targetRotation.current.y += dx * 0.012;
+      targetRotation.current.x += dy * 0.012;
+      lastMouse.current = { x: e.clientX, y: e.clientY };
     }
   };
 
   const handlePointerUp = () => {
-    isPointerDown.current = false;
-    setIsDragging(false);
+    isDragging.current = false;
   };
 
   return (
     <div
-      ref={containerRef}
+      className="relative w-full aspect-square max-w-[460px] mx-auto select-none group"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-      className="relative w-full aspect-square max-w-[460px] sm:max-w-[500px] lg:max-w-[540px] flex items-center justify-center select-none cursor-grab active:cursor-grabbing touch-none"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        isDragging.current = false;
+        mousePos.current = { x: 0, y: 0 };
+      }}
+      onClick={triggerPulse}
     >
-      {/* 3D WebGL Canvas */}
-      <canvas ref={canvasRef} className="w-full h-full block rounded-2xl" />
+      {/* Outer Holographic Ambient Glow Aura */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-[#9ed8ff]/15 via-[#cfae6e]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-      {/* Futuristic HUD Top Overlay */}
-      <div className="absolute top-3 left-4 right-4 flex items-center justify-between pointer-events-none text-[10px] font-mono tracking-wider">
-        <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 text-white/80">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#9ed8ff] animate-pulse" />
-          <span className="text-[#9ed8ff] font-semibold">WEBGL 3D</span>
-          <span className="text-white/40">|</span>
-          <span className="text-[#cfae6e]">{fps} FPS</span>
+      {/* Cyber Frame Container */}
+      <div className="absolute inset-1 sm:inset-2 rounded-3xl border border-white/10 bg-[#07090e]/75 backdrop-blur-xl p-3 flex flex-col justify-between overflow-hidden shadow-[0_0_60px_rgba(158,216,255,0.12)]">
+        
+        {/* Top HUD Telemetry Ribbon */}
+        <div className="flex items-center justify-between z-10 px-2 py-1">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="text-[10px] font-mono font-bold text-white/90 uppercase tracking-widest flex items-center gap-1.5">
+              3D QUANTUM CORE <Sparkles className="h-2.5 w-2.5 text-[#cfae6e]" />
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 text-[9px] font-mono text-[#9ed8ff]">
+            <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 font-bold">
+              {fps} FPS
+            </span>
+            <span className="hidden sm:inline px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              HARDWARE WEBGL
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 pointer-events-auto">
-          <button
-            onClick={triggerPulse}
-            title="Expand 3D Quantum Energy Pulse"
-            className="flex items-center gap-1.5 bg-[#9ed8ff]/10 hover:bg-[#9ed8ff]/25 border border-[#9ed8ff]/30 text-[#9ed8ff] px-2.5 py-1 rounded-full transition-all text-[10px] font-mono shadow-[0_0_12px_rgba(158,216,255,0.2)] hover:shadow-[0_0_18px_rgba(158,216,255,0.4)]"
-          >
-            <Zap className="w-3 h-3" />
-            <span>PULSE</span>
-          </button>
-        </div>
-      </div>
+        {/* Real-time WebGL 3D Mount Container */}
+        <div className="relative flex-1 w-full flex items-center justify-center cursor-grab active:cursor-grabbing">
+          <div ref={mountRef} className="w-full h-full block" />
 
-      {/* 3D Geometry Selector Dock */}
-      <div className="absolute bottom-3 left-4 right-4 flex flex-col items-center gap-2 pointer-events-none">
-        <div className="flex items-center justify-center gap-1.5 bg-black/75 backdrop-blur-md px-2.5 py-1.5 rounded-2xl border border-white/10 pointer-events-auto shadow-2xl">
-          {(
-            [
-              { id: "icosahedron", label: "Seed", icon: Sparkles },
-              { id: "torusKnot", label: "Nexus", icon: Activity },
-              { id: "tesseract", label: "4D Cube", icon: Layers },
-              { id: "helix", label: "Helix", icon: Compass },
-              { id: "octahedron", label: "Prism", icon: Shield },
-            ] as const
-          ).map((g) => {
-            const Icon = g.icon;
-            const isActive = activeGeometry === g.id;
-            return (
-              <button
-                key={g.id}
-                onClick={() => handleGeometryChange(g.id)}
-                className={`flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-mono font-medium transition-all ${
-                  isActive
-                    ? "bg-[#9ed8ff]/20 text-[#9ed8ff] border border-[#9ed8ff]/40 shadow-[0_0_10px_rgba(158,216,255,0.25)]"
-                    : "text-white/60 hover:text-white hover:bg-white/5 border border-transparent"
-                }`}
-              >
-                <Icon className="w-3 h-3" />
-                <span className="hidden sm:inline">{g.label}</span>
-              </button>
-            );
-          })}
-
-          <div className="w-[1px] h-3.5 bg-white/20 mx-1" />
-
-          {/* Shading Style Toggle */}
-          <button
-            onClick={() => {
-              const modes: ShadingMode[] = ["crystal", "wireframe", "synapse"];
-              const next = modes[(modes.indexOf(activeShading) + 1) % modes.length];
-              handleShadingChange(next);
-            }}
-            title="Toggle Material: Crystal / Wireframe / Synapse"
-            className="flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-mono bg-white/[0.04] hover:bg-white/[0.08] text-[#cfae6e] border border-[#cfae6e]/30 transition-colors"
-          >
-            <Eye className="w-3 h-3" />
-            <span className="capitalize">{activeShading}</span>
-          </button>
+          {/* Interactive Click/Drag Prompt */}
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+            <span className="text-[9px] font-mono px-3 py-1 rounded-full bg-black/85 border border-[#9ed8ff]/50 text-[#9ed8ff] uppercase tracking-wider backdrop-blur-md shadow-[0_0_15px_rgba(158,216,255,0.3)]">
+              ✦ Drag to Orbit • Click to Pulse ✦
+            </span>
+          </div>
         </div>
 
-        {/* Drag Hint */}
-        <div className="text-[9px] font-mono text-white/40 tracking-wider">
-          {isDragging ? "ORBITING 360° SPATIAL CAMERA" : "DRAG TO ROTATE 360° · HOVER SATELLITES"}
-        </div>
-      </div>
-
-      {/* Floating Tooltip for Hovered AI Satellite Node */}
-      <AnimatePresence>
-        {hoveredNode && nodeScreenPos && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 5 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.15 }}
-            style={{
-              position: "absolute",
-              left: Math.min(Math.max(nodeScreenPos.x, 70), 380),
-              top: Math.min(Math.max(nodeScreenPos.y - 45, 15), 450),
-              pointerEvents: "none",
-            }}
-            className="z-30 flex items-center gap-2 bg-black/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#9ed8ff]/40 shadow-[0_0_20px_rgba(158,216,255,0.3)]"
-          >
-            <span
-              className="w-2 h-2 rounded-full animate-ping"
-              style={{ backgroundColor: hoveredNode.color }}
-            />
-            <div>
-              <div className="text-[11px] font-mono font-bold text-white tracking-wide">
-                {hoveredNode.name}
-              </div>
-              <div className="text-[9px] font-mono text-[#cfae6e]">
-                {hoveredNode.category}
-              </div>
+        {/* Bottom Switchers: Geometries & Shading Styles */}
+        <div className="z-10 flex flex-col gap-2 px-2 pt-2 border-t border-white/5">
+          {/* Geometry Selector */}
+          <div className="flex flex-wrap items-center justify-between gap-1">
+            <div className="flex flex-wrap gap-1">
+              {(
+                [
+                  { id: "icosahedron", label: "Seed" },
+                  { id: "torusknot", label: "Torus Knot" },
+                  { id: "tesseract", label: "Tesseract" },
+                  { id: "helix", label: "DNA Helix" },
+                  { id: "octahedron", label: "Crystal" },
+                ] as const
+              ).map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setGeometry(g.id);
+                    triggerPulse();
+                  }}
+                  className={`text-[9px] font-mono px-2 py-0.5 rounded-md border transition-all ${
+                    geometry === g.id
+                      ? "bg-[#9ed8ff]/25 border-[#9ed8ff] text-white shadow-[0_0_10px_rgba(158,216,255,0.4)] font-bold"
+                      : "bg-white/[0.02] border-white/5 text-white/50 hover:text-white hover:border-white/20"
+                  }`}
+                >
+                  {g.label}
+                </button>
+              ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            <div className="text-[9px] font-mono text-[#cfae6e] hidden sm:block">
+              {synapseCount} Edges
+            </div>
+          </div>
+
+          {/* Shading Style & Satellite Nodes Indicator */}
+          <div className="flex items-center justify-between gap-1 text-[8.5px] font-mono">
+            <div className="flex items-center gap-1">
+              <span className="text-white/40 uppercase">Mode:</span>
+              {(
+                [
+                  { id: "crystal", label: "Crystal Core" },
+                  { id: "wireframe", label: "Wireframe" },
+                  { id: "synapse", label: "Deep Synapse" },
+                ] as const
+              ).map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShading(s.id);
+                  }}
+                  className={`px-1.5 py-0.5 rounded transition-all ${
+                    shading === s.id
+                      ? "text-[#9ed8ff] font-bold bg-white/5"
+                      : "text-white/40 hover:text-white"
+                  }`}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="hidden sm:flex items-center gap-1 text-white/40">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#9ed8ff] animate-ping" />
+              <span>7 Satellites Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
