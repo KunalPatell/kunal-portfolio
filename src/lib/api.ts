@@ -50,8 +50,7 @@ Key Facts:
 - Current Role: AI-ML Engineer at Capermint Technology (May 2026 - Present), building AI game engines, dynamic NPC behaviors, and optimizing FastAPI inference (-35% latency).
 - Prior Roles:
   * AI Engineer at Elite Workforce Services (Dec 2025 - May 2026): Automated 40%+ manual processes, saved 120+ hrs/mo with n8n and LLM fallback gateways.
-  * AI Engineer at One Percent Media (May 2025 - Nov 2025): Handled 5,000+ daily operational requests, 98% OCR extraction accuracy.
-  * AI Automation Engineer at Sevenseed Technology (Dec 2024 - May 2025): Orchestrated 7+ SaaS platforms, maintained 99.8% workflow uptime.
+  * AI Automation Engineer at Sevenseed Technology (Dec 2024 - Nov 2025): Orchestrated JSON API automation pipelines across 7+ SaaS platforms, processing 5,000+ daily operational requests with 99.8% uptime.
 - Major Platforms & Startups Built:
   1. Rakshak AI (5-in-1 AI Public Safety & Vision Suite, automatic FIR generation with BNS/IPC legal codes, safety mask PPE scanner, facial attendance).
   2. Sevenseed Ecosystem (Multi-agent AI venture studio with LangGraph, Groq LLaMA 3.3 70B, ChromaDB RAG, zero-cost BYOK).
@@ -109,10 +108,8 @@ export function semanticOfflineAnswer(query: string): string {
       `2. **AI Engineer @ Elite Workforce Services** *(Dec 2025 – May 2026)*:\n` +
       `   - Automated **40%+** of enterprise manual workflows using Python, REST APIs, and n8n, saving **120+ engineering hours/month**.\n` +
       `   - Built multi-provider LLM fallback gateways with automated failover handling.\n\n` +
-      `3. **AI Engineer @ One Percent Media** *(May 2025 – Nov 2025)*:\n` +
-      `   - High-throughput content automation pipelines processing **5,000+ daily requests** with **98% OCR accuracy**.\n\n` +
-      `4. **AI Automation Engineer @ Sevenseed Technology** *(Dec 2024 – May 2025)*:\n` +
-      `   - Orchestrated JSON API workflows across 7+ SaaS platforms with **99.8% task reliability**.`;
+      `3. **AI Automation Engineer @ Sevenseed Technology** *(Dec 2024 – Nov 2025)*:\n` +
+      `   - Engineered JSON API automation engines across 7+ SaaS platforms, processing **5,000+ daily requests** with **99.8% task reliability**.`;
   }
 
   if (q.includes("automation") || q.includes("n8n") || q.includes("pipeline") || q.includes("workflow") || q.includes("make")) {
@@ -396,7 +393,7 @@ export function analyzeJobDescription(jobDesc: string): AtsMatchResult {
     relevantProjects.push("Breakdown Factor (YOLOv8 Defect Scanner)", "Rakshak AI Vision Suite", "LCB Face Matcher");
   }
   if (text.includes("automation") || text.includes("n8n") || text.includes("workflow") || text.includes("crm")) {
-    relevantProjects.push("Sevenforce Autonomous Workforce", "One Percent Media Automation");
+    relevantProjects.push("Sevenforce Autonomous Workforce", "Sevenseed Automation Workflows");
   }
   if (relevantProjects.length === 0 && matched.length > 0) {
     relevantProjects.push("Rakshak AI", "Sevenseed Ecosystem", "Comonk AI");

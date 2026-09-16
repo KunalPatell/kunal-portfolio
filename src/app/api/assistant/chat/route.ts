@@ -9,8 +9,7 @@ Key Facts:
 - Current Role: AI-ML Engineer at Capermint Technology (May 2026 - Present), building AI game engines, dynamic NPC behaviors, and optimizing FastAPI inference (-35% latency).
 - Prior Roles:
   * AI Engineer at Elite Workforce Services (Dec 2025 - May 2026): Automated 40%+ manual processes, saved 120+ hrs/mo with n8n and LLM fallback gateways.
-  * AI Engineer at One Percent Media (May 2025 - Nov 2025): Handled 5,000+ daily operational requests, 98% OCR extraction accuracy.
-  * AI Automation Engineer at Sevenseed Technology (Dec 2024 - May 2025): Orchestrated 7+ SaaS platforms, maintained 99.8% workflow uptime.
+  * AI Automation Engineer at Sevenseed Technology (Dec 2024 - Nov 2025): Orchestrated JSON API automation pipelines across 7+ SaaS platforms, processing 5,000+ daily operational requests with 99.8% uptime.
 - Major Platforms & Startups Built:
   1. Rakshak AI (5-in-1 AI Public Safety & Vision Suite, automatic FIR generation with BNS/IPC legal codes, safety mask PPE scanner, facial attendance).
   2. Sevenseed Ecosystem (Multi-agent AI venture studio with LangGraph, Groq LLaMA 3.3 70B, ChromaDB RAG, zero-cost BYOK).

@@ -1,4 +1,4 @@
-/**
+"?"/**
  * Centralized portfolio content and knowledge store.
  * Master data file for Kunal Patel - AI Engineer & Automation Specialist.
  */
@@ -68,9 +68,9 @@ export const resume: ResumeSection[] = [
         meta: "May 2026 – Present",
         badges: ["FastAPI", "Real-time AI", "Inference Optimization"],
         points: [
-          "Architected real-time AI/ML game engines and dynamic NPC interaction behaviors, reducing model inference latency by 35% across mobile and web platforms.",
-          "Engineered telemetry-driven data pipelines and automated user engagement scoring systems, increasing D1 user retention by 22%.",
-          "Integrated high-throughput REST API microservices in FastAPI, seamlessly connecting ML inference endpoints with front-end game loops."
+          "Architected real-time AI/ML game engines & dynamic NPC interaction behaviors, reducing inference latency by 35% on mobile and web platforms.",
+          "Engineered telemetry-driven data pipelines and automated user engagement scoring models, increasing D1 user retention by 22%.",
+          "Integrated high-throughput REST API microservices in FastAPI, seamlessly connecting ML inference endpoints with front-end game loops.",
         ],
       },
       {
@@ -79,29 +79,20 @@ export const resume: ResumeSection[] = [
         meta: "Dec 2025 – May 2026",
         badges: ["n8n", "LangChain", "LLM Gateways", "Python"],
         points: [
-          "Spearheaded end-to-end enterprise workflow automation using Python, REST APIs, and n8n, automating 40%+ of manual processes and saving 120+ engineering hours/month.",
-          "Integrated multi-provider LLM fallback gateways (OpenAI, Groq LLaMA) with automated failover handling and real-time execution analytics.",
-          "Built custom performance analytics dashboards, translating raw workflow execution logs into actionable operational insights for client stakeholders."
-        ],
-      },
-      {
-        primary: "AI Engineer",
-        secondary: "One Percent Media, Ahmedabad",
-        meta: "May 2025 – Nov 2025",
-        badges: ["OCR & NLP", "Automation Webhooks", "Python"],
-        points: [
-          "Designed high-throughput AI content automation pipelines using custom Python scripts and n8n webhooks, handling 5,000+ daily operational requests.",
-          "Engineered automated OCR & NLP data extraction tools, reducing document processing turnaround time from hours to seconds with 98% accuracy."
+          "Spearheaded end-to-end enterprise process automation using Python, REST APIs, and n8n, saving 120+ manual engineering hours/month (~40% efficiency boost).",
+          "Integrated multi-provider LLM fallback gateways (OpenAI, Groq) with automated retry handling and real-time dashboard analytics.",
+          "Built custom performance analytics dashboards, translating raw workflow execution logs into actionable operational insights for client stakeholders.",
         ],
       },
       {
         primary: "AI Automation Engineer",
         secondary: "Sevenseed Technology, Ahmedabad",
-        meta: "Dec 2024 – May 2025",
-        badges: ["JSON Pipelines", "API Orchestration", "Make / Zapier"],
+        meta: "Dec 2024 – Nov 2025",
+        badges: ["JSON Pipelines", "API Orchestration", "OCR & NLP", "n8n"],
         points: [
           "Engineered JSON API-driven automation engines compatible with n8n, Make, and Zapier, orchestrating micro-app workflows across 7+ SaaS platforms.",
-          "Standardized workflow error-handling protocols and API webhooks, eliminating pipeline drop-offs and maintaining 99.8% background task reliability."
+          "Designed high-throughput AI automation pipelines and automated OCR/NLP data extraction tools using Python and n8n webhooks, processing 5,000+ daily operational requests.",
+          "Standardized workflow error-handling protocols and API webhooks, ensuring 99.8% uptime across all automated background tasks.",
         ],
       },
     ],
@@ -690,9 +681,9 @@ export const experiences = [
     period: "May 2026 – Present",
     metrics: "-35% Inference Latency | +22% Retention",
     highlights: [
-      "Architected real-time AI/ML game engines and dynamic NPC interaction behaviors, reducing model inference latency by 35% across mobile and web platforms.",
-      "Engineered telemetry-driven data pipelines and automated user engagement scoring systems, increasing D1 user retention by 22%.",
-      "Integrated high-throughput REST API microservices in FastAPI, seamlessly connecting ML inference endpoints with front-end game loops."
+      "Architected real-time AI/ML game engines & dynamic NPC interaction behaviors, reducing inference latency by 35% on mobile and web platforms.",
+      "Engineered telemetry-driven data pipelines and automated user engagement scoring models, increasing D1 user retention by 22%.",
+      "Integrated high-throughput REST API microservices in FastAPI, seamlessly connecting ML inference endpoints with front-end game loops.",
     ],
   },
   {
@@ -701,29 +692,20 @@ export const experiences = [
     period: "Dec 2025 – May 2026",
     metrics: "40%+ Processes Automated | 120+ Hrs/Mo Saved",
     highlights: [
-      "Spearheaded end-to-end enterprise workflow automation using Python, REST APIs, and n8n, automating 40%+ of manual processes and saving 120+ engineering hours/month.",
-      "Integrated multi-provider LLM fallback gateways (OpenAI, Groq LLaMA) with automated failover handling and real-time execution analytics.",
-      "Built custom performance analytics dashboards, translating raw workflow execution logs into actionable operational insights for client stakeholders."
-    ],
-  },
-  {
-    role: "AI Engineer",
-    company: "One Percent Media, Ahmedabad",
-    period: "May 2025 – Nov 2025",
-    metrics: "5,000+ Daily Requests | 98% Accuracy",
-    highlights: [
-      "Designed high-throughput AI content automation pipelines using custom Python scripts and n8n webhooks, handling 5,000+ daily operational requests.",
-      "Engineered automated OCR & NLP data extraction tools, reducing document processing turnaround time from hours to seconds with 98% accuracy."
+      "Spearheaded end-to-end enterprise process automation using Python, REST APIs, and n8n, saving 120+ manual engineering hours/month (~40% efficiency boost).",
+      "Integrated multi-provider LLM fallback gateways (OpenAI, Groq) with automated retry handling and real-time dashboard analytics.",
+      "Built custom performance analytics dashboards, translating raw workflow execution logs into actionable operational insights for client stakeholders.",
     ],
   },
   {
     role: "AI Automation Engineer",
     company: "Sevenseed Technology, Ahmedabad",
-    period: "Dec 2024 – May 2025",
-    metrics: "7+ SaaS Orchestrations | 99.8% Reliability",
+    period: "Dec 2024 – Nov 2025",
+    metrics: "5,000+ Daily Requests | 99.8% Reliability",
     highlights: [
       "Engineered JSON API-driven automation engines compatible with n8n, Make, and Zapier, orchestrating micro-app workflows across 7+ SaaS platforms.",
-      "Standardized workflow error-handling protocols and API webhooks, eliminating pipeline drop-offs and maintaining 99.8% background task reliability."
+      "Designed high-throughput AI automation pipelines and automated OCR/NLP data extraction tools using Python and n8n webhooks, processing 5,000+ daily operational requests.",
+      "Standardized workflow error-handling protocols and API webhooks, ensuring 99.8% uptime across all automated background tasks.",
     ],
   },
 ];
