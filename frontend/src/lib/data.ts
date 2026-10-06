@@ -1,4 +1,4 @@
-"?"/**
+/**
  * Centralized portfolio content and knowledge store.
  * Master data file for Kunal Patel - AI Engineer & Automation Specialist.
  */
@@ -9,7 +9,7 @@ export const profile = {
   tagline: "Building production multi-agent systems, computer vision models, and enterprise automation pipelines.",
   subtitle:
     "AI Engineer with an MSc in AI & Machine Learning. Specialized in multi-agent LLM orchestration (LangGraph, Groq LLaMA 3.3 70B, OpenAI, Gemini), RAG vector search pipelines, custom YOLOv8 computer vision models, and automated FastAPI backends with 40%+ efficiency gains.",
-  email: "websitekunal@gmail.com",
+  email: "imkunalpatell@gmail.com",
   phone: "+91 84908 61586",
   location: "Ahmedabad, Gujarat, India",
   resumeUrl: "/resume.pdf",
