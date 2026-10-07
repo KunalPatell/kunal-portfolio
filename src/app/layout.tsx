@@ -1,0 +1,99 @@
+import type { Metadata } from "next";
+import { Inter, JetBrains_Mono, Michroma } from "next/font/google";
+import "./globals.css";
+import { profile } from "@/lib/data";
+import { Grain, GlowEffectInitializer } from "@/components/backgrounds";
+import {
+  ScrollProgress,
+  EntranceAnimator,
+  SmoothScrollProvider,
+  CustomCursor,
+} from "@/components/motion";
+import { NeuralSynapse2D } from "@/components/3d";
+import { Preloader } from "@/components/layout";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+const michroma = Michroma({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-display",
+  display: "swap",
+});
+
+const description =
+  "Portfolio of Kunal Patel - AI Engineer, Multi-Agent Architect & Automation Specialist building production multi-agent systems, computer vision models, and intelligent enterprise automation.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(profile.socials.portfolio || "https://kunalpatel.dev"),
+  title: {
+    default: `${profile.name} | AI Engineer & Automation Specialist`,
+    template: `%s | ${profile.name}`,
+  },
+  description,
+  keywords: [
+    "AI Engineer Portfolio",
+    "Data Scientist Portfolio",
+    "Machine Learning Engineer",
+    "Multi-Agent AI",
+    "LangGraph",
+    "FastAPI",
+    "Computer Vision",
+    "YOLOv8",
+    "n8n Automation",
+    "Kunal Patel",
+  ],
+  authors: [{ name: profile.name }],
+  openGraph: {
+    title: `${profile.name} | AI Engineer & Automation Specialist`,
+    description,
+    type: "website",
+    siteName: `${profile.name} Portfolio`,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${profile.name} - AI Engineer & Multi-Agent Architect Portfolio`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} | AI Engineer`,
+    description,
+    images: ["/og-image.png"],
+  },
+  robots: { index: true, follow: true },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en" className={`${inter.variable} ${jetbrains.variable} ${michroma.variable} dark`}>
+      <body>
+        <SmoothScrollProvider>
+          <Preloader />
+          <GlowEffectInitializer />
+          <CustomCursor />
+          <NeuralSynapse2D />
+          <EntranceAnimator />
+          <ScrollProgress />
+          <Grain />
+          {children}
+        </SmoothScrollProvider>
+      </body>
+    </html>
+  );
+}
