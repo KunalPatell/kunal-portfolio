@@ -94,15 +94,50 @@ with `data.ts` so the AI answers stay accurate.
 
 ---
 
-## 📁 Structure
+## 📁 Project Architecture & Directory Structure
 ```
 Portfolio/
-├── Dockerfile            # builds frontend + runs backend (port 7860)
-├── README.md             # this file (+ HF Space config)
-├── frontend/             # Next.js 15 app (static export)
-│   └── src/lib/data.ts   # ← edit your content here
-└── backend/              # FastAPI: /api/assistant/chat, /api/contact, serves static
-    └── app/knowledge.py  # ← assistant knowledge base
+├── backend/                       # FastAPI Backend (AI Assistant, Knowledge Base)
+│   ├── app/
+│   │   ├── routers/               # API routes (assistant.py, contact.py)
+│   │   ├── config.py              # LLM provider & service config
+│   │   ├── knowledge.py           # AI Assistant knowledge base & prompt templates
+│   │   └── llm.py                 # Multi-LLM provider gateway (Gemini, Groq, OpenAI)
+│   ├── main.py                    # Server entry point
+│   ├── requirements.txt           # Python backend dependencies
+│   └── .env.example               # Template environment variables
+│
+├── frontend/                      # Next.js 15 App (Static Export, React 19/18 UI)
+│   ├── public/                    # Web-served static assets (resumes, project images)
+│   │   ├── projects/              # Project screenshots & showcases
+│   │   └── startups/              # Startup logos & assets
+│   ├── src/
+│   │   ├── app/                   # App Router (layout.tsx, page.tsx, globals.css)
+│   │   ├── components/            # Design System (21st.dev, Aceternity, Spline, Unicorn)
+│   │   │   ├── 3d/                # Three.js WebGL & Canvas visualizers (QuantumCore3D, NeuralSynapse3D)
+│   │   │   ├── backgrounds/       # Ambient shaders & lighting (AnimatedBackground, Grain, Glow)
+│   │   │   ├── motion/            # Kinetic physics, tilt & smooth scroll (Lenis, Magnetic, Reveal)
+│   │   │   ├── ui/                # Cyber buttons, radars, counters, command palette, terminal
+│   │   │   ├── layout/            # Navbar dock, footer, preloader
+│   │   │   └── sections/          # Page sections (Hero, About, Projects, VentureStudio, Skills, etc.)
+│   │   ├── lib/                   # Data source of truth (data.ts), sound synthesizer, API clients
+│   │   └── types/                 # Shared TypeScript interfaces & declarations
+│   ├── package.json               # Frontend dependencies & Next scripts
+│   ├── tsconfig.json              # TypeScript configuration with @/* path aliases
+│   └── tailwind.config.ts         # Cyberpunk dark mode tokens, animations & glow utilities
+│
+├── docs/                          # Project documentation, plans & credentials
+│   ├── credentials/               # PDF documents (recommendation letters, certificates, JDs)
+│   └── planning/                  # Specs (master_plan.md, portfolio_specs.md, ui_inspirations.md)
+│
+├── scripts/                       # Automation, deployment & maintenance scripts
+│   ├── deploy/                    # Hugging Face deployment scripts (deploy_to_hf.py, deploy_to_hf.bat)
+│   ├── maintenance/               # Update & sync utilities (generate_og_image.py, update_portfolio_resume.py)
+│   └── scratch/                   # Exploratory utilities
+│
+├── Dockerfile                     # Multi-stage production container
+├── README.md                      # Main project documentation & HF Space config
+└── package.json                   # Root monorepo workspace coordinator
 ```
 
 ## 🔌 API

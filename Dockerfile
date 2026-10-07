@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY --chown=user backend/ ./
 # Drop the built frontend where main.py expects it (backend/static)
-COPY --chown=user --from=frontend /app/frontend/out ./static
+COPY --chown=user --from=frontend /app/frontend/dist ./static
 
 USER user
 

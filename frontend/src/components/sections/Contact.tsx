@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2, CheckCircle2, Copy, Check, ExternalLink } from "lucide-react";
 import { isPlaceholderUrl, profile } from "@/lib/data";
-import { SectionHeading } from "@/components/SectionHeading";
+import { SectionHeading } from "@/components/ui";
 import { sound } from "@/lib/sound";
 
 type Status = "idle" | "sending" | "sent" | "error";

@@ -2,8 +2,8 @@
 
 import { Download, FileText, GraduationCap, Award, Briefcase, CheckCircle2 } from "lucide-react";
 import { resume, resumeAction } from "@/lib/data";
-import { SectionHeading } from "@/components/SectionHeading";
-import { CyberButton } from "@/components/CyberButton";
+import { SectionHeading } from "@/components/ui";
+import { CyberButton } from "@/components/ui";
 import { sound } from "@/lib/sound";
 
 function getSectionIcon(title: string) {

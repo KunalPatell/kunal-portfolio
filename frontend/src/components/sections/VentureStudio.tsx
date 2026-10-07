@@ -15,8 +15,8 @@ import {
   Zap,
 } from "lucide-react";
 import { projects } from "@/lib/data";
-import { SectionHeading } from "@/components/SectionHeading";
-import { HoloTilt3D } from "@/components/HoloTilt3D";
+import { SectionHeading, CardSpotlight } from "@/components/ui";
+import { HoloTilt3D } from "@/components/motion";
 import { sound } from "@/lib/sound";
 
 const VENTURE_LIST = projects.filter((p) => p.isStartupVenture);
@@ -42,8 +42,8 @@ export function VentureStudio() {
           description="As Lead AI Engineer for the Sevenseed Studio ecosystem, I architected the multi-agent backend, vector RAG backbone, and specialized inference engines powering 7 enterprise software ventures."
         />
 
-        {/* Studio Architecture Flow Overview */}
-        <div data-blur-in className="mb-12 glass-card p-6 border border-white/10 bg-[#080a0f]/90">
+        {/* Studio Architecture Flow Overview wrapped in CardSpotlight */}
+        <CardSpotlight radius={400} color="rgba(158, 216, 255, 0.14)" className="mb-12 p-6 border border-white/10">
           <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-5">
             <span className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#9ed8ff]">
               <Cpu className="h-4 w-4 text-[#9ed8ff]" />
@@ -76,7 +76,7 @@ export function VentureStudio() {
               <div className="text-[10px] text-white/40 mt-1">Next.js 15 SSR Client</div>
             </div>
           </div>
-        </div>
+        </CardSpotlight>
 
         {/* Venture Navigation Tabs & Explorer */}
         <div className="grid gap-8 lg:grid-cols-12 items-start">
@@ -113,7 +113,7 @@ export function VentureStudio() {
 
           {/* Selected Venture Deep Dive Display */}
           <HoloTilt3D className="lg:col-span-8" intensity={6} glareOpacity={0.2}>
-            <div data-blur-in className="glass-card p-6 sm:p-8 h-full">
+            <CardSpotlight radius={380} color="rgba(158, 216, 255, 0.12)" className="p-6 sm:p-8 h-full border border-white/10">
               <AnimatePresence mode="wait">
               <motion.div
                 key={selectedVenture.id}
@@ -198,8 +198,8 @@ export function VentureStudio() {
                   </div>
                 </div>
               </motion.div>
-            </AnimatePresence>
-            </div>
+              </AnimatePresence>
+            </CardSpotlight>
           </HoloTilt3D>
         </div>
       </div>

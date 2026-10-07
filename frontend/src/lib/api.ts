@@ -149,7 +149,7 @@ export function semanticOfflineAnswer(query: string): string {
 
   if (q.includes("resume") || q.includes("cv") || q.includes("download")) {
     return `You can download Kunal's latest executive resume:\n\n` +
-      `📄 **[Download V7 ATS Resume PDF](${profile.resumeUrl})**\n\n` +
+      `📄 **[Download Latest ATS Resume PDF](${profile.resumeUrl})**\n\n` +
       `The resume covers all 4 professional tenures, 9+ production AI platforms, complete technical proficiencies, and MSc/BCA credentials.`;
   }
 

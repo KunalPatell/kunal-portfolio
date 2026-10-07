@@ -4,10 +4,10 @@
   "private": true,
   "description": "AI Engineer & Automation Developer portfolio for Kunal Patel",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "node -r ./patch-readlink.js ./node_modules/next/dist/bin/next dev",
+    "build": "node -r ./patch-readlink.js ./node_modules/next/dist/bin/next build",
+    "start": "node -r ./patch-readlink.js ./node_modules/next/dist/bin/next start",
+    "lint": "node -r ./patch-readlink.js ./node_modules/next/dist/bin/next lint"
   },
   "dependencies": {
     "@types/node": "^22.9.0",

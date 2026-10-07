@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kunal Patel | AI Engineer & Automation Specialist — Live Portfolio Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #050505;
+      --card-bg: #0b0e14;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(158, 216, 255, 0.35);
+      --accent: #9ed8ff;
+      --accent-cyan: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --gold: #cfae6e;
+      --emerald: #10b981;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: #f1f5f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Cyber Background */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 85% 45%, rgba(207, 174, 110, 0.05) 0%, transparent 50%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Fixed Glass Navbar */
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    .nav-pill {
+      background: rgba(10, 12, 18, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 9999px;
+      padding: 8px 22px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.8);
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo-box {
+      width: 28px;
+      height: 28px;
+      background: rgba(158, 216, 255, 0.15);
+      border: 1px solid rgba(158, 216, 255, 0.3);
+      border-radius: 6px;
+      color: var(--accent);
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      padding: 5px 10px;
+      border-radius: 9999px;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Sound FX Toggle (From heyfenil.online) */
+    .btn-sound {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      border-radius: 9999px;
+      padding: 5px 12px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-sound:hover, .btn-sound.active {
+      color: var(--accent);
+      border-color: rgba(158, 216, 255, 0.5);
+      background: rgba(56, 189, 248, 0.12);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .btn-cmd {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-cmd:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .btn-resume {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: all 0.3s;
+    }
+
+    .btn-resume:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 75px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--accent-cyan);
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, #38bdf8 50%, #cfae6e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 15.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 580px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #000000;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(255,255,255,0.25);
+    }
+
+    /* 1-Click Copy Email Button (From heyfenil.online) */
+    .copy-email-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: #e2e8f0;
+      padding: 11px 18px;
+      border-radius: 12px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .copy-email-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .tooltip {
+      position: absolute;
+      top: -34px;
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #10b981;
+      color: #000;
+      font-weight: 700;
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Hero Stats Bar */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      max-width: 500px;
+    }
+
+    .stat-item h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .stat-item p {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 3D Holographic Developer Card (From heyfenil.online) */
+    .tilt-card-wrapper {
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tilt-card {
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(145deg, #10141f 0%, #080a0f 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 40px -10px var(--accent-glow);
+      transition: transform 0.1s ease-out, box-shadow 0.3s;
+    }
+
+    .card-glare {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-id-tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .card-status-dot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      color: #10b981;
+    }
+
+    .card-status-dot span {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+    }
+
+    .card-profile {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 20px;
+    }
+
+    .card-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .card-role {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11.5px;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .card-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .chip {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #e2e8f0;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* Live Local Clock (From heyfenil.online) */
+    .card-clock {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-clock-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .card-clock-val {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Marquee Strip */
+    .marquee-wrapper {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 16px 0;
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(12, 15, 23, 0.4);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 36px;
+      animation: marquee 25s linear infinite;
+    }
+
+    .marquee-item {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .marquee-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Base Section */
+    section {
+      padding: 90px 0;
+      border-top: 1px solid var(--card-border);
+      position: relative;
+    }
+
+    .section-eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      max-width: 620px;
+      margin-bottom: 40px;
+    }
+
+    /* Cards & Grids */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 26px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card:hover {
+      border-color: var(--card-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.6);
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      transition: all 0.2s;
+    }
+
+    .timeline-card:hover {
+      border-color: rgba(158, 216, 255, 0.4);
+      background: #0f131c;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 12px;
+    }
+
+    .timeline-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .timeline-company {
+      font-size: 13px;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+
+    .timeline-date {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .timeline-bullets li {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .timeline-bullets li::before {
+      content: '▸';
+      color: var(--accent);
+      font-family: 'Geist Mono', monospace;
+    }
+
+    /* Live Interactive Sandbox Box */
+    .sandbox-console {
+      background: #07090e;
+      border: 1px solid rgba(158, 216, 255, 0.25);
+      border-radius: 20px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .sandbox-screen {
+      height: 280px;
+      background: #020305;
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .sandbox-scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: scan 3s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+
+    .mock-bbox {
+      border: 2px solid #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+      padding: 4px 8px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      color: #fff;
+      border-radius: 4px;
+      position: absolute;
+      top: 35%;
+      left: 38%;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+
+    /* ATS Score Gauge */
+    .ats-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 6px solid #10b981;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+      margin: 0 auto 20px;
+    }
+
+    .ats-score-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    /* Floating Copilot Pill */
+    .copilot-pill {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(13, 16, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 9999px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.3);
+      cursor: pointer;
+      z-index: 90;
+      transition: all 0.2s;
+    }
+
+    .copilot-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px rgba(56, 189, 248, 0.5);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--card-border);
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
+      .hero-title { font-size: 38px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-bg"></div>
+
+  <!-- Navbar (With Audio Toggle & ⌘K from heyfenil.online) -->
+  <nav class="navbar">
+    <div class="nav-pill">
+      <a href="#home" class="nav-logo" onclick="playClick()">
+        <span class="nav-logo-box">KP</span>
+        <span>KUNAL PATEL</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" onclick="playClick()">ABOUT</a></li>
+        <li><a href="#experience" onclick="playClick()">EXPERIENCE</a></li>
+        <li><a href="#ventures" onclick="playClick()">VENTURES</a></li>
+        <li><a href="#projects" onclick="playClick()">PROJECTS</a></li>
+        <li><a href="#skills" onclick="playClick()">SKILLS</a></li>
+        <li><a href="#contact" onclick="playClick()">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="soundToggle" class="btn-sound" onclick="toggleSound()">
+          <span>AUDIO</span>
+          <span id="soundLabel">OFF</span>
+        </button>
+        <button class="btn-cmd" onclick="triggerCommandPalette()">
+          <span>⌘K</span>
+        </button>
+        <a href="https://kunalpatel-portfolio.vercel.app/resume.pdf" target="_blank" class="btn-resume">RESUME ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 1. Hero Section (All original stats preserved + 3D Tilt Card & 1-Click Copy Email from heyfenil.online) -->
+  <header id="home" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <div>
+          <div class="hero-badge">
+            <span>●</span> AI ENGINEER & AUTOMATION SPECIALIST
+          </div>
+          
+          <h1 class="hero-title">
+            <span>Architecting</span><br>
+            <span class="highlight">Autonomous AI</span><br>
+            <span>& Production Systems.</span>
+          </h1>
+
+          <p class="hero-desc">
+            Building production AI applications end-to-end — multi-agent LLM systems (LangGraph, Groq LLaMA 3.3 70B, OpenAI, Gemini), RAG vector search pipelines, custom YOLOv8 computer vision models, and automated FastAPI backends.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary" onclick="playClick()">
+              Explore Production Work ↓
+            </a>
+            
+            <!-- 1-Click Copy Email Button (from heyfenil.online) -->
+            <button class="copy-email-btn" onclick="copyEmail(this)">
+              <span class="tooltip">✓ Copied to clipboard!</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>imkunalpatell@gmail.com</span>
+            </button>
+          </div>
+
+          <!-- All original stats intact -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <h4>9+</h4>
+              <p>Production Apps</p>
+            </div>
+            <div class="stat-item">
+              <h4>40%+</h4>
+              <p>Efficiency Gain</p>
+            </div>
+            <div class="stat-item">
+              <h4 style="color: #38bdf8;">MSc</h4>
+              <p>AI & ML Graduate</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Holographic Developer Card (from heyfenil.online) -->
+        <div class="tilt-card-wrapper">
+          <div class="tilt-card" id="tiltCard">
+            <div class="card-glare" id="cardGlare"></div>
+            
+            <div class="card-header">
+              <span class="card-id-tag">DEV-ID: KP-2026</span>
+              <div class="card-status-dot">
+                <span></span> AVAILABLE FOR ROLES
+              </div>
+            </div>
+
+            <div class="card-profile">
+              <h3 class="card-name">Kunal Patel</h3>
+              <p class="card-role">AI Engineer & Automation Specialist</p>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Ahmedabad, Gujarat, India
+              </p>
+            </div>
+
+            <div class="card-chips">
+              <span class="chip">LangGraph</span>
+              <span class="chip">YOLOv8</span>
+              <span class="chip">FastAPI</span>
+              <span class="chip">Groq 70B</span>
+              <span class="chip">ChromaDB</span>
+              <span class="chip">n8n</span>
+            </div>
+
+            <!-- Live Local Clock (from heyfenil.online) -->
+            <div class="card-clock">
+              <div>
+                <div class="card-clock-label">Local Time (IST)</div>
+                <div class="card-clock-val" id="liveClock">06:25 PM</div>
+              </div>
+              <div>
+                <div class="card-clock-label">Status</div>
+                <div class="card-clock-val" style="color: #10b981;">Ready to Deploy</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Marquee Ticker -->
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot"></span> LangGraph Multi-Agent Workflows</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Groq LLaMA 3.3 70B Sub-Second Inference</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> YOLOv8 Real-Time Defect Detection</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> FastAPI High-Throughput Microservices</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> ChromaDB Vector RAG Retrieval</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> n8n & Make Workflow Automation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> PyTorch & OpenCV Deep Learning</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Bring-Your-Own-Key (BYOK) Gateways</span>
+    </div>
+  </div>
+
+  <!-- 3. About Section -->
+  <section id="about">
+    <div class="container">
+      <p class="section-eyebrow">Engineering Profile</p>
+      <h2 class="section-title">End-to-End AI System Architect</h2>
+      <p class="section-desc">
+        MSc in Artificial Intelligence & Machine Learning. I design autonomous LLM multi-agent graphs, high-precision computer vision defect scanners, and production enterprise automation pipelines that drive real operational business value.
+      </p>
+
+      <div class="grid-3">
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">Multi-Agent LLMs</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted);">Stateful LangGraph committee workflows orchestrating autonomous agents, fallback gateways, and vector memory stores.</p>
+        </div>
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">Computer Vision</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted);">Custom YOLOv8 models (best.pt) fine-tuned for structural crack detection, face recognition, and real-time PPE compliance.</p>
+        </div>
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">Automation Backends</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted);">FastAPI asynchronous endpoints connected with n8n and Make webhooks, automating 40%+ of manual business processes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Experience Section (All 4 roles intact) -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-eyebrow">Career Timeline</p>
+      <h2 class="section-title">Where I've Applied AI</h2>
+      <p class="section-desc">
+        Track record building and deploying production machine learning models and enterprise automation workflows.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <h3 class="timeline-role">AI-ML Engineer</h3>
+              <p class="timeline-company">Capermint Technology • Ahmedabad, Gujarat</p>
+            </div>
+            <span class="timeline-date">May 2026 – Present</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Architected real-time AI/ML game engines and dynamic NPC interaction behaviors, reducing model inference latency by 35% across mobile and web platforms.</li>
+            <li>Engineered telemetry-driven data pipelines and automated user engagement scoring systems, increasing D1 user retention by 22%.</li>
+            <li>Integrated high-throughput REST API microservices in FastAPI, seamlessly connecting ML inference endpoints with front-end game loops.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <h3 class="timeline-role">AI Engineer</h3>
+              <p class="timeline-company">Elite Workforces Services • Ahmedabad, Gujarat</p>
+            </div>
+            <span class="timeline-date">Dec 2025 – May 2026</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Spearheaded end-to-end enterprise process automation using Python, REST APIs, and n8n, automating 40%+ of manual processes and saving 120+ engineering hours/month.</li>
+            <li>Integrated multi-provider LLM fallback gateways (OpenAI, Groq LLaMA) with automated failover handling and real-time execution analytics.</li>
+            <li>Built custom performance analytics dashboards, translating raw workflow execution logs into actionable operational insights.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <h3 class="timeline-role">AI Automation Engineer</h3>
+              <p class="timeline-company">Sevenseed Technology • Ahmedabad, Gujarat</p>
+            </div>
+            <span class="timeline-date">Dec 2024 – Nov 2025</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Engineered JSON API-driven automation engines compatible with n8n, Make, and Zapier, orchestrating micro-app workflows across 7+ SaaS platforms.</li>
+            <li>Designed high-throughput AI automation pipelines and automated OCR/NLP data extraction tools using Python and n8n webhooks, processing 5,000+ daily operational requests.</li>
+            <li>Standardized workflow error-handling protocols and API webhooks, eliminating pipeline drop-offs and maintaining 99.8% background task reliability.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Venture Studio (All 9 Startups Intact) -->
+  <section id="ventures">
+    <div class="container">
+      <p class="section-eyebrow">Incubator & Ecosystem</p>
+      <h2 class="section-title">Sevenseed AI Venture Studio (9 Startups)</h2>
+      <p class="section-desc">
+        Autonomous startups incubated and architected under the Sevenseed AI ecosystem with Bring-Your-Own-Key (BYOK) architecture and shared vector knowledge backbones.
+      </p>
+
+      <div class="grid-3">
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">Comonk AI</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Career Intelligence & ATS</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">32-panel AI career copilot with RAG job matching, mock interview voice scoring, and PDF reporting.</p>
+          <a href="https://comonk-ai.onrender.com/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">Sevenforce Automation</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Autonomous AI Workforce</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">7-agent autonomous workforce dock (Maya, Sales CRM, lead scoring, email automation, meeting bot).</p>
+          <a href="https://sevenseed.onrender.com/sevenforce/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">Breakdown Factor</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Structural Defect Scanner</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">YOLOv8 best.pt defect scanning (cracks, pipe leaks, tile damage) and IS-456 BOQ material estimation.</p>
+          <a href="https://sevenseed.onrender.com/breakdown/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">Rakshak AI</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Police & Citizen Copilot</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Automatic FIR generation (Bharatiya Nyaya Sanhita), scam URL detector, and PPE mask scanner.</p>
+          <a href="https://sevenseed.onrender.com/rakshak-ai/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">AVP Emart</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Conversational E-Commerce</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">AI-guided product recommendation engine and dynamic catalog search in Next.js.</p>
+          <a href="https://sevenseed.onrender.com/avp-emart/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">AVPU EdTech</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Personalized AI Tutor</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Adaptive learning tutor that adjusts curriculum difficulty based on student quiz performance.</p>
+          <a href="https://sevenseed.onrender.com/avpu/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">Decode Forest</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Ayurvedic AI Pharmacy</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Botanical knowledge graph matching Ayurvedic herbal remedies to user symptoms.</p>
+          <a href="https://sevenseed.onrender.com/decode-forest/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">AVP Charitable Trust</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Social Impact & NGO</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">NGO transparent donation tracker and volunteer coordination portal.</p>
+          <a href="https://sevenseed.onrender.com/trust/" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 6px;">Sevenseed Platform</h4>
+          <p style="font-size: 11px; color: var(--accent); font-family: 'Geist Mono'; margin-bottom: 8px;">Multi-Agent Core Engine</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Central gateway orchestrating shared vector embeddings and BYOK key vaults.</p>
+          <a href="https://sevenseed.onrender.com" target="_blank" style="font-size: 12px; color: #fff; text-decoration: none; font-weight: 600;">Launch App ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Featured Production Projects (All Intact) -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-eyebrow">Deep Systems</p>
+      <h2 class="section-title">Featured Production Projects</h2>
+      <p class="section-desc">
+        End-to-end architectures connecting machine learning inference engines with modern full-stack web applications.
+      </p>
+
+      <div class="grid-2">
+        <div class="glass-card" style="padding: 30px;">
+          <span style="font-family: 'Geist Mono'; font-size: 11px; color: var(--accent-cyan);">MULTI-AGENT PLATFORM</span>
+          <h3 style="font-family: 'Space Grotesk'; font-size: 22px; margin: 10px 0;">Sevenseed AI Multi-Agent SaaS Platform</h3>
+          <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+            Orchestrates 9 autonomous startup ventures using LangGraph, Groq LLaMA 3.3 70B, ChromaDB vector RAG, and FastAPI. Includes Bring-Your-Own-Key (BYOK) manager for zero-cost client workloads.
+          </p>
+          <a href="https://sevenseed.onrender.com" target="_blank" style="color: #fff; font-weight: 600; text-decoration: none; font-size: 12px;">Live Architecture ↗</a>
+        </div>
+
+        <div class="glass-card" style="padding: 30px;">
+          <span style="font-family: 'Geist Mono'; font-size: 11px; color: var(--accent-cyan);">COMPUTER VISION</span>
+          <h3 style="font-family: 'Space Grotesk'; font-size: 22px; margin: 10px 0;">Breakdown Factor (YOLOv8 PyTorch)</h3>
+          <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+            Fine-tuned YOLOv8 custom weights (best.pt) detecting 10+ structural defects in real-time video frames with automated IS-456 bill-of-quantities cost estimation.
+          </p>
+          <a href="https://sevenseed.onrender.com/breakdown/" target="_blank" style="color: #fff; font-weight: 600; text-decoration: none; font-size: 12px;">Live Defect Scanner ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Interactive Vision Sandbox (Full Interactive Demo Intact) -->
+  <section id="vision-sandbox">
+    <div class="container">
+      <p class="section-eyebrow">Interactive Testing</p>
+      <h2 class="section-title">Computer Vision Real-Time Sandbox</h2>
+      <p class="section-desc">
+        Test camera models for facial recognition, safety mask compliance, and structural crack defect detection.
+      </p>
+
+      <div class="sandbox-console">
+        <div class="sandbox-screen">
+          <div class="sandbox-scanline"></div>
+          <div class="mock-bbox">DEFECT: crack (0.94)</div>
+          <p style="color: rgba(255,255,255,0.4); font-family: 'Geist Mono'; font-size: 12px;">
+            [ YOLOv8 Neural Inference Engine Active • 30+ FPS • OpenCV Stream ]
+          </p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-primary" onclick="alert('Camera model active! Detecting 10+ defect classes.')">Toggle Live Stream</button>
+            <button class="btn-sound" onclick="alert('Defect mode set to Structural Inspection (IS-456)')">Mode: Crack & Pipe Leak</button>
+          </div>
+          <span style="font-family: 'Geist Mono'; font-size: 11px; color: var(--emerald);">● In-Browser WebAssembly Acceleration</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Interactive ATS Matcher (Full Interactive Demo Intact) -->
+  <section id="ats-matcher">
+    <div class="container">
+      <p class="section-eyebrow">AI Tooling</p>
+      <h2 class="section-title">ATS Resume & Job Matcher</h2>
+      <p class="section-desc">
+        Semantic vector matcher evaluating applicant resumes against job descriptions using cosine similarity embeddings.
+      </p>
+
+      <div class="sandbox-console" style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: center;">
+        <div style="text-align: center;">
+          <div class="ats-circle">
+            <span class="ats-score-num">94%</span>
+            <span style="font-size: 10px; font-family: 'Geist Mono'; color: #10b981;">MATCH RATE</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted);">Compatible with Workday & Lever ATS</p>
+        </div>
+
+        <div>
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">Resume Semantic Breakdown</h4>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            Top matched competencies: LangGraph (98%), FastAPI (95%), YOLOv8 (92%), Vector RAG (96%).
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-primary" onclick="alert('Upload your custom PDF to score!')">Upload Resume PDF</button>
+            <button class="btn-sound" onclick="alert('Sample Senior AI Job Description loaded!')">Load Sample JD</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Technical Skills (All Stacks Intact) -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-eyebrow">Technical Competencies</p>
+      <h2 class="section-title">Core Skills & Stacks</h2>
+      <p class="section-desc">
+        Production machine learning tools, autonomous agent frameworks, and backend engineering architectures.
+      </p>
+
+      <div class="grid-4">
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 16px; margin-bottom: 12px;">AI & Multi-Agent</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span class="chip">LangGraph</span>
+            <span class="chip">Groq LLaMA 3.3 70B</span>
+            <span class="chip">OpenAI API</span>
+            <span class="chip">Gemini 1.5</span>
+            <span class="chip">RAG Search</span>
+            <span class="chip">ChromaDB</span>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 16px; margin-bottom: 12px;">Computer Vision</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span class="chip">PyTorch</span>
+            <span class="chip">YOLOv8</span>
+            <span class="chip">OpenCV</span>
+            <span class="chip">Defect Detection</span>
+            <span class="chip">Face Recognition</span>
+            <span class="chip">Bounding Boxes</span>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 16px; margin-bottom: 12px;">Backend & APIs</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span class="chip">Python</span>
+            <span class="chip">FastAPI</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Next.js 15</span>
+            <span class="chip">Docker</span>
+            <span class="chip">REST APIs</span>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 16px; margin-bottom: 12px;">Automation & MLOps</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span class="chip">n8n</span>
+            <span class="chip">Make / Zapier</span>
+            <span class="chip">ETL Pipelines</span>
+            <span class="chip">Git / GitHub</span>
+            <span class="chip">Vercel</span>
+            <span class="chip">Render</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. What I Can Build (Intact) -->
+  <section id="what-i-can-build">
+    <div class="container">
+      <p class="section-eyebrow">Offerings & Deliverables</p>
+      <h2 class="section-title">What I Can Build For Your Team</h2>
+      <p class="section-desc">
+        End-to-end intelligent engineering solutions delivered with high speed and production-grade quality.
+      </p>
+
+      <div class="grid-3">
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">Autonomous Agent Fleets</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted);">LangGraph DAG state machines that autonomously research, synthesize, and execute business actions across APIs.</p>
+        </div>
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">RAG Knowledge Engines</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted);">ChromaDB vector retrieval pipelines with semantic reranking for enterprise document and legal code intelligence.</p>
+        </div>
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 8px;">Custom Vision Inspection</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted);">Trained YOLOv8 PyTorch networks deployed on lightweight edge servers for automated real-time quality control.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Interactive Ask Kunal AI Assistant (Intact) -->
+  <section id="ai-assistant">
+    <div class="container">
+      <p class="section-eyebrow">Interactive Copilot</p>
+      <h2 class="section-title">Ask Kunal AI Assistant</h2>
+      <p class="section-desc">
+        Ask questions about Kunal's background, past projects, multi-agent frameworks, and availability in real-time.
+      </p>
+
+      <div class="sandbox-console" style="max-width: 800px; margin: 0 auto;">
+        <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; height: 180px; overflow-y: auto; margin-bottom: 16px;">
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <span style="font-family: 'Geist Mono'; font-size: 11px; color: var(--accent);">[AI Copilot]:</span>
+            <span style="font-size: 13px; color: #cbd5e1;">Hello! I am Kunal's AI assistant. Ask me about his LangGraph multi-agent systems, YOLOv8 defect detectors, or production FastAPI projects.</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <input type="text" placeholder="Type your question for Kunal's AI assistant..." style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 12px 16px; border-radius: 10px; color: #fff; font-family: 'Inter'; font-size: 13px;">
+          <button class="btn-primary" onclick="alert('AI Assistant backend is ready to query!')">Send Query</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Resume Viewer (Intact) -->
+  <section id="resume">
+    <div class="container">
+      <p class="section-eyebrow">Credentials</p>
+      <h2 class="section-title">Curriculum Vitae</h2>
+      <p class="section-desc">
+        Download the official ATS-friendly Charcoal Carbon PDF resume or inspect verified qualifications.
+      </p>
+
+      <div class="glass-card" style="text-align: center; padding: 40px; max-width: 600px; margin: 0 auto;">
+        <h4 style="font-family: 'Space Grotesk'; font-size: 22px; margin-bottom: 8px;">Kunal Patel — ATS Resume</h4>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Updated for 2026 • AI Engineer & Automation Specialist</p>
+        <a href="https://kunalpatel-portfolio.vercel.app/resume.pdf" target="_blank" class="btn-primary" style="display: inline-flex;">
+          Download PDF Resume (2 Pages) ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Education & Certifications (Intact) -->
+  <section id="education">
+    <div class="container">
+      <p class="section-eyebrow">Academic Background</p>
+      <h2 class="section-title">Education & Certifications</h2>
+      <p class="section-desc">
+        Rigorous academic foundation in artificial intelligence, deep learning, software engineering, and systems.
+      </p>
+
+      <div class="grid-2">
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 4px;">MSc in AI & Machine Learning</h4>
+          <p style="font-size: 12px; color: var(--gold); font-family: 'Geist Mono'; margin-bottom: 10px;">Sardar Patel University • Aug 2024 – Apr 2026</p>
+          <p style="font-size: 13px; color: var(--text-muted);">Specialized in deep learning architectures, computer vision, multi-agent frameworks, and predictive modeling.</p>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-family: 'Space Grotesk'; font-size: 18px; margin-bottom: 4px;">Bachelor of Computer Applications (BCA)</h4>
+          <p style="font-size: 12px; color: var(--gold); font-family: 'Geist Mono'; margin-bottom: 10px;">Dharmsinh Desai University (DDU) • Jun 2020 – Apr 2023</p>
+          <p style="font-size: 13px; color: var(--text-muted);">Core software engineering, database management systems (DBMS), algorithms, and web applications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. Contact Section (With 1-Click Copy Email from heyfenil.online) -->
+  <section id="contact">
+    <div class="container">
+      <div class="glass-card" style="padding: 50px; text-align: center; border-color: rgba(158, 216, 255, 0.2);">
+        <p class="section-eyebrow">Get In Touch</p>
+        <h2 class="section-title" style="margin-bottom: 14px;">Let's Build Autonomous Systems.</h2>
+        <p class="section-desc" style="margin: 0 auto 30px; text-align: center;">
+          Open for full-time engineering roles, AI system architecture consulting, and high-impact automation projects.
+        </p>
+        
+        <button class="copy-email-btn" onclick="copyEmail(this)" style="padding: 16px 28px; font-size: 14px;">
+          <span class="tooltip">✓ Copied to clipboard!</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span>imkunalpatell@gmail.com</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer with Live Clock (From heyfenil.online) -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <span>© 2026 KUNAL PATEL • AI ENGINEER & AUTOMATION SPECIALIST</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/KunalPatell" target="_blank">GITHUB ↗</a>
+          <a href="https://linkedin.com/in/kunalpatell" target="_blank">LINKEDIN ↗</a>
+          <a href="https://kunalpatel-portfolio.vercel.app/resume.pdf" target="_blank">RESUME ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Copilot Button -->
+  <a href="#ai-assistant" class="copilot-pill" onclick="playClick()">
+    <span>✦</span>
+    <span>Ask Kunal AI</span>
+  </a>
+
+  <!-- Audio & 3D Interactive Scripts (From heyfenil.online) -->
+  <script>
+    let audioCtx = null;
+    let soundEnabled = false;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleSound() {
+      initAudio();
+      soundEnabled = !soundEnabled;
+      const label = document.getElementById('soundLabel');
+      const btn = document.getElementById('soundToggle');
+      if (soundEnabled) {
+        label.textContent = 'ON';
+        btn.classList.add('active');
+        playClick(800, 0.05);
+      } else {
+        label.textContent = 'OFF';
+        btn.classList.remove('active');
+      }
+    }
+
+    function playClick(freq = 600, duration = 0.04) {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + duration);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function copyEmail(btn) {
+      playClick(900, 0.08);
+      navigator.clipboard.writeText('imkunalpatell@gmail.com').then(() => {
+        const tooltip = btn.querySelector('.tooltip');
+        tooltip.classList.add('show');
+        setTimeout(() => {
+          tooltip.classList.remove('show');
+        }, 2200);
+      });
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      const timeStr = now.toLocaleTimeString('en-US', options);
+      const el = document.getElementById('liveClock');
+      if (el) el.textContent = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const card = document.getElementById('tiltCard');
+    const glare = document.getElementById('cardGlare');
+
+    if (card) {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -12;
+        const rotateY = ((x - centerX) / centerX) * 12;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        card.style.setProperty('--glare-x', `${(x / rect.width) * 100}%`);
+        card.style.setProperty('--glare-y', `${(y / rect.height) * 100}%`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      });
+    }
+
+    function triggerCommandPalette() {
+      playClick(500, 0.05);
+      alert("⌘K Command Palette:\n\n1. Download ATS Resume (PDF)\n2. Explore Sevenseed AI (9 Startups)\n3. Test Vision Sandbox Camera\n4. Run ATS Resume Matcher\n5. Copy Email (imkunalpatell@gmail.com)");
+    }
+  </script>
+</body>
+</html>

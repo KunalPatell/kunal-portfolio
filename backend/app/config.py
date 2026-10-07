@@ -16,6 +16,7 @@ PROJECT_ROOT = BACKEND_DIR.parent
 # to backend/static; locally it falls back to ../frontend/out.
 _static_candidates = [
     BACKEND_DIR / "static",
+    PROJECT_ROOT / "frontend" / "dist",
     PROJECT_ROOT / "frontend" / "out",
 ]
 STATIC_DIR = next((p for p in _static_candidates if p.exists()), _static_candidates[0])
@@ -26,14 +27,14 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY", "").strip()
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 MISTRAL_MODEL = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
 
 # --- Contact form delivery (optional) ---
 # If unset, submissions are logged server-side and still return success.
-CONTACT_FORWARD_EMAIL = os.getenv("CONTACT_FORWARD_EMAIL", "websitekunal@gmail.com")
+CONTACT_FORWARD_EMAIL = os.getenv("CONTACT_FORWARD_EMAIL", "imkunalpatell@gmail.com")
 
 # CORS origins for split local dev. "*" by default is fine for a public portfolio.
 ALLOWED_ORIGINS = [

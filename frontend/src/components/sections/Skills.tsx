@@ -4,8 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, BrainCircuit, ScanFace, Layers, Workflow } from "lucide-react";
 import { skillGroups } from "@/lib/data";
-import { SectionHeading } from "@/components/SectionHeading";
-import { CyberRadar2D } from "@/components/CyberRadar2D";
+import { SectionHeading } from "@/components/ui";
+import { CyberRadar2D } from "@/components/ui";
 import { sound } from "@/lib/sound";
 
 const iconMap: Record<string, typeof BrainCircuit> = {

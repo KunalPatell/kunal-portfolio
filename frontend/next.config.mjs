@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  distDir: "dist",
   reactStrictMode: true,
   images: {
     unoptimized: true,
   },
-  turbopack: {},
   webpack: (config) => {
     config.resolve.symlinks = false;
     return config;

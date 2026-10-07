@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Send, Bot, User, Loader2, Key, ShieldCheck, RefreshCcw } from "lucide-react";
 import { aiSuggestions, profile } from "@/lib/data";
 import { askKunalAI, getStoredApiKeys, type ChatMessage } from "@/lib/api";
-import { SectionHeading } from "@/components/SectionHeading";
+import { SectionHeading } from "@/components/ui";
 import { sound } from "@/lib/sound";
 
 const GREETING: ChatMessage = {
@@ -98,7 +98,7 @@ export function AIAssistant() {
                 )}
               </p>
               <p className="font-mono text-[9px] text-white/40 uppercase tracking-widest mt-0.5">
-                Grounded on 9+ production platforms &amp; V7 Resume
+                Grounded on 9+ production platforms &amp; Executive Resume
               </p>
             </div>
             <Sparkles className="ml-auto h-4 w-4 text-[#9ed8ff] drop-shadow-[0_0_5px_rgba(158,216,255,0.4)]" />

@@ -1,6 +1,6 @@
 import { BadgeCheck } from "lucide-react";
 import { certifications } from "@/lib/data";
-import { SectionHeading } from "@/components/SectionHeading";
+import { SectionHeading } from "@/components/ui";
 
 export function Certifications() {
   return (

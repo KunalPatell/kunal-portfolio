@@ -660,7 +660,7 @@ export function resumeAction() {
   if (profile.resumeAvailable) {
     return {
       href: profile.resumeUrl,
-      label: "Download V7 Resume",
+      label: "Download Resume",
       external: true,
       note: "Executive ATS-optimized PDF resume.",
     };
