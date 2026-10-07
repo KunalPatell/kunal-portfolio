@@ -2,7 +2,7 @@
 
 import { BrainCircuit, Workflow, ScanFace, MessagesSquare } from "lucide-react";
 import { about } from "@/lib/data";
-import { SectionHeading } from "@/components/ui";
+import { SectionHeading } from "@/components/SectionHeading";
 
 const pillars = [
   { icon: BrainCircuit, title: "Machine Learning", desc: "Models that learn from data and ship to production." },

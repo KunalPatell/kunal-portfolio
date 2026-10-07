@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Michroma } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
-import { Grain, GlowEffectInitializer } from "@/components/backgrounds";
-import {
-  ScrollProgress,
-  EntranceAnimator,
-  SmoothScrollProvider,
-  CustomCursor,
-} from "@/components/motion";
-import { NeuralSynapse2D } from "@/components/3d";
-import { Preloader } from "@/components/layout";
+import { Grain } from "@/components/Grain";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { EntranceAnimator } from "@/components/EntranceAnimator";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
+import { GlowEffectInitializer } from "@/components/GlowEffectInitializer";
+import { CustomCursor } from "@/components/CustomCursor";
+import { NeuralSynapse2D } from "@/components/NeuralSynapse2D";
+import { Preloader } from "@/components/Preloader";
 
 const inter = Inter({
   subsets: ["latin"],

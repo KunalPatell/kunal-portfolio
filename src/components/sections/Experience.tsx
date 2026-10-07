@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Briefcase, Calendar, Building2, TrendingUp, CheckCircle2 } from "lucide-react";
 import { experiences } from "@/lib/data";
-import { SectionHeading, CardSpotlight } from "@/components/ui";
+import { SectionHeading } from "@/components/SectionHeading";
 
 export function Experience() {
   return (
@@ -44,7 +44,7 @@ export function Experience() {
               </span>
 
               {/* Experience Card */}
-              <CardSpotlight radius={320} color="rgba(158, 216, 255, 0.12)" className="p-6 transition-all duration-300 group border border-white/10">
+              <div className="glass-card p-6 hover:border-[#9ed8ff]/40 transition-all duration-300 group">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-4">
                   <div>
                     <h3 className="font-mono text-base font-bold uppercase tracking-wider text-white group-hover:text-[#9ed8ff] transition-colors">
@@ -77,7 +77,7 @@ export function Experience() {
                     </li>
                   ))}
                 </ul>
-              </CardSpotlight>
+              </div>
             </motion.div>
           ))}
         </div>

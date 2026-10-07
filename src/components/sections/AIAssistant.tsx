@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Send, Bot, User, Loader2, Key, ShieldCheck, RefreshCcw } from "lucide-react";
 import { aiSuggestions, profile } from "@/lib/data";
 import { askKunalAI, getStoredApiKeys, type ChatMessage } from "@/lib/api";
-import { SectionHeading } from "@/components/ui";
+import { SectionHeading } from "@/components/SectionHeading";
 import { sound } from "@/lib/sound";
 
 const GREETING: ChatMessage = {

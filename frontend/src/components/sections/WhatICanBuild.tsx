@@ -11,7 +11,7 @@ import {
   Search,
   ClipboardList,
 } from "lucide-react";
-import { SectionHeading } from "@/components/ui";
+import { SectionHeading } from "@/components/SectionHeading";
 
 const capabilities = [
   {

@@ -15,8 +15,8 @@ import {
   BarChart3,
 } from "lucide-react";
 import { projects, Project } from "@/lib/data";
-import { SectionHeading, CardSpotlight } from "@/components/ui";
-import { HoloTilt3D } from "@/components/motion";
+import { SectionHeading } from "@/components/SectionHeading";
+import { HoloTilt3D } from "@/components/HoloTilt3D";
 import { sound } from "@/lib/sound";
 
 const FILTERS = ["All", "Venture Startups", "AI & LLM", "Computer Vision", "Automation"];
@@ -93,17 +93,12 @@ export function Projects() {
               className="h-full"
             >
               <HoloTilt3D className="h-full" intensity={14} glareOpacity={0.3}>
-                <CardSpotlight
-                  radius={280}
-                  color="rgba(158, 216, 255, 0.15)"
-                  className="h-full cursor-pointer hover:border-[#9ed8ff]/50 transition-all duration-300 transform-gpu hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+                <article
                   onClick={() => handleOpenModal(project)}
+                  style={{ transformStyle: "preserve-3d" }}
+                  className="group glass-card flex h-full flex-col overflow-hidden hover:border-[#9ed8ff]/50 cursor-pointer transition-all duration-300 transform-gpu hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
                 >
-                  <article
-                    style={{ transformStyle: "preserve-3d" }}
-                    className="group flex h-full flex-col overflow-hidden"
-                  >
-                    <div style={{ transformStyle: "preserve-3d" }} className={`relative h-44 overflow-hidden bg-gradient-to-br ${project.accent}`}>
+                  <div style={{ transformStyle: "preserve-3d" }} className={`relative h-44 overflow-hidden bg-gradient-to-br ${project.accent}`}>
                     {project.image ? (
                       <Image
                         src={project.image}
@@ -178,7 +173,6 @@ export function Projects() {
                     </div>
                   </div>
                 </article>
-                </CardSpotlight>
               </HoloTilt3D>
             </motion.div>
           ))}

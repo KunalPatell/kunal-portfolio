@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { atsPresets, profile } from "@/lib/data";
 import { analyzeJobDescription, AtsMatchResult } from "@/lib/api";
-import { SectionHeading } from "@/components/ui";
+import { SectionHeading } from "@/components/SectionHeading";
 import { sound } from "@/lib/sound";
 
 export function AtsMatcher() {

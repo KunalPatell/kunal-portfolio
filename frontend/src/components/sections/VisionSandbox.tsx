@@ -14,7 +14,7 @@ import {
   Layers,
   Sparkles,
 } from "lucide-react";
-import { SectionHeading } from "@/components/ui";
+import { SectionHeading } from "@/components/SectionHeading";
 import { sound } from "@/lib/sound";
 
 type SimulationMode = "yolo_defect" | "face_biometrics" | "agent_trace";
